@@ -1,0 +1,85 @@
+<!-- 订单详情页 -->
+<!-- <view class='title'>买家商品标题：</view>
+<view class='text'>小清新手账本活页本笔记本子简约大学生记事本</view>
+<view class='title'>商品型号：</view>
+<view class='text'>加大码</view>
+<view class='title'>商品件数：</view>
+<view class='text'>3</view>
+<view class='title'>买家收货地址：</view>
+<view class='text'>买家收货地址买家收货地址买家收货地址买家收货地址买家收货地址</view>
+<view class='title'>买家电话：</view>
+<view class='text'>1323232213</view>
+<button type='warn' catchtap='deliverGoods'>确认发货</button> -->
+
+<view>
+  <view class='box1 backgroup_white margin_t'>
+    <view class='box1_text'>地址</view>
+    <view>
+      <view class='box1_top'>
+        <view>名字</view>
+        <view>18718212688</view>
+      </view>
+      <view class='box1_bottom'>广东省湛江市</view>
+    </view>
+  </view>
+  <view>
+    <view class='seller_name'>
+      <view>七彩人生</view>
+      <view></view>
+    </view>
+    <view class='box2'>
+      <view class='image'>
+        <image class='image' src='/images/tuan.png'></image>
+      </view>
+      <view class='box2_right'>
+        <view class='box1_bottom'>商品名字</view>
+        <view class='box1_top'>型号：</view>
+        <view class='box1_top box2_bottom'>
+          <view class='red'>￥ 100</view>
+          <view>X 5</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='box3'>
+   <view class='box3_top font_sz22'>
+    <view>商品金额</view>
+    <view>￥ 500</view>
+   </view>
+   <view class='box3_top font_sz22'>
+    <view>运费</view>
+    <view>￥ 0</view>
+   </view>
+   <view class='box3_top font_sz22'>
+    <view>优惠券</view>
+    <view>-￥ 0</view>
+   </view>
+   <view class='box3_top font_sz22 border'>
+    <view>订单总价</view>
+    <view>￥ 0</view>
+   </view>
+   <view class='box3_top'>
+    <view>实际付款</view>
+    <view class='red'>￥ 0</view>
+   </view>
+  </view>
+  <view class='text margin_t'>
+    <view>订单编号</view>
+    <view class='padding_left'>fdsfdafdsfsda</view>
+  </view>
+  <view class='text'>
+    <view>下单时间</view>
+    <view class='padding_left'>fdsfdafdsfsda</view>
+  </view>
+  <view class='button_box margin_t backgroup_white'>
+    <view class='button_box2 '>取消订单</view>
+    <view class='button_box2 button_border red'>立即支付</view>
+  </view>
+  <!-- <view class='box3_top box5 box5_text'>
+    <view class='box3_top padding-left box5_text'>
+      <view>合计：</view>
+      <view>￥ 500</view>
+    </view>
+    <view class='box5_button' catchtap='pay'>在线支付</view>
+  </view> -->
+</view>

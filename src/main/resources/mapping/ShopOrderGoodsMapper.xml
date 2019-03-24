@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ShopOrderGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ShopOrderGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="is_group" property="isGroup" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="group_price" property="groupPrice" jdbcType="DECIMAL" />
+    <result column="go_num" property="goNum" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="p_version" property="pVersion" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_id, user_id, add_time, goods_name, is_group, price, group_price, go_num, 
+    total_price, order_id, p_version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_order_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	SELECT 
+	  sog.*,
+	  pimg.`image` 
+	FROM
+	  shop_order_goods sog,
+	  product_img pimg 
+	WHERE sog.order_id = #{orderId} 
+	  AND pimg.`product_id` = sog.`goods_id` 
+	  AND pimg.`is_cover` = 1 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_order_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.ShopOrderGoods" >
+    insert into shop_order_goods (id, goods_id, user_id, 
+      add_time, goods_name, is_group, 
+      price, group_price, go_num, 
+      total_price, order_id, p_version
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{goodsName,jdbcType=VARCHAR}, #{isGroup,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{groupPrice,jdbcType=DECIMAL}, #{goNum,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DECIMAL}, #{orderId,jdbcType=INTEGER}, #{pVersion,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.ShopOrderGoods" >
+    insert into shop_order_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="isGroup != null" >
+        is_group,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="groupPrice != null" >
+        group_price,
+      </if>
+      <if test="goNum != null" >
+        go_num,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="pVersion != null" >
+        p_version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="isGroup != null" >
+        #{isGroup,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="groupPrice != null" >
+        #{groupPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goNum != null" >
+        #{goNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="pVersion != null" >
+        #{pVersion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ShopOrderGoods" >
+    update shop_order_goods
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="isGroup != null" >
+        is_group = #{isGroup,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="groupPrice != null" >
+        group_price = #{groupPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goNum != null" >
+        go_num = #{goNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="pVersion != null" >
+        p_version = #{pVersion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ShopOrderGoods" >
+    update shop_order_goods
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      is_group = #{isGroup,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      group_price = #{groupPrice,jdbcType=DECIMAL},
+      go_num = #{goNum,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      order_id = #{orderId,jdbcType=INTEGER},
+      p_version = #{pVersion,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

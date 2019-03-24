@@ -1,0 +1,16 @@
+<view>
+  <view class='box1' catchtap='goSetAddress'>
+    <view class='box1_text1'>添加收货地址</view>
+    <view>></view>
+  </view>
+  <view class='box2' wx:for="{{addressList}}" wx:key="{{index}}">
+    <view class='box2_text'>
+      <view class='box2_text_1'>
+        <view>{{item.userName}}</view>
+        <view class='box2_text_2'>电话：{{item.tel}}</view>
+      </view>
+      <view class='box2_text_2'>收货地址：{{item.address}}   </view>
+    </view>
+    <!-- <view class='box2_1'>></view> -->
+  </view>
+</view>

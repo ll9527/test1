@@ -1,0 +1,73 @@
+<view>
+  <view class='head'>
+    <!-- <view class='search'>
+      <view class='searchFrame'>
+        <input class='searchFrame_input' placeholder='搜索'></input>
+        <view class='searchFrame_images'>
+          <image src='/images/search.png'></image>
+        </view>
+      </view>
+    </view> -->
+    <view class='search tabBar'>
+      <view class="text_box {{tab==1?'text_box_on':''}}" data-tab='1' catchtap='rank'>综合</view>
+      <view class="text_box {{tab==2?'text_box_on':''}}" data-tab='2' catchtap='rank'>销量</view>
+      <view class="text_box {{tab==3?'text_box_on':''}}" data-tab='3' catchtap='rank'>价格</view>
+    </view>
+  </view>
+  <view class='padding'></view>
+  <!-- <view hidden='{{tab==1?true:false}}' > -->
+  <view hidden='{{tab==1?false:true}}' >
+  <navigator class='item' url='/pages/productDetails/productDetails?productid={{item.id}}' wx:for="{{productList}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <view>已销{{item.salesVolume}}件</view>
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo' wx:if="{{item.isGroup==1}}">团</view>
+          <view wx:if="{{item.isGroup==1}}">￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  </view>
+  <view hidden='{{tab==2?false:true}}' >
+  <navigator class='item' url='/pages/productDetails/productDetails?productid={{item.id}}' wx:for="{{productList2}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <view>已销{{item.salesVolume}}件</view>
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo' wx:if="{{item.isGroup==1}}">团</view>
+          <view wx:if="{{item.isGroup==1}}">￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  </view>
+  <view hidden='{{tab==3?false:true}}' >
+  <navigator class='item' url='/pages/productDetails/productDetails?productid={{item.id}}' wx:for="{{productList3}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <view>已销{{item.salesVolume}}件</view>
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo' wx:if="{{item.isGroup==1}}">团</view>
+          <view wx:if="{{item.isGroup==1}}">￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  </view>
+</view>

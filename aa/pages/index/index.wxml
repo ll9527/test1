@@ -1,0 +1,130 @@
+<button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
+<!-- 分类 -->
+<scroll-view class="categories" scroll-x="true" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+	<view class="category {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">
+	  热门
+	 </view>
+	<view class="category {{currentTab==index+1 ? 'on' : ''}}" data-current="{{index+1}}" bindtap="swichNav" wx:for="{{level2List}}" wx:key="{{index}}">
+	  {{item.className}}
+	 </view>
+	<!-- <view class="category {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">
+	  鞋包
+	 </view>
+	<view class="category {{currentTab==3 ? 'on' : ''}}"  data-current="3" bindtap="swichNav">
+	  电器
+	 </view> -->
+	<!-- <view class="category {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap="swichNav">
+	  零食
+	 </view>
+	<view class="category {{currentTab==5 ? 'on' : ''}}" data-current="5" bindtap="swichNav">
+	  百货
+	 </view> -->
+   <!-- current 要按顺序排  和currentTab对应 -->
+	<!-- <view class="category {{currentTab==4 ? 'on' : ''}}" data-current="4" bindtap="swichNav">
+	  数码
+	 </view> -->
+</scroll-view>
+<!-- 主体 -->
+<view class="box">
+	<swiper current="{{currentTab}}" duration="200"  circular=false
+bindchange="bindChange" style="height:{{winHeight-44+'px'}}"> 
+		<!-- 热门 --> 
+		<swiper-item >  
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+        <!-- 轮播图 -->
+        <view  class="swiper">
+          <swiper indicator-dots="{{indicatorDots}}"   class="swiper" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">  
+            <block wx:for="{{imgUrls}}" wx:key="*this">  
+              <swiper-item>  
+                <!-- <navigator url="{{item.link}}">   -->
+                  <image src="{{url+item.url}}"/>
+                 <!-- </navigator>   -->
+               </swiper-item>  
+             </block>  
+           </swiper>  
+         </view>
+        <!-- ------------------------------------------------------- -->
+        <!-- 品牌区 -->
+        <!-- <view class="brands"> -->
+          <!-- <view class="brand"  hover-class="navigator-hover" bindtap="toSupermarket"> -->
+          <!-- <view class="brand"  hover-class="navigator-hover"> -->
+            <!-- <view>百货超市</view> -->
+            <!-- <image src="/images/superMarket.png"></image> -->
+           <!-- </view> -->
+          <!-- <view class="brand"  hover-class="navigator-hover" bindtap="toBrand"> -->
+          <!-- <view class="brand"  hover-class="navigator-hover"> -->
+            <!-- <view>连锁品牌</view> -->
+            <!-- <image src="/images/brand.png"></image> -->
+           <!-- </view> -->
+         <!-- </view> -->
+         <!-- --------------------------------------------------------- -->
+        <!-- 置顶按钮 -->  
+        <view  class="goTop" bindtap="goTop">
+          <image src="/images/goTop.png"></image> 
+         </view> 
+        <!-- 产品列表区 -->
+        <view class="producs" wx:for="{{hotList}}" wx:key="{{index}}">
+          <!-- 标题块 -->
+          <!-- <view class="produc" bindtap="goDetails"  hover-class="navigator-hover">    -->
+          <navigator url="/pages/productDetails/productDetails?productid={{item.id}}" class="produc" hover-class="navigator-hover">   
+            <image src="{{url}}/image/{{item.productImgList[0].image}}"></image>
+            <view class="produc_right">
+              <view class="produc_right_title">
+                <text>{{item.title}}</text>
+               </view>
+              <view class="produc_right_bottom">
+                <view class="produc_right_bottom_l">
+                  <view class="produc_right_bottom_price">￥{{item.price}} 已销{{item.salesVolume}}件</view>
+                  <view class="produc_right_bottom_name">{{item.seller.titleName}}</view>
+                  <!-- <view class="produc_right_bottom_go">进店 ></view> -->
+                </view>
+                <view class="produc_right_bottom_2">
+                  <image wx:if="{{item.isGroup==1}}" src="{{url}}/image/13.png"></image>
+                  <view wx:if="{{item.isGroup==1}}">￥ {{item.groupPrice}}</view>
+                </view>
+              </view>
+            </view>
+          </navigator>
+          <!-- </view> -->
+          <!-- 评论块 -->
+          <!-- <navigator url="/pages/test/test" class="comment" hover-class="navigator-hover">
+            <view class="comment_top">最新评论</view>
+            <view class="comment_bottom">看我家小帅哥穿的样子就知道啦，客服推荐的码数很合适，儿子穿上帅帅的店家发货看我家小帅哥穿的样子就知道啦看我家小帅哥穿的样子就知道啦看我家小帅哥穿的样子就知道啦</view>
+          </navigator> -->
+        </view>
+       </scroll-view>
+     </swiper-item>
+    <!-- 服饰 -->
+    <swiper-item wx:for="{{level2List}}" wx:key="{{index}}">  
+      <!-- <view>服饰</view>  -->
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+        <!-- 产品列表区 -->
+        <!-- <view>ffffffaaa</view> -->
+        <view class="producs2" wx:for="{{pList}}" wx:key="{{index}}">
+          <!-- 标题块 -->
+          <!-- <view class="produc" bindtap="goDetails"  hover-class="navigator-hover">    -->
+          <navigator url="/pages/productDetails/productDetails?productid={{item.id}}" class="produc" hover-class="navigator-hover">   
+            <image src="{{url}}/image/{{item.productImgList[0].image}}"></image>
+            <view class="produc_right">
+              <view class="produc_right_title">
+                <text>{{item.title}}</text>
+               </view>
+              <view class="produc_right_bottom">
+                <view class="produc_right_bottom_l">
+                  <view class="produc_right_bottom_price">￥{{item.price}} 已销{{item.salesVolume}}件</view>
+                  <view class="produc_right_bottom_name">{{item.seller.titleName}}</view>
+                  <!-- <view class="produc_right_bottom_go">进店 ></view> -->
+                </view>
+                <view class="produc_right_bottom_2">
+                  <image wx:if="{{item.isGroup==1}}" src="{{url}}/image/13.png"></image>
+                  <view wx:if="{{item.isGroup==1}}">￥ {{item.groupPrice}}</view>
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </view>
+      </scroll-view>
+     </swiper-item>
+    
+  </swiper>
+</view>

@@ -1,0 +1,22 @@
+<view>
+  <view class='box1'>
+    <navigator class='box1_item'>
+      <view>个人资料</view>
+      <view>></view>
+    </navigator>
+    <navigator class='box1_item' url='/pages/receivingAddress/receivingAddress'>
+      <view>收货地址</view>
+      <view>></view>
+    </navigator>
+  </view>
+  <view class='box1'>
+    <navigator class='box1_item'>
+      <view>活动奖励说明</view>
+      <view>></view>
+    </navigator>
+    <navigator class='box1_item'>
+      <view>官方客服</view>
+      <view>></view>
+    </navigator>
+  </view>
+</view>

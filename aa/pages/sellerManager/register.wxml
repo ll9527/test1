@@ -1,0 +1,25 @@
+<form bindsubmit="formSubmit">
+  <input class='inputBox' name="title" maxlength="10" type="text" placeholder="请输入商店名称"></input>
+  <view class='text'>注：商店名称最长10个汉字</view>
+
+    <input class='inputBox' name="tel" maxlength="11" type="number" placeholder="请输入商家电话"></input>
+    <view class='text'>注：商家电话</view>
+
+  <input class='inputBox' name="address" maxlength="30" type="text" placeholder="请输入商铺地址"></input>
+  <view class='text'>注：请输入商铺地址</view>
+
+  <view class="section">
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{twoLevelName}}" >
+    <view class="inputBox picker">
+      店铺类型：{{index? twoLevelName[index]:"请点选择类型"}}
+    </view>
+  </picker>
+</view>
+<view class='text'>注：请选择店铺类型</view>
+
+<image src='{{item}}' mode="widthFix" style='width:670rpx;' wx:for="{{detailsPhoto}}" wx:key="{{index}}"></image>
+<view class='text'>点击按钮上传营业执照,需要正反面,各种证件照片,最多9张照片</view>
+<view class='button' catchtap='seeDetailsPhoto'>上传证件照片</view>
+
+<button form-type="submit">提交</button>
+</form>

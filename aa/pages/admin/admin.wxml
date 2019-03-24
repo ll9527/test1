@@ -1,0 +1,6 @@
+
+<navigator open-type='redirect' url='/pages/admin/waitConfirm?sellerid={{item.seller.id}}&userid={{item.id}}' class='items' wx:for="{{selleList}}" wx:key="{{index}}">
+  <view class='items_title'>店铺名：{{item.seller.titleName}}</view>
+</navigator>
+
+

@@ -1,0 +1,48 @@
+<view>
+  <view class='box1' catchtap='goReceivingAddress'>
+    <view class='box1_text'>
+      <view class='box1_text_1'>
+        <view>陈真</view>
+        <view>18218254545</view>
+      </view>
+      <view class='box1_text_2'>收货地址:广东省湛江市海田三路65号   </view>
+    </view>
+    <view class='box1_1'>></view>
+  </view>
+    <view class='items'>
+    <view class='items_title'>纸物文具店</view>
+    <checkbox-group name="">
+      <view class='items_body' bindtap='selectCheckbox'>
+        <checkbox color='rgb(255,90,90)'></checkbox>
+        <image class='items_body_image' src='/images/15.png'></image>
+        <view class='items_body_right'>
+          <view class='items_body_right_title'>Q小清新小确幸Z横线精装本子</view>
+          <view class='items_body_right_bottom'>
+            <!-- <view class='items_body_right_bottom_1'>团</view> -->
+            <view class='items_body_right_bottom_2'>￥12.0</view>
+            <view class='items_body_right_bottom_3'>
+              <text decode='{{true}}' data-index='{{index}}' catchtap='reduce' class='items_body_right_bottom_3_text1'>&lt;</text>
+              <view>1</view>
+              <text catchtap='add' data-index='{{index}}'class='items_body_right_bottom_3_text2'>></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </checkbox-group>
+  </view>
+  <view class='body_bottom'>
+    <view class='body_bottom_1'>
+      <view class='body_bottom_1_text1'>总价:</view>
+      <view class='body_bottom_1_text2'>￥12</view>
+    </view>
+    <view class='body_bottom_2'>
+      <!-- <button class='del' size='mini' catchtap='del'>
+        <view>删除</view>
+      </button> -->
+      <button form-type='submit' class='submit' size='mini'>
+        <view>微信支付</view>
+      </button>
+    </view>
+  </view>
+  <view class='botton_padding'></view>
+</view>

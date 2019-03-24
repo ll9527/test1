@@ -1,0 +1,7 @@
+/* pages/sellerManager/sellerPhoto.wxss */
+.text{
+  padding: 0 20rpx;
+}
+.image{
+ width: 100%;
+}

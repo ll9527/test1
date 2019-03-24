@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ShopOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.ShopOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="express_sn" property="expressSn" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+    <result column="is_pick" property="isPick" jdbcType="INTEGER" />
+    <result column="prepay_id" property="prepay_id" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_sn, express_sn, add_time, user_name, user_address, tel, user_id, seller_id, 
+    seller_name, total_money, order_status, mark, is_pick, prepay_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 用订单号查询订单对象 -->
+  <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+     *
+    from shop_order
+    where order_sn = #{orderSn}
+  </select>
+  <!-- 查询所有订单 -->
+  <select id="selectAllByUserOrSeller" resultMap="BaseResultMap">
+    select 
+     *
+    from shop_order
+    where order_status = #{status}
+	    <if test="userId != null">
+	    	and user_id = #{userId}
+	    </if>
+	    <if test="sellerId != null">
+	    	and seller_id = #{sellerId}
+	    </if>
+    	AND mark IS NULL 
+    	<if test="userId != null">
+    	ORDER BY add_time DESC 
+    	</if>
+    	<if test="sellerId != null">
+    	ORDER BY add_time
+    	</if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.ShopOrder" >
+    insert into shop_order (id, order_sn, express_sn, 
+      add_time, user_name, user_address, 
+      tel, user_id, seller_id, 
+      seller_name, total_money, order_status, 
+      mark, is_pick, prepay_id)
+    values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{expressSn,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
+      #{sellerName,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
+      #{mark,jdbcType=VARCHAR}, #{isPick,jdbcType=INTEGER}, #{prepay_id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.ShopOrder" >
+    insert into shop_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderSn != null" >
+        order_sn,
+      </if>
+      <if test="expressSn != null" >
+        express_sn,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userAddress != null" >
+        user_address,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="sellerName != null" >
+        seller_name,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="isPick != null" >
+        is_pick,
+      </if>
+      <if test="prepay_id != null" >
+        prepay_id
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="expressSn != null" >
+        #{expressSn,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerName != null" >
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPick != null" >
+        #{isPick,jdbcType=INTEGER},
+      </if>
+      <if test="prepay_id != null" >
+        #{prepay_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelectiveRetKey" parameterType="com.entity.ShopOrder" >
+    insert into shop_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderSn != null" >
+        order_sn,
+      </if>
+      <if test="expressSn != null" >
+        express_sn,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userAddress != null" >
+        user_address,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="sellerName != null" >
+        seller_name,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="isPick != null" >
+        is_pick,
+      </if>
+      <if test="prepay_id != null" >
+        prepay_id
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="expressSn != null" >
+        #{expressSn,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerName != null" >
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPick != null" >
+        #{isPick,jdbcType=INTEGER},
+      </if>
+      <if test="prepay_id != null" >
+        #{prepay_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.ShopOrder" >
+    update shop_order
+    <set >
+      <if test="orderSn != null" >
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="expressSn != null" >
+        express_sn = #{expressSn,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddress != null" >
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerName != null" >
+        seller_name = #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPick != null" >
+        is_pick = #{isPick,jdbcType=INTEGER},
+      </if>
+      <if test="prepay_id != null" >
+        prepay_id = #{prepay_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.ShopOrder" >
+    update shop_order
+    set order_sn = #{orderSn,jdbcType=VARCHAR},
+      express_sn = #{expressSn,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_address = #{userAddress,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=INTEGER},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      mark = #{mark,jdbcType=VARCHAR},
+      is_pick = #{isPick,jdbcType=INTEGER},
+      prepay_id = #{prepay_id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

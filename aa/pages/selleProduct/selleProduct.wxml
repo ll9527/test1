@@ -1,0 +1,19 @@
+  <!-- 卖家上架的商品页面 -->
+  <view class='item' url='/pages/selleProduct/addSelleProduct' wx:for="{{productList}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <!-- <view>已销246件</view> -->
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo'>团</view>
+          <view>￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='button' data-productId='{{item.id}}' catchtap='onDelete'>下架</view>
+  </view>
+  

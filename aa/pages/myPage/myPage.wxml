@@ -1,0 +1,153 @@
+<button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
+<view class='page' style='height:{{winHeight}}px'>
+  <view class='box1'>
+    <view class='box1_top'>
+      <!-- <image class='box1_top_image' src='/images/tx@2x.png'></image> -->
+      <view class='box1_top_mid'>
+        <view class='box1_top_mid_title'>{{username}}</view>
+        <view class='box1_top_mid_title2'>
+          <view style='margin-right:20rpx' bindtap='toDianZhang'>升级店长</view>
+          <view bindtap='toKaiDian'>线下开店</view>
+        </view>
+      </view>
+      <!-- <view class='box1_top_last'>
+        <navigator url='/pages/shopCart/shopCart'>        
+          <image class='box1_top_icon' src='/images/gwc.png'></image>
+        </navigator>
+        <navigator url='/pages/setUp/setUp'>
+          <image class='box1_top_icon' src='/images/sz.png'></image>
+        </navigator>
+      </view> -->
+    </view>
+    <view class='box1_bottom'>
+      <view class='box1_bottom_1' bindtap='toTuangou'>
+        <image src='/images/tuan.png'></image>
+        <view>
+          <view class='box1_bottom_1_title'>我的团购></view>
+          <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>22</view>
+        </view>
+      </view>
+      <view class='box1_bottom_2'></view>
+      <view class='box1_bottom_1' bindtap='toYeji'>
+        <image src='/images/jifen.png'></image>
+        <view>
+          <view class='box1_bottom_1_title'>业绩积分></view> 
+          <view class='box1_bottom_1_num' style='color: rgb(255, 168, 0);'>{{score}}</view>         
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='box2'>
+    <view class='box2_top'>
+      <view class='box2_top_title'>我的订单</view>
+      <view class='box2_top_title2' bindtap='selectAllList'></view>
+    </view>
+    <view class='box2_bottom'>
+      <view class='box2_bottom_icon' catchtap='dFukuan'>
+        <image src='/images/dfukuan.png'></image>
+        <view>待付款</view>
+      </view>
+      <view class='box2_bottom_icon' catchtap='dFahuo'>
+        <image src='/images/dfahuo.png'></image>
+        <view>待发货</view>
+      </view>
+      <view class='box2_bottom_icon' catchtap='dShouhuo'>
+        <image src='/images/dshouhuo.png'></image>
+        <view>待收货</view>
+      </view>
+      <view class='box2_bottom_icon'>
+        <image src='/images/dpingjia.png'></image>
+        <view>待评价</view>
+      </view>
+      <view class='box2_bottom_icon' catchtap='shouHou'>
+        <image src='/images/shouhou.png'></image>
+        <view>售后</view>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='box2 bonusPool'>
+    <view class='box2_bottom'>
+      <view class='box2_bottom_icon' catchtap='dFahuo'>
+        <image src='/images/dfahuo.png'></image>
+        <view>活动奖金池</view>
+      </view>
+      <view class='box2_bottom_icon' catchtap='dShouhuo'>
+        <image src='/images/dshouhuo.png'></image>
+        <view>奖励奖金池</view>
+      </view>
+    </view>
+  </view> -->
+  <view class='bonusPool'>
+    <view class='bonusPool_1'>
+      <view>3698</view>
+      <view>今日活动奖金</view>
+    </view>
+    <view class='bonusPool_1'>
+      <view>8888</view>
+      <view>今日奖励奖金</view>
+    </view>
+  </view>
+  <view class='box3'>
+    <view class='cause' wx:if="{{mark}}">
+      <view>
+        开店不成功,原因:
+          <view>
+            {{mark}}，请再次申请</view>
+          </view>
+    </view>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/myWallet/myWallet'>
+      <view>我的钱包</view>
+      <view>></view>
+    </navigator>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/myCollection/myCollection?userid={{userData.userId}}'>
+      <view>我的收藏</view>
+      <view>></view>
+    </navigator>
+    <!-- <view class='box3_item_border'></view>
+    <navigator class='box3_item'>
+      <view>我的评论</view>
+      <view>></view>
+    </navigator> -->
+    <view class='box3_item_border'></view>
+    <button class='button box3_item' open-type="share">
+      <view>我的分享</view>
+      <view>></view>
+    </button>
+    <!-- <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/userData/userData'>
+      <view>个人资料</view>
+      <view>></view>
+    </navigator> -->
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/receivingAddress/receivingAddress'>
+      <view>收货地址</view>
+      <view>></view>
+    </navigator>
+    <!-- <view class='box3_item_border'></view>
+    <navigator class='box3_item'>
+      <view>活动奖励说明</view>
+      <view>></view>
+    </navigator> -->
+    <view class='box3_item_border'></view>
+    <view class='box3_item' catchtap='goSellerManager'>
+      <view>商家后台</view>
+      <view>></view>
+    </view>
+    <view class='box3_item_border' wx:if="{{userData.info==1}}"></view>
+    <navigator class='box3_item' url='/pages/admin/admin' wx:if="{{userData.info==1}}">
+      <view>管理员后台</view>
+      <view>></view>
+    </navigator>
+    <view class='box3_item_border'></view>
+    <view class='box3_item' catchtap='signOut'>
+      <view>退出登陆</view>
+      <view>></view>
+    </view>
+  </view>
+  <view class='box4'>
+    <view class='box4_text'>客服热线：</view>
+    <view class='box4_text' style='color:rgb(83,180,251)'>0759-3601996</view>
+  </view>
+</view>

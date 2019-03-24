@@ -1,0 +1,19 @@
+<!-- 订单详情页 -->
+<view class='title'>店铺标题：</view>
+<view class='text'>{{sellsMessage.titleName}}</view>
+<view class='title'>店铺电话：</view>
+<view class='text'>{{sellsMessage.tel}}</view>
+<view class='title'>店铺类型：</view>
+<view class='text'>{{sellsMessage.sellerClass}}</view>
+<view class='title'>店铺地址：</view>
+<view class='text' wx:for="{{sellsMessage.sellerAddressList}}" wx:key="{{index}}">{{item.address}}</view>
+<image class='image' mode='widthFix' wx:for="{{sellsMessage.sellerBcImgList}}" src="{{url+'/image/'+item.img}}" wx:key="{{index}}"></image>
+
+<view class='title'>拒绝理由：</view>
+<form bindsubmit='refuse' bindreset='approval'>
+
+  <input class='inputBox' name="mark" placeholder='请输入拒绝理由'></input>
+
+<button class='margin' type='primary' form-type="reset">批准入驻</button>
+<button class='margin' type='warn' form-type="submit">拒绝入驻</button>
+</form>

@@ -1,0 +1,176 @@
+/* 轮播图 */
+.swiper {
+  height: 280rpx;
+  width: 100%;
+}
+.swiper image {
+  height: 280rpx;
+  width: 100%;
+} 
+/* 分类 */
+.box{
+  background-color: rgb(245, 245, 245);
+}
+.box swiper-item{
+  height:100%;
+  width:100%;
+}
+.categories {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center; 
+  color: rgb(128, 128, 128);
+  background-color: rgb(255, 255, 255);
+  white-space: nowrap;
+  display: flex;
+} 
+.categories .category {
+  /* width: 125rpx; */
+  padding: 0 20rpx;
+  height: 88rpx;
+  font-size: 32rpx;
+  display: inline-block;
+} 
+.on{ 
+  color: rgb(255, 90, 90); 
+} 
+/* 品牌区 */
+.brands{
+  width: 100%;
+  height: 140rpx;
+  margin-top: 16rpx;
+  overflow: hidden;
+  padding: 20rpx 40rpx 20rpx 40rpx;
+  background-color: rgb(255, 255, 255);
+}
+.brand{
+  width: 320rpx;
+  height: 140rpx;
+  background-color: gainsboro;
+  display: inline-block;
+  /* 解决父盒子塌陷 */
+  overflow: hidden;
+  margin-right: 23rpx; 
+  /* margin:20rpx 0rpx 20rpx 40rpx; */
+}
+.brand image{
+  width: 320rpx;
+  height: 140rpx;
+  overflow: hidden;
+  /* 解决元素下沉 基线对齐 */
+  /* vertical-align:top;   */
+}
+/* .brand view{
+  width: 200rpx;
+  height: 100rpx;
+  margin-top: 16rpx; 
+  overflow: hidden;
+  display:inline-block;
+  background-color: gold;
+} */
+/* 产品列表区 */
+.producs{
+  /* height: 396rpx; */
+  overflow: hidden;
+  margin : 20rpx 20rpx 0rpx 20rpx;
+  background-color: rgb(255, 255, 255);
+}
+.producs2{
+  height: 243rpx;
+  overflow: hidden;
+  margin : 20rpx 20rpx 0rpx 20rpx;
+  background-color: rgb(255, 255, 255);
+}
+.produc{
+  height: 223rpx;
+  margin-top: 16rpx;
+  margin: 20rpx 20rpx 0rpx 20rpx;
+  border-bottom: 1rpx solid rgb(233, 233, 233);
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+}
+.produc > image{
+  width: 204rpx;
+  height: 204rpx;
+  vertical-align:top;
+}
+.produc_right{
+  display: inline-block;
+  width: 444rpx;
+  height: 204rpx; 
+  margin-left: 20rpx;
+}
+.produc_right_title{
+  width: 426;
+  height: 68rpx;
+  overflow: hidden;
+  word-break:break-all;
+  line-height: 34rpx;
+  padding-top: 8rpx;
+  padding-right: 38rpx; 
+  font-size: 28rpx;
+  color: rgb(31, 31, 31);
+}
+.produc_right_bottom{
+  height: 60rpx;
+  margin-top: 60rpx;
+  overflow: hidden;
+}
+.produc_right_bottom_l{
+  width: 300rpx;
+  height: 54rpx;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 24rpx;
+  font-size: 22rpx;
+  color: rgb(128, 128, 128);
+}
+.produc_right_bottom_price{
+  padding-bottom : 8rpx; 
+}
+.produc_right_bottom_name{
+  display: inline-block;
+}
+.produc_right_bottom_go{
+  padding-left: 14rpx;
+  display: inline-block;
+  color: red;
+}
+.produc_right_bottom_2{
+  width: 140rpx;
+  height: 40rpx;
+  position : static;
+  display: inline-block;
+  color: red;
+  padding-left: 0rpx;
+  overflow: ： hidden;
+}
+.produc_right_bottom_2 > view{
+  font-size: 28rpx;
+  line-height: 28rpx;
+  display: inline-block;
+}
+.produc_right_bottom_2 > image{
+  width: 30rpx;
+  height: 30rpx;
+  /* vertical-align: top; */
+}
+.comment{
+  padding: 12rpx 20rpx 0 20rpx;
+  height: 120rpx;
+  font-size: 28rpx;
+  background-color: rgb(255, 255, 255);
+}
+.comment_bottom{
+  width: 670rpx;
+  height: 78rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: rgb(128, 128, 128);
+  font-size: 24rpx;
+}

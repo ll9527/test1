@@ -1,0 +1,26 @@
+<view>
+  <view style='height:650rpx;'>
+    <image src='/images/xq.png' class='image'></image>
+  </view>
+  <view class='body1'>
+    <view class='body1_title'>正在开团</view>
+    <view class='body1_items'  wx:for='{{4}}'>
+      <view class='body1_items_1'>
+        <image src='/images/tx@2x.png'></image>
+        <view>斯里啪啪</view>
+      </view>
+      <view class='body1_items_2'>
+        <view class='body1_items_2_text'>
+          <view class='body1_items_2_text_1'>
+              <view>还有</view>
+              <view class='body1_items_2_text_1_text'>1位</view>
+              <view>快上车</view>
+          </view>
+          <view style='color:rgb(128,128,128)'>剩余02:06:51</view>
+        </view>
+        <view class='body1_items_2_button'>去加团</view>
+      </view>
+    </view>
+  </view>
+  <view class='body2'>开团</view>
+</view>

@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/totalshop?zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      initial-size: 5
+      max-active: 1000
+      min-idle: 10
+      max-wait: 10
+  resources:
+    chain:
+      strategy:
+        content:
+          paths: /**
+          enabled: true
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+    prefix: classpath:/view/
+    encoding: UTF-8
+    suffix: .html
+  servlet:
+    multipart:
+      max-request-size: 100000000
+      max-file-size: 100000000
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  config-location: classpath:mybatis-config.xml
+
+logging:
+  level:
+    com:
+      dao:
+        debug
+  #采用相对路径方式将日志文件输出到【log\myspringboot.log】
+#  path: C:\Users\Administrator\Desktop\log
+#  file: log\myspringboot.log
+

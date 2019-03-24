@@ -1,0 +1,6 @@
+<!--pages/sellerManager/sellerPhoto.wxml-->
+<text class='text'>店铺名：{{sellerName}}</text>
+<view wx:for="{{imageList}}" wx:key="{{index}}">
+  <image class='image' src="{{url+item.img}}" mode='widthFix' ></image>
+</view>
+

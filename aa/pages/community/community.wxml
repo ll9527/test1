@@ -1,0 +1,143 @@
+<button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
+<view>
+  <view>
+    <view class="topPadding"></view>
+    <view class="page">
+      <view>
+          <!-- <view class="weui-search-bar"> -->
+          <view class="search_bar">        
+              <view class="{{searchBorder?'weui-search-bar__form':'search-bar__form'}}">
+                  <view class="weui-search-bar__box">
+                      <!-- <icon class="weui-icon-search_in-box" type="search" size="14"></icon> -->
+                      <image src="/images/search.png" class="weui-icon-search_in-box" style="width:30rpx;height:30rpx;"></image>
+                      <input type="text" class="weui-search-bar__input" style="vertical-align:top" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" confirm-type="搜索" bindconfirm="search"/>
+                      <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                          <icon type="clear" size="14"></icon>
+                      </view>
+                  </view>
+                  <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                      <!-- <icon class="weui-icon-search" type="search" size="14"></icon> -->
+                      <image src="/images/search.png" class="weui-icon-search" style="width:30rpx;height:30rpx;margin-top:12rpx;"></image>
+                      <view class="weui-search-bar__text" style="vertical-align:top">在线选货到店自提快人一步</view>
+                  </label>
+              </view>
+              <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+          </view>
+          <!-- <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
+              <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                  <view class="weui-cell__bd">
+                      <view>实时搜索文本</view>
+                  </view>
+              </navigator>
+              <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                  <view class="weui-cell__bd">
+                      <view>实时搜索文本</view>
+                  </view>
+              </navigator>
+              <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                  <view class="weui-cell__bd">
+                      <view>实时搜索文本</view>
+                  </view>
+              </navigator>
+              <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                  <view class="weui-cell__bd">
+                      <view>实时搜索文本</view>
+                  </view>
+              </navigator>
+          </view> -->
+      </view>
+    </view>
+    <!-- 分类 -->
+    <scroll-view class="categories" scroll-x="true" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+      <view class="category {{current==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">
+        热门
+      </view>
+      <view class="category {{current==index+1 ? 'on' : ''}}" data-current="{{index+1}}" bindtap="swichNav" wx:for="{{classfiy}}" wx:key="{{index}}">
+        {{item}}
+      </view>
+      <!-- <view class="category {{current==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">
+        便利店
+      </view>
+      -->
+    </scroll-view>
+  </view>
+  <swiper  current="{{currentTab}}" duration="200"  circular=false  
+bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'>
+    <!-- <swiper-item wx:for="{{6}}"> -->
+    <swiper-item >
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+        <!-- style="height:{{winHeight-88-50}}px" -->
+        <view class='body'>
+          <!-- item -->
+          <view class='body_item' wx:for="{{hotList}}" wx:key="{{index}}">
+            <!-- 头部 -->
+            <view class='body_item_head'>
+              <!-- <image src='/images/15.png'></image> -->
+              <!-- <view class='body_item_title'> -->
+              <navigator class='body_item_title' url="{{'/pages/storeAllList/storeAllList?sellerid='+item[0].id}}">
+                <view class='body_item_title_1'>{{item[0].titleName}}</view>
+                <!-- <view class='body_item_title_2'>来这里吃冰淇淋，小心没舌头哦！</view> -->
+              </navigator>
+              <!-- </view> -->
+              <view class='body_item_collect'>
+                <!-- <view class='{{showCollect?"body_item_collect1":"body_item_collect2"}}' bindtap='switchCollect'>{{showCollect?"收藏":"已收藏"}}</view> -->
+                <!-- <view class='body_item_collect2' wx:if="{{showCollect}}" bindtap='switchCollect'>已收藏</view> -->
+              </view>
+            </view>
+            <!-- 图片 -->
+            <view class='body_item_images'>
+              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
+                <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
+                <view>￥ {{item.price}}</view>
+              </navigator>
+            </view>
+            <!-- 位置 -->
+            <!-- <view class='body_item_seat'>
+              <view class='body_item_seat_text'>{{item.}}</view>
+              <image src='/images/seat.png'></image>
+            </view>       -->
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>  
+    
+    <swiper-item wx:for="{{classfiy}}" wx:key="{{index}}">
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+        <!-- style="height:{{winHeight-88-50}}px" -->
+        <view class='body'>
+          <!-- item -->
+          <view class='body_item' wx:for="{{sellerProList}}" wx:key="{{index}}">
+            <!-- 头部 -->
+            <view class='body_item_head'>
+              <!-- <image src='/images/15.png'></image> -->
+              <!-- <view class='body_item_title'> -->
+              <navigator class='body_item_title' url="{{'/pages/storeAllList/storeAllList?sellerid='+item[0].id}}">
+                <view class='body_item_title_1'>{{item[0].titleName}}</view>
+                <!-- <view class='body_item_title_2'>来这里吃冰淇淋，小心没舌头哦！</view> -->
+              </navigator>
+              <!-- </view> -->
+              <view class='body_item_collect'>
+                <!-- <view class='{{showCollect?"body_item_collect1":"body_item_collect2"}}' bindtap='switchCollect'>{{showCollect?"收藏":"已收藏"}}</view> -->
+                <!-- <view class='body_item_collect2' wx:if="{{showCollect}}" bindtap='switchCollect'>已收藏</view> -->
+              </view>
+            </view>
+            <!-- 图片 -->
+            <view class='body_item_images'>
+              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
+                <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
+                <view>￥ {{item.price}}</view>
+              </navigator>
+            </view>
+            <!-- 位置 -->
+            <!-- <view class='body_item_seat'>
+              <view class='body_item_seat_text'>{{item.}}</view>
+              <image src='/images/seat.png'></image>
+            </view>       -->
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>  
+
+
+  </swiper>
+</view>

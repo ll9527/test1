@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ShopMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Shop">
+        <id column="class_id" property="classId" jdbcType="INTEGER"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="class_key" property="classKey" jdbcType="INTEGER"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="ondelect" property="ondelect" jdbcType="INTEGER"/>
+        <result column="images" property="images" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--关联二级目录-->
+    <resultMap id="selectLevel" type="com.entity.Shop">
+        <id column="class_id" property="classId" jdbcType="INTEGER"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="class_key" property="classKey" jdbcType="INTEGER"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="ondelect" property="ondelect" jdbcType="INTEGER"/>
+        <result column="images" property="images" jdbcType="VARCHAR"/>
+        <collection property="twoLevelName" ofType="com.entity.Shop">
+            <id column="c2id" property="classId" jdbcType="INTEGER"/>
+            <result column="c2name" property="className" jdbcType="VARCHAR"/>
+            <result column="c2key" property="classKey" jdbcType="INTEGER"/>
+            <result column="c2level" property="level" jdbcType="INTEGER"/>
+            <result column="c2ondelect" property="ondelect" jdbcType="INTEGER"/>
+            <result column="c2images" property="images" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        class_id, class_name, class_key, level, ondelect, images
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_classify
+        where class_id = #{classId,jdbcType=INTEGER}
+    </select>
+
+    <!--查询分类表目录-->
+    <select id="selectLevel" resultMap="selectLevel">
+        SELECT c1.*,
+               c2.class_id   c2id,
+               c2.class_name c2name,
+               c2.class_key  c2key,
+               c2.LEVEL      c2level,
+               c2.ondelect   c2ondelect,
+               c2.images     c2images
+        FROM shop_classify c1,
+             shop_classify c2
+        WHERE c1.ondelect = 0
+          AND c1.class_id = c2.class_key
+          AND c2.ondelect = 0
+    </select>
+
+    <!--根据classid查询分类表目录-->
+    <select id="selectLevel1and2" resultMap="selectLevel" parameterType="java.lang.Integer">
+        SELECT c1.*,
+               c2.class_id   c2id,
+               c2.class_name c2name,
+               c2.class_key  c2key,
+               c2.LEVEL      c2level,
+               c2.ondelect   c2ondelect,
+               c2.images     c2images
+        FROM shop_classify c1
+                 INNER JOIN shop_classify c2 ON c1.class_id = c2.class_key
+        where c1.class_id = #{classid}
+          AND c2.ondelect = 0
+    </select>
+
+    <!--查询二级目录-->
+    <select id="selectTwo" resultMap="selectLevel">
+        SELECT c.class_id, c.class_name, c.class_key, c.LEVEL, c.ondelect, c.images
+        FROM shop_classify c
+        WHERE c.`level` = 2
+          AND c.ondelect = 0
+    </select>
+
+    <!--查询所有-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from shop_classify
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from shop_classify
+        where class_id = #{classId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.Shop">
+        insert into shop_classify (class_id, class_name, class_key, level, ondelect, images)
+        values (#{classId,jdbcType=INTEGER},
+                #{className,jdbcType=VARCHAR},
+                #{classKey,jdbcType=INTEGER},
+                #{level,jdbcType=INTEGER},
+                #{ondelect,jdbcType=INTEGER},
+                #{images,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.Shop">
+        insert into shop_classify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classId != null">
+                class_id,
+            </if>
+            <if test="className != null">
+                class_name,
+            </if>
+            <if test="classKey != null">
+                class_key,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="ondelect != null">
+                ondelect,
+            </if>
+            <if test="images != null">
+                images,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="classId != null">
+                #{classId,jdbcType=INTEGER},
+            </if>
+            <if test="className != null">
+                #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="classKey != null">
+                #{classKey,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="ondelect != null">
+                #{ondelect,jdbcType=INTEGER},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.Shop">
+        update shop_classify
+        <set>
+            <if test="className != null">
+                class_name = #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="classKey != null">
+                class_key = #{classKey,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="ondelect != null">
+                ondelect = #{ondelect,jdbcType=INTEGER},
+            </if>
+            <if test="images != null">
+                images = #{images,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where class_id = #{classId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.Shop">
+        update shop_classify
+        set class_name = #{className,jdbcType=VARCHAR},
+            class_key  = #{classKey,jdbcType=INTEGER},
+            level      = #{level,jdbcType=INTEGER},
+            ondelect   = #{ondelect,jdbcType=INTEGER},
+            images     = #{images,jdbcType=VARCHAR}
+        where class_id = #{classId,jdbcType=INTEGER}
+    </update>
+</mapper>

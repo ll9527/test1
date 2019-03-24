@@ -1,0 +1,19 @@
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">店长（会员）与奖金奖励制度</view>
+        <view class="page__desc">1.升级店长（会员）须交 199 元平台技术维护费。</view>
+        <view class="page__desc">2.以个人或你所分享好友购物积累积分（你好友所分享的购
+物积分不属于你），消费 1 元人民币等于 1 积分。</view>
+    <view class="page__desc">3.当个人积分累计达到 3800 积分（确认收货后积分才生效），
+可享有平台每天奖励奖金，以个人积分不同得到奖励奖金不
+同，根据平台每天总销售金额不同发放奖金金额不同</view>
+    <view class="page__desc">4. 30 天内没有任意一次购物（包括线上线下），会停止发放
+个人所得奖励奖金且积分清零。</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="default" bindtap="openSuccess">升级店长</button>
+            <button class="weui-btn" type="default" bindtap="openMyPage">返回</button>
+        </view>
+    </view>
+</view>

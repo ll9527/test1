@@ -1,0 +1,58 @@
+<view>
+  <view class='tab'>
+    <!-- <view>待付款</view> -->
+    <navigator url='/pages/order/order'>待付款</navigator>
+    <!-- <view>待发货</view> -->
+    <navigator url='/pages/orderDelivery/orderDelivery'>待发货</navigator>
+    <view class='onTab'>待收货</view>
+    <!-- <navigator url='/pages/orderTakeDelivery/orderTakeDelivery'>待收货</navigator> -->
+  </view>
+  <view class='paddingTop88'></view>
+  <view>
+    <form bindsubmit='bindsubmit'>
+      <view class='items' wx:for="{{items}}" wx:key="{{index}}">
+        <view class='items_title'>{{item.name}}</view>
+        <checkbox-group name="{{item.name}}">
+          <view class='items_body' data-index='{{index}}' bindtap='selectCheckbox'>
+            <checkbox checked='{{item.checked}}' value='{{item.name}}' color='rgb(255,90,90)'></checkbox>
+            <image class='items_body_image' src='/images/15.png'></image>
+            <view class='items_body_right'>
+              <view class='items_body_right_title'>
+                {{item.title}}
+              </view>
+              <view class='items_body_right_bottom'>
+                <view class='items_body_right_bottom_text'>型号：30P精品小本</view>
+                <!-- <view class='items_body_right_bottom_1'>团</view>
+                <view class='items_body_right_bottom_2'>￥{{item.totalPrice}}</view>
+                <view class='items_body_right_bottom_3'>
+                  <text decode='{{true}}' data-index='{{index}}' catchtap='reduce' class='items_body_right_bottom_3_text1'>&lt;</text>
+                  <view>{{item.num}}</view>
+                  <text catchtap='add' data-index='{{index}}'class='items_body_right_bottom_3_text2'>></text>
+                </view> -->
+              </view>
+            </view>
+            <view class='items_body_price'>
+                <view class='price'>￥12.0</view>
+                <view class='num'>X3</view>
+              </view>
+          </view>
+        </checkbox-group>
+      </view>
+      <view class='body_bottom'>
+        <view class='body_bottom_1'>
+          <!-- <view class='body_bottom_1_text1'>总价:</view>
+          <view class='body_bottom_1_text2'>￥{{pageTotalPrice}}</view> -->
+        </view>
+        <view class='body_bottom_2'>
+          <!-- <button class='del' size='mini' catchtap='del'>
+            <view>删除</view>
+          </button> -->
+          <button form-type='submit' class='submit' size='mini'>
+            <view>确认收货</view>
+          </button>
+        </view>
+      </view>
+      <view class='botton_padding'></view>
+    </form>
+  </view>
+</view>

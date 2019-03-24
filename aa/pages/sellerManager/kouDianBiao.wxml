@@ -1,0 +1,8 @@
+<view class='title'>
+  <view class='title1'>类目</view>
+  <view class='title2'>扣点</view>
+</view>
+<view class='text' wx:for="{{list}}" wx:key="{{index}}">
+  <view class='title1'>{{item.titleName}}</view>
+  <view class='title2'>{{item.commission}}%</view>
+</view>

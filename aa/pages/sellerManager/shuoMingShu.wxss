@@ -1,0 +1,7 @@
+page{
+  width: 710rpx;
+  margin: 0 20rpx;
+}
+.title{
+  text-align: center;
+}

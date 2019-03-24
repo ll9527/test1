@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_vip" jdbcType="INTEGER" property="isVip"/>
+        <result column="is_seller" jdbcType="INTEGER" property="isSeller"/>
+        <result column="tel" jdbcType="BIGINT" property="tel"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="is_admin" jdbcType="INTEGER" property="isAdmin"/>
+        <result column="is_apply" jdbcType="INTEGER" property="isApply"/>
+        <result column="apply_money" jdbcType="DECIMAL" property="applyMoney"/>
+        <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark"/>
+    </resultMap>
+
+    <!--一对一关联Seller-->
+    <resultMap id="WithSeller" type="com.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_vip" jdbcType="INTEGER" property="isVip"/>
+        <result column="is_seller" jdbcType="INTEGER" property="isSeller"/>
+        <result column="tel" jdbcType="BIGINT" property="tel"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="is_admin" jdbcType="INTEGER" property="isAdmin"/>
+        <result column="is_apply" jdbcType="INTEGER" property="isApply"/>
+        <result column="apply_money" jdbcType="DECIMAL" property="applyMoney"/>
+        <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark"/>
+        <association property="seller" javaType="com.entity.Seller">
+            <id column="sid" jdbcType="INTEGER" property="id"/>
+            <result column="title_name" jdbcType="VARCHAR" property="titleName"/>
+        </association>
+    </resultMap>
+
+    <!--一对多关联Address-->
+    <resultMap id="WithAddress" type="com.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="is_vip" property="isVip" jdbcType="INTEGER"/>
+        <result column="is_seller" property="isSeller" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="is_admin" property="isAdmin" jdbcType="INTEGER"/>
+        <result column="is_apply" jdbcType="INTEGER" property="isApply"/>
+        <result column="apply_money" jdbcType="DECIMAL" property="applyMoney"/>
+        <result column="applied_mark" jdbcType="VARCHAR" property="appliedMark"/>
+        <collection ofType="com.entity.Address" property="addressList">
+            <id column="address_id" property="id" jdbcType="INTEGER"/>
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="user_id" property="userId" jdbcType="INTEGER"/>
+            <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="phone" property="tel" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, username, password, is_vip, is_seller, tel, score, money, is_admin, is_apply,
+        apply_money, applied_mark
+    </sql>
+
+    <!--selectKey-->
+    <insert id="selectKey" parameterType="com.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="isVip != null">
+                is_vip,
+            </if>
+            <if test="isSeller != null">
+                is_seller,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="isAdmin != null">
+                is_admin,
+            </if>
+            <if test="isApply != null">
+                is_apply,
+            </if>
+            <if test="applyMoney != null">
+                apply_money,
+            </if>
+            <if test="appliedMark != null">
+                applied_mark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isVip != null">
+                #{isVip,jdbcType=INTEGER},
+            </if>
+            <if test="isSeller != null">
+                #{isSeller,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="isAdmin != null">
+                #{isAdmin,jdbcType=INTEGER},
+            </if>
+            <if test="isApply != null">
+                #{isApply,jdbcType=INTEGER},
+            </if>
+            <if test="applyMoney != null">
+                #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="appliedMark != null">
+                #{appliedMark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+    <!--查询已提交商家入驻申请但未确认的用户-->
+    <select id="selectUnconfirmed" resultMap="WithSeller">
+        SELECT u.*, s.id as sid, s.title_name
+        FROM user u
+                 INNER JOIN seller s ON u.id = s.user_id
+        WHERE u.is_apply = 1
+          and u.is_seller = 0
+    </select>
+
+    <select id="checkTel" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select *
+        from user
+        where tel = #{tel}
+    </select>
+
+    <!--单独查询未批准用户信息-->
+    <select id="selectUnconfirmByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select *
+        from user
+        where is_apply = 1
+          and id = #{userid}
+    </select>
+
+    <!--登录验证-->
+    <select id="login" resultMap="BaseResultMap" parameterType="Map">
+        SELECT
+        *
+        FROM
+        USER
+        WHERE
+        <if test="username!=null">
+            USER.username = #{username}
+        </if>
+        <if test="tel!=null">
+            user.tel = #{tel}
+        </if>
+        AND USER.PASSWORD = #{password}
+    </select>
+    <!--关联查询Address-->
+    <select id="selectAddressByUserId" resultMap="WithAddress" parameterType="java.lang.Integer">
+        SELECT USER
+                       .*, a.id address_id, a.address, a.tel phone
+        FROM USER
+                 INNER JOIN address AS a ON a.user_id = USER.id
+        WHERE USER.id = #{userid}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.User">
+        insert into user (id,
+                          username,
+                          password,
+                          is_vip,
+                          is_seller,
+                          tel,
+                          score,
+                          money,
+                          is_admin,
+                          is_apply,
+                          apply_money,
+                          applied_mark)
+        values (#{id,jdbcType=INTEGER},
+                #{username,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
+                #{isVip,jdbcType=INTEGER},
+                #{isSeller,jdbcType=INTEGER},
+                #{tel,jdbcType=BIGINT},
+                #{score,jdbcType=INTEGER},
+                #{money,jdbcType=DECIMAL},
+                #{isAdmin,jdbcType=INTEGER},
+                #{isApply,jdbcType=INTEGER},
+                #{applyMoney,jdbcType=DECIMAL},
+                #{appliedMark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="isVip != null">
+                is_vip,
+            </if>
+            <if test="isSeller != null">
+                is_seller,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="isAdmin != null">
+                is_admin,
+            </if>
+            <if test="isApply != null">
+                is_apply,
+            </if>
+            <if test="applyMoney != null">
+                apply_money,
+            </if>
+            <if test="appliedMark != null">
+                applied_mark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isVip != null">
+                #{isVip,jdbcType=INTEGER},
+            </if>
+            <if test="isSeller != null">
+                #{isSeller,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="isAdmin != null">
+                #{isAdmin,jdbcType=INTEGER},
+            </if>
+            <if test="isApply != null">
+                #{isApply,jdbcType=INTEGER},
+            </if>
+            <if test="applyMoney != null">
+                #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="appliedMark != null">
+                #{appliedMark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.User">
+        update user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="isVip != null">
+                is_vip = #{isVip,jdbcType=INTEGER},
+            </if>
+            <if test="isSeller != null">
+                is_seller = #{isSeller,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="isAdmin != null">
+                is_admin = #{isAdmin,jdbcType=INTEGER},
+            </if>
+            <if test="isApply != null">
+                is_apply = #{isApply,jdbcType=INTEGER},
+            </if>
+            <if test="applyMoney != null">
+                apply_money = #{applyMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="appliedMark != null">
+                applied_mark = #{appliedMark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.User">
+        update user
+        set username     = #{username,jdbcType=VARCHAR},
+            password     = #{password,jdbcType=VARCHAR},
+            is_vip       = #{isVip,jdbcType=INTEGER},
+            is_seller    = #{isSeller,jdbcType=INTEGER},
+            tel          = #{tel,jdbcType=BIGINT},
+            score        = #{score,jdbcType=INTEGER},
+            money        = #{money,jdbcType=DECIMAL},
+            is_admin     = #{isAdmin,jdbcType=INTEGER},
+            is_apply     = #{isApply,jdbcType=INTEGER},
+            apply_money  = #{applyMoney,jdbcType=DECIMAL},
+            applied_mark = #{appliedMark,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

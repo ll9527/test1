@@ -1,0 +1,10 @@
+page{
+  width: 690rpx;
+  margin: 0 auto;
+  color: rgb(31, 31, 31);
+  font-size: 30rpx;
+  text-align: center;
+}
+.phone{
+  color: rgb(83,180,251);
+}

@@ -1,0 +1,31 @@
+<navigator class='padding_10' wx:for="{{list}}" wx:key="{{index}}" url="{{'/pages/orderDetails/orderDetails?oId='+item.shopOrder.id}}">
+  <view >
+    <view class='box1_top box2_bottom titleBox'>
+      <view>{{item.shopOrder.addTime}}</view>
+      <view>待付款</view>
+    </view>
+    <view class='box2' wx:for="{{item.shopOrderGoodsList}}" wx:key="{{index}}">
+      <view class='image'>
+        <image class='image' src='{{url+item.image}}'></image>
+      </view>
+      <view class='box2_right'>
+        <view class='box1_bottom'>{{item.goodsName}}</view>
+        <view class='box1_top'>型号：{{item.pVersion}}</view>
+        <view class='box1_top box2_bottom'>
+          <view class='red'>￥ {{item.price}}</view>
+          <view>X {{item.goNum}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- ---------------------------------------------------     -->
+  <view class='box1_top flex_jc_end text padding_r20'>
+    <view>合计：</view>
+    <view class='red'>￥ {{item.shopOrder.totalMoney}}</view>
+  </view>
+  <!-- ---------------------------------------------------     -->
+  <view class='box1_top flex_jc_end text'>
+    <view class='button margin ' data-oId='{{item.shopOrder.id}}' data-index='{{index}}'  catchtap='closeOrder'>取消订单</view>
+    <view class='red button border_red margin' data-oId='{{item.shopOrder.id}}' data-index='{{index}}' catchtap='goPay'>支付</view>
+  </view>
+</navigator>

@@ -1,0 +1,116 @@
+<button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
+<view>
+
+  <!-- <view class="page"> -->
+    <view>
+      <view class='search_bar'>
+        <view class='search_bar_label' hidden="{{inputShowed}}" bindtap="showInput">
+          <image src="/images/search.png" class="icon_search"></image>
+          <view class="search_bar_text">海量品质好物等你选购</view>
+        </view>
+        <view class='search_bar_label_2'  hidden="{{!inputShowed}}">
+          <view class='search_bar_label_2_left'>
+            <image src="/images/search.png" class="icon_search"></image>
+            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping"  confirm-type="搜索" bindconfirm="search"/>
+            <view class='clear_icon' wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+              <icon size='14' type='clear'></icon>
+            </view>
+          </view>  
+          <view class="search_bar_label_2_left_right" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>        
+      </view>
+      <!-- <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
+            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view>实时搜索文本</view>
+                </view>
+            </navigator>
+            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view>实时搜索文本</view>
+                </view>
+            </navigator>
+            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view>实时搜索文本</view>
+                </view>
+            </navigator>
+            <navigator url="" class="weui-cell" hover-class="weui-cell_active">
+                <view class="weui-cell__bd">
+                    <view>实时搜索文本</view>
+                </view>
+            </navigator>
+      </view> -->
+    </view>
+  <view hidden="{{searchRecord}}">
+    <!-- 热门搜索 -->    
+    <!-- <view class="popular">
+      <view class="popular_view1">
+        <text class="popular_text1">热门搜索</text>
+      </view>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+    </view>   -->
+    <!-- 历史 -->
+    <!-- <view class="popular">
+      <view class="popular_view1">
+        <text class="popular_text1">历史搜索</text>
+      </view>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+      <navigator url="/pages/test/test" class="popular_view2">
+          <text>棉衣加厚棉衣加厚</text>
+      </navigator>
+    </view>   -->
+  </view>
+  <!-- 显示主体 -->
+   <!-- style="height: {{winHeight-44-50}}px" -->
+  <view class="body1">
+  <!-- <view class="body1" hidden="{{!showBady}}"> -->
+    <view class="body1_left">
+      <!-- 分类 -->
+      <scroll-view style="height:{{winHeight-55+'px'}}" scroll-y="{{true}}" scroll-top="{{scrollTop}}" scroll-with-animation="{{true}}">
+        <view class="category {{currentTab==index ? 'on' : ''}}" data-current="{{index}}" bindtap="swichNav" wx:for="{{categoryList}}" wx:key="{{index}}">
+          {{item.className}}
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 右边滑动主体 -->
+    <view class="body1_right">
+      <scroll-view style="height:{{winHeight-55+'px'}}" scroll-y="{{true}}" bindscroll="rigConScr" scroll-into-view="{{listId}}" scroll-with-animation="{{true}}">
+        <!-- 标题list -->
+        <view class="body1_right_box"  wx:for="{{categoryList}}" id="{{'list'+index}}" data-listId="list{{index}}" wx:key="{{index}}">
+          <view class="body1_right_box_top">
+            <text > {{item.className}} </text>
+            <!-- <navigator hover-class="hoverClass" url='/pages/searchItems/searchItems'>查看全部></navigator> -->
+          </view>
+          <!-- 商品 -->
+          <view class="body1_right_box_bottom">
+            <!-- 商品list -->
+            <navigator class="body1_right_box_bottom_list" url="/pages/searchItems/searchItems?search={{item.classId}}" wx:for="{{item.towLevelName}}" wx:key="{{index}}">
+              <image src="{{url+'/image/'+item.images}}"></image>
+              <view>{{item.className}}</view>
+            </navigator>           
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

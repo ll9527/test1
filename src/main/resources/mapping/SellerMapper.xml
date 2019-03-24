@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.SellerMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Seller">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 一对多查询 -->
+    <resultMap id="WithAddressImg" type="com.entity.Seller">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+        <collection property="sellerBcImgList" ofType="com.entity.SellerBcImg">
+            <result column="img" jdbcType="VARCHAR" property="img"/>
+            <result column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="seller_id" jdbcType="INTEGER" property="sellerId"/>
+        </collection>
+        <collection property="sellerAddressList" ofType="com.entity.SellerAddress">
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="seller_id" property="sellerId" jdbcType="INTEGER"/>
+            <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!--一对一商户图片查询-->
+    <resultMap id="WithSellerBcImg" type="com.entity.Seller">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+        <association property="sellerBcImg" javaType="com.entity.SellerBcImg">
+            <result column="img" jdbcType="VARCHAR" property="img"/>
+        </association>
+    </resultMap>
+
+    <!--一对多商品+商品图片查询-->
+    <resultMap id="WithProductAndPimg" type="com.entity.Seller">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="BIGINT"/>
+        <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+        <collection property="productList" ofType="com.entity.Product">
+            <id column="pid" jdbcType="INTEGER" property="id"/>
+            <result column="title" jdbcType="VARCHAR" property="title"/>
+            <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
+            <result column="price" jdbcType="INTEGER" property="price"/>
+            <result column="group_price" jdbcType="INTEGER" property="groupPrice"/>
+            <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
+            <result column="num" jdbcType="INTEGER" property="num"/>
+            <result column="cid" jdbcType="INTEGER" property="cid"/>
+            <result column="status" jdbcType="TINYINT" property="status"/>
+            <result column="created" jdbcType="TIMESTAMP" property="created"/>
+            <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+            <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+            <collection property="productImgList" ofType="com.entity.ProductImg">
+                <id column="id" property="id" jdbcType="INTEGER"/>
+                <result column="product_id" property="productId" jdbcType="INTEGER"/>
+                <result column="image" property="image" jdbcType="VARCHAR"/>
+                <result column="is_cover" property="isCover" jdbcType="INTEGER"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, tel, title_name, user_id, seller_class
+    </sql>
+
+
+    <!--通过sellerClass查找商家-->
+    <select id="selectSellerFromSellerClass" resultMap="WithAddressImg" parameterType="java.lang.String">
+        select *
+        from seller
+        inner join seller_address a on seller.id = a.seller_id
+        where seller_class = #{sellerClass}
+          AND a.address like "%湛江市%"
+    </select>
+
+    <!--查该商家的所有上架中的商品+封面图-->
+    <select id="selectSellerDetail" resultMap="WithProductAndPimg" parameterType="map">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+          AND p.status = 1
+        <if test="operation == 1">
+            ORDER BY p.title, p.price ASC ,
+            p.sales_volume DESC
+        </if>
+        <if test="operation == 2">
+            ORDER BY p.sales_volume DESC
+        </if>
+        <if test="operation == 3">
+            ORDER BY p.price, p.group_price ASC
+        </if>
+        <if test="operation == 4">
+            ORDER BY p.id DESC
+        </if>
+    </select>
+
+    <!--根据商家id查找旗下前三热销商品-->
+    <select id="selectSellerTopThree" resultMap="WithProductAndPimg" parameterType="java.lang.Integer">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+          AND p.status = 1
+        ORDER BY p.sales_volume DESC
+        LIMIT 0,
+              3
+    </select>
+
+    <!--根据商家id查找旗下前九热销商品-->
+    <select id="selectSellerTopNine" resultMap="WithProductAndPimg" parameterType="java.lang.Integer">
+        SELECT s.*, p.id pid, p.*, img.image
+        FROM (
+                     (
+                             seller_with_product_img swp
+                                     INNER JOIN seller s ON s.id = swp.seller_id
+                             )
+                             INNER JOIN product_item p ON p.id = swp.product_id
+                     )
+                 INNER JOIN product_img img ON img.product_id = swp.product_id
+        WHERE s.id = #{sellerid}
+          AND img.is_cover = 1
+          AND p.status = 1
+        ORDER BY p.sales_volume DESC
+        LIMIT 0,
+              9
+    </select>
+
+    <!--查询所有商家-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from seller
+    </select>
+
+    <!--查询未审批商户详情信息-->
+    <select id="selectUnconfirmDetial" resultMap="WithAddressImg" parameterType="java.lang.Integer">
+        SELECT s.*, sa.address, img.img
+        FROM seller s
+                 INNER JOIN seller_address sa ON s.id = sa.seller_id
+                 INNER JOIN seller_bcimg img ON img.seller_id = s.id
+        where s.id = #{seller_id}
+    </select>
+
+    <!--一对一联合查询商户信息（包括图片）-->
+    <select id="selectWithBcImg" resultMap="WithSellerBcImg" parameterType="java.lang.Integer">
+        SELECT s.id, s.tel, s.title_name, s.user_id, bc.img
+        FROM seller s
+                 INNER JOIN seller_bcimg bc ON s.user_id = bc.user_id
+        WHERE s.user_id = #{userid}
+    </select>
+
+    <!--通过userid查找-->
+    <select id="selectByUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select *
+        from seller
+        where user_id = #{userid}
+    </select>
+
+    <!--selectKey-->
+    <insert id="selectKey" parameterType="com.entity.Seller">
+        insert into seller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="titleName != null">
+                title_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="sellerClass != null">
+                seller_class,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="sellerClass != null">
+                #{sellerClass,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+    </insert>
+    <delete id="deleteByUserid" parameterType="java.lang.Integer">
+        delete
+        from seller
+        where user_id = #{userid}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from seller
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from seller
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.Seller">
+        insert into seller (id, tel, title_name, user_id, seller_class)
+        values (#{id,jdbcType=INTEGER},
+                #{tel,jdbcType=BIGINT},
+                #{titleName,jdbcType=VARCHAR},
+                #{userId,jdbcType=INTEGER},
+                #{sellerClass,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.Seller">
+        insert into seller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="titleName != null">
+                title_name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="sellerClass != null">
+                seller_class,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="sellerClass != null">
+                #{sellerClass,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.Seller">
+        update seller
+        <set>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=BIGINT},
+            </if>
+            <if test="titleName != null">
+                title_name = #{titleName,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="sellerClass != null">
+                seller_class = #{sellerClass,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.Seller">
+        update seller
+        set tel          = #{tel,jdbcType=BIGINT},
+            title_name   = #{titleName,jdbcType=VARCHAR},
+            user_id      = #{userId,jdbcType=INTEGER},
+            seller_class = #{sellerClass,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

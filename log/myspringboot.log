@@ -1,0 +1,37 @@
+2019-02-26 22:35:49.444  INFO 11456 --- [main] com.totalshop.TotalshopApplication       : Starting TotalshopApplication on DESKTOP-61G0873 with PID 11456 (D:\workspace3\TotalShop\target\classes started by l in D:\workspace3\TotalShop)
+2019-02-26 22:35:49.450  INFO 11456 --- [main] com.totalshop.TotalshopApplication       : No active profile set, falling back to default profiles: default
+2019-02-26 22:35:53.529  INFO 11456 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-02-26 22:35:53.566  INFO 11456 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-02-26 22:35:53.567  INFO 11456 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.14]
+2019-02-26 22:35:53.576  INFO 11456 --- [main] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Develop\Java\jdk1.8.0_192_32\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\Develop\Java\jdk1.8.0_192_32\jre\bin;D:/Develop/Java/jdk1.8.0_192_32/bin/../jre/bin/client;D:/Develop/Java/jdk1.8.0_192_32/bin/../jre/bin;D:/Develop/Java/jdk1.8.0_192_32/bin/../jre/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Develop\Java\jdk1.8.0_192_32\bin;D:\nodejs\;C:\WINDOWS\System32\OpenSSH\;D:\MySQL\MySQL Server 5.5\bin;C:\Program Files\VisualSVN Server\bin;C:\Program Files\TortoiseSVN\bin;D:\maven\apache-maven-3.3.9\bin;D:\Program Files\Git\cmd;C:\Users\l\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\l\AppData\Local\Programs\Python\Python36\;C:\Users\l\AppData\Local\Microsoft\WindowsApps;;E:\Fiddler;C:\Users\l\AppData\Roaming\npm;C:\Users\l\AppData\Local\Microsoft\WindowsApps;D:\ IDEA\bin;;D:\eclipse2018;;.]
+2019-02-26 22:35:53.746  INFO 11456 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-02-26 22:35:53.747  INFO 11456 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4175 ms
+2019-02-26 22:35:53.903  INFO 11456 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-02-26 22:35:54.521  INFO 11456 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2019-02-26 22:35:55.520  INFO 11456 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-02-26 22:35:55.797  WARN 11456 --- [main] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][main] Template Mode 'LEGACYHTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-02-26 22:35:55.866  INFO 11456 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-02-26 22:35:56.218  INFO 11456 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-02-26 22:35:56.226  INFO 11456 --- [main] com.totalshop.TotalshopApplication       : Started TotalshopApplication in 7.823 seconds (JVM running for 8.89)
+2019-02-26 22:38:17.723  INFO 11456 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-02-26 22:38:17.723  INFO 11456 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-02-26 22:38:17.735  INFO 11456 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 12 ms
+2019-02-26 22:38:17.847 DEBUG 11456 --- [http-nio-8080-exec-2] com.dao.UserMapper.selectByPrimaryKey    : ==>  Preparing: select id, username, password, is_vip, is_seller, tel, score, money, is_admin, is_apply, apply_money, applied_mark from user where id = ? 
+2019-02-26 22:38:17.847 DEBUG 11456 --- [http-nio-8080-exec-1] com.dao.UserMapper.selectByPrimaryKey    : ==>  Preparing: select id, username, password, is_vip, is_seller, tel, score, money, is_admin, is_apply, apply_money, applied_mark from user where id = ? 
+2019-02-26 22:38:17.891 DEBUG 11456 --- [http-nio-8080-exec-2] com.dao.UserMapper.selectByPrimaryKey    : ==> Parameters: 35(Integer)
+2019-02-26 22:38:17.891 DEBUG 11456 --- [http-nio-8080-exec-1] com.dao.UserMapper.selectByPrimaryKey    : ==> Parameters: 35(Integer)
+2019-02-26 22:38:17.924 DEBUG 11456 --- [http-nio-8080-exec-1] com.dao.UserMapper.selectByPrimaryKey    : <==      Total: 1
+2019-02-26 22:38:17.924 DEBUG 11456 --- [http-nio-8080-exec-2] com.dao.UserMapper.selectByPrimaryKey    : <==      Total: 1
+2019-02-26 22:40:31.959  INFO 11456 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2019-02-26 22:40:31.964  INFO 11456 --- [RMI TCP Connection(2)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-02-26 22:40:31.975  INFO 11456 --- [RMI TCP Connection(2)-127.0.0.1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2019-02-26 22:45:11.899  INFO 9296 --- [main] com.totalshop.TotalshopApplicationTests  : Starting TotalshopApplicationTests on DESKTOP-61G0873 with PID 9296 (started by l in D:\workspace3\TotalShop)
+2019-02-26 22:45:11.901  INFO 9296 --- [main] com.totalshop.TotalshopApplicationTests  : No active profile set, falling back to default profiles: default
+2019-02-26 22:45:15.448  INFO 9296 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-02-26 22:45:16.077  INFO 9296 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2019-02-26 22:45:17.824  INFO 9296 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-02-26 22:45:18.164  WARN 9296 --- [main] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][main] Template Mode 'LEGACYHTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-02-26 22:45:18.260  INFO 9296 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-02-26 22:45:18.570  INFO 9296 --- [main] com.totalshop.TotalshopApplicationTests  : Started TotalshopApplicationTests in 7.577 seconds (JVM running for 10.839)
+2019-02-26 22:45:19.237  INFO 9296 --- [Thread-2] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-02-26 22:45:19.244  INFO 9296 --- [Thread-2] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed

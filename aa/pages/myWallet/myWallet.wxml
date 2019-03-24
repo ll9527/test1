@@ -1,0 +1,13 @@
+<view>
+  <view class='card'>
+    <view class='card_title'>
+      <view>金额</view>
+      <view class='toCash' bindtap='toCash'>提现</view>
+    </view>
+    <view class='text'>
+      <view>{{money}}</view>
+      <view class='text_1'>元</view>
+    </view>
+  </view>
+  <view class='text2'>* 提现隔天才到账，有问题请联系客服</view>
+</view>

@@ -1,0 +1,17 @@
+  <!-- 已卖出的商品页面 -->
+  <navigator class='item' url='/pages/orderDetails/orderDetails' wx:for="{{10}}">
+    <image src='/images/15.png'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>小清新手账本活页本笔记本子简约大学生记事本</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥42.8</view>
+          <!-- <view>已销246件</view> -->
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo'>团</view>
+          <view>￥33.8</view>
+        </view>
+      </view>
+    </view>
+  </navigator>

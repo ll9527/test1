@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Product">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
+        <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+    </resultMap>
+
+    <!--关联商品图片-->
+    <resultMap id="WithProductImg" type="com.entity.Product">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
+        <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+        <collection ofType="com.entity.ProductImg" property="productImgList">
+            <id column="imgid" jdbcType="INTEGER" property="id"/>
+            <result column="product_id" jdbcType="INTEGER" property="productId"/>
+            <result column="image" jdbcType="VARCHAR" property="image"/>
+            <result column="is_cover" jdbcType="INTEGER" property="isCover"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="All" type="com.entity.Product">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sell_point" jdbcType="VARCHAR" property="sellPoint"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="group_price" jdbcType="DECIMAL" property="groupPrice"/>
+        <result column="is_group" jdbcType="INTEGER" property="isGroup"/>
+        <result column="num" jdbcType="INTEGER" property="num"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="sales_volume" jdbcType="INTEGER" property="salesVolume"/>
+        <association property="seller" javaType="com.entity.Seller">
+            <id column="sellerid" property="id" jdbcType="INTEGER"/>
+            <result column="tel" property="tel" jdbcType="BIGINT"/>
+            <result column="title_name" property="titleName" jdbcType="VARCHAR"/>
+            <result column="user_id" property="userId" jdbcType="INTEGER"/>
+            <result column="seller_class" property="sellerClass" jdbcType="VARCHAR"/>
+            <collection property="sellerAddressList" ofType="com.entity.SellerAddress">
+                <result column="address" property="address" jdbcType="VARCHAR"/>
+            </collection>
+        </association>
+        <collection ofType="com.entity.ProductImg" property="productImgList">
+            <id column="imgid" jdbcType="INTEGER" property="id"/>
+            <result column="product_id" jdbcType="INTEGER" property="productId"/>
+            <result column="image" jdbcType="VARCHAR" property="image"/>
+            <result column="is_cover" jdbcType="INTEGER" property="isCover"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, sell_point, price, group_price, is_group, num, cid, status, created, updated,
+        sales_volume
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product_item
+        where id = #{id,jdbcType=INTEGER}
+        AND status = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from product_item
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.Product">
+        insert into product_item (id,
+                                  title,
+                                  sell_point,
+                                  price,
+                                  group_price,
+                                  is_group,
+                                  num,
+                                  cid,
+                                  status,
+                                  created,
+                                  updated,
+                                  sales_volume)
+        values (#{id,jdbcType=INTEGER},
+                #{title,jdbcType=VARCHAR},
+                #{sellPoint,jdbcType=VARCHAR},
+                #{price,jdbcType=DECIMAL},
+                #{groupPrice,jdbcType=DECIMAL},
+                #{isGroup,jdbcType=INTEGER},
+                #{num,jdbcType=INTEGER},
+                #{cid,jdbcType=INTEGER},
+                #{status,jdbcType=TINYINT},
+                #{created,jdbcType=TIMESTAMP},
+                #{updated,jdbcType=TIMESTAMP},
+                #{salesVolume,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.Product">
+        insert into product_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="sellPoint != null">
+                sell_point,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="groupPrice != null">
+                group_price,
+            </if>
+            <if test="isGroup != null">
+                is_group,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+            <if test="salesVolume != null">
+                sales_volume,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="groupPrice != null">
+                #{groupPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="isGroup != null">
+                #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salesVolume != null">
+                #{salesVolume,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.Product">
+        update product_item
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                sell_point = #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="groupPrice != null">
+                group_price = #{groupPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="isGroup != null">
+                is_group = #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                updated = #{updated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salesVolume != null">
+                sales_volume = #{salesVolume,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.Product">
+        update product_item
+        set title        = #{title,jdbcType=VARCHAR},
+            sell_point   = #{sellPoint,jdbcType=VARCHAR},
+            price        = #{price,jdbcType=DECIMAL},
+            group_price  = #{groupPrice,jdbcType=DECIMAL},
+            is_group     = #{isGroup,jdbcType=INTEGER},
+            num          = #{num,jdbcType=INTEGER},
+            cid          = #{cid,jdbcType=INTEGER},
+            status       = #{status,jdbcType=TINYINT},
+            created      = #{created,jdbcType=TIMESTAMP},
+            updated      = #{updated,jdbcType=TIMESTAMP},
+            sales_volume = #{salesVolume,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--查询商户内的商品-->
+    <select id="selectFromSeller" resultMap="WithProductImg" parameterType="java.lang.Integer">
+        SELECT p.id, p.title, p.price, p.group_price, i.image
+        FROM (
+                     product_item p
+                             INNER JOIN product_img i ON p.id = i.product_id
+                     )
+                 INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
+        WHERE i.is_cover = 1
+          AND p.status = 1
+          AND swp.seller_id = #{sellerid}
+    </select>
+
+    <!--查询所有（包括封面）-->
+    <select id="selectAll" resultMap="All">
+        SELECT p.id,
+               p.title,
+               p.is_group,
+               p.group_price,
+               p.price,
+               p.sales_volume,
+               p.sell_point,
+               s.id sellerid,
+               s.title_name,
+               pimg.image
+        FROM (
+                (
+                        (
+                                seller_with_product_img swp
+                                        INNER JOIN product_item p ON p.id = swp.product_id
+                                )
+                                INNER JOIN seller s ON s.id = swp.seller_id
+                        )
+                        INNER JOIN product_img pimg ON pimg.product_id = swp.product_id
+                )
+        WHERE pimg.is_cover = 1
+          AND p.`status` = 1
+        ORDER BY p.sales_volume DESC
+        limit 0, 300
+    </select>
+
+
+    <!--查询二级目录下所有的商品(根据名字与销量排序)-->
+    <select id="selectLevel2P" parameterType="Map" resultMap="WithProductImg">
+        SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
+        FROM (
+        (
+        product_item p
+        INNER JOIN product_img i ON p.id = i.product_id
+        )
+        INNER JOIN shop_classify sc ON sc.class_id = p.cid
+        )
+        WHERE p.STATUS = 1
+        AND i.is_cover = 1
+        and p.cid = #{classid}
+        <if test="operationCode == 1">
+            ORDER BY p.title, p.sales_volume desc
+        </if>
+        <if test="operationCode == 2">
+            ORDER BY p.sales_volume desc
+        </if>
+        <if test="operationCode == 3">
+            ORDER BY p.price, p.group_price desc
+        </if>
+    </select>
+
+
+    <!--查询一级目录-->
+    <select id="selectLevel1P" parameterType="java.lang.Integer" resultMap="All">
+        SELECT p.id,
+               p.title,
+               p.is_group,
+               p.group_price,
+               p.price,
+               p.sales_volume,
+               s.title_name,
+               s.id sellerid,
+               pimg.image
+        FROM (
+                (
+                        (
+                                (
+                                        (
+                                                class_with_product cwp
+                                                        INNER JOIN product_item p ON p.id = cwp.product_id
+                                                )
+                                                INNER JOIN shop_classify sc ON sc.class_id = cwp.level2_class_id
+                                        )
+                                        INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
+                                )
+                                INNER JOIN seller s ON s.id = swp.seller_id
+                        )
+                        INNER JOIN product_img pimg ON pimg.product_id = p.id
+                )
+        WHERE p.`status` = 1
+          AND pimg.is_cover = 1
+          AND sc.class_id = #{classid}
+    </select>
+
+
+    <!--根据字符串模糊查询-->
+    <select id="serchProduct" resultMap="All" parameterType="map">
+        SELECT p.id,
+        p.title,
+        p.is_group,
+        p.group_price,
+        p.price,
+        p.sales_volume,
+        s.title_name,
+        s.id sellerid,
+        pimg.image
+        FROM (
+        (
+        (
+        (
+        (
+        class_with_product cwp
+        INNER JOIN product_item p ON p.id = cwp.product_id
+        )
+        INNER JOIN shop_classify sc ON sc.class_id = cwp.level2_class_id
+        )
+        INNER JOIN seller_with_product_img swp ON swp.product_id = p.id
+        )
+        INNER JOIN seller s ON s.id = swp.seller_id
+        )
+        INNER JOIN product_img pimg ON pimg.product_id = p.id
+        )
+        WHERE p.`status` = 1
+        AND pimg.is_cover = 1
+        AND p.title like concat('%',#{pname},'%')
+        <if test="operationCode == 1">
+            ORDER BY p.title, p.sales_volume desc
+        </if>
+        <if test="operationCode == 2">
+            ORDER BY p.sales_volume desc
+        </if>
+        <if test="operationCode == 3">
+            ORDER BY p.price, p.group_price desc
+        </if>
+    </select>
+
+    <!--查询商品+详情图片-->
+    <select id="selectProductWithImg" parameterType="java.lang.Integer" resultMap="WithProductImg">
+        SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
+        FROM product_item p
+                 INNER JOIN product_img i ON p.id = i.product_id
+        WHERE p.id = #{productid}
+          and p.status = 1
+          and i.is_cover = 0
+    </select>
+
+    <!--查询商品+封面图片-->
+    <select id="selectProductWithImgF" parameterType="java.lang.Integer" resultMap="WithProductImg">
+        SELECT p.*, i.id imgid, i.product_id, i.image, i.is_cover
+        FROM product_item p
+                 INNER JOIN product_img i ON p.id = i.product_id
+        WHERE p.id = #{productid}
+          and p.status = 1
+          and i.is_cover = 1
+    </select>
+
+    <insert id="selectKey" parameterType="com.entity.Product">
+        insert into product_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="sellPoint != null">
+                sell_point,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="groupPrice != null">
+                group_price,
+            </if>
+            <if test="isGroup != null">
+                is_group,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+            <if test="salesVolume != null">
+                sales_volume,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="sellPoint != null">
+                #{sellPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="groupPrice != null">
+                #{groupPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="isGroup != null">
+                #{isGroup,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="salesVolume != null">
+                #{salesVolume,jdbcType=INTEGER},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+</mapper>

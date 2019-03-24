@@ -1,0 +1,24 @@
+.box3{
+  width: 100%;
+  /* height: 320rpx; */
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+}
+.box3_item{
+  width: 678rpx;
+  height: 80rpx;
+  padding-left: 26rpx; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box3_item > view{
+  height: 32rpx;
+  line-height: 32rpx;
+  font-size: 26rpx;
+}
+.box3_item_border{
+  border-top: 1rpx rgb(196,196,196) solid;
+}

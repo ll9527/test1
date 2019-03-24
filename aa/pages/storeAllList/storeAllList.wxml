@@ -1,0 +1,34 @@
+<view>
+
+  <view class='head'>
+    <view class='tab'>
+      <!-- <navigator class='tab_text' url='/pages/storeDetails/storeDetails'>首页</navigator> -->
+      <view class='tab_text onTab'>全部</view>
+      <navigator open-type="redirect" class='tab_text' url='/pages/storeNewList/storeNewList?sellerid={{sellerid}}'>新品</navigator>
+    </view>
+    <view class='search tabBar'>
+      <view class="text_box {{tab==1?'on':''}}" data-tab='1' catchtap='rank'>综合</view>
+      <view class="text_box {{tab==2?'on':''}}" data-tab='2' catchtap='rank'>销量</view>
+      <view class="text_box {{tab==3?'on':''}}" data-tab='3' catchtap='rank'>价格</view>
+    </view>
+  </view>
+  <view class='padding'></view>
+  <!-- <view hidden='{{tab==1?false:true}}' > -->
+  <navigator class='item' url='/pages/productDetails/productDetails?productid={{item.id}}' wx:for="{{productList.productList}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <view>已销{{item.salesVolume}}件</view>
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo' wx:if="{{item.isGroup==1}}">团</view>
+          <view wx:if="{{item.isGroup==1}}">￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  <!-- </view> -->
+</view>

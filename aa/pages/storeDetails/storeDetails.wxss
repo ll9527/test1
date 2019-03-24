@@ -1,0 +1,129 @@
+page{
+  width: 100%;
+  background-color: rgb(245, 245, 245);
+}
+.tab{
+  width: 100%;
+  height: 80rpx;
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.tab_text{
+  line-height: 78rpx;
+  text-align: center;
+  width: 110rpx;
+  height: 78rpx;
+
+  color: rgb(255,255,255);
+}
+.padding{
+  width: 100%;
+  height: 80rpx;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.onTab{
+  border-bottom: 2rpx rgb(255,255,255) solid; 
+}
+.image{
+  width: 100%;
+  height: 380rpx;
+}
+.shopHead{
+  width: 136rpx;
+  height: 136rpx;
+  position: absolute;
+  left: 20rpx;
+  top: 313rpx;
+}
+.box1{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.box1 > view{
+  width: 100rpx;
+  height: 30rpx;
+  padding: 10rpx 0;
+  line-height: 30rpx;
+  text-align: center;
+  margin-right: 30rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  color: rgb(128, 128, 128);
+  border: 1rpx rgb(128, 128, 128) solid;
+}
+.onCollection{
+  color: rgb(255, 255, 255);
+  background-color: rgb(250, 90, 90);
+}
+.box2{
+  margin: 0 20rpx;
+}
+.box2_title{
+  width: 100%;
+  height: 64rpx;
+  font-size: 36rpx;
+  color: rgb(0,0,0);
+  font-weight: 700;
+}
+.box2_summary{
+  line-height: 40rpx;
+  font-size: 28rpx;
+}
+.box2_text{
+  padding-top: 10rpx;
+  height: 22rpx;
+  line-height: 22rpx;
+  display: flex;
+  margin-bottom: 43rpx;
+}
+.box2_text_1{
+  font-size: 20rpx;
+  color: rgb(128,128,128);
+  padding-right: 20rpx;
+  border-right: 1rpx rgb(128, 128, 128) solid;
+}
+.box2_text_2{
+  font-size: 20rpx;
+  padding:0 20rpx;
+  color: rgb(83,180,251);
+}
+.box2_image{
+  width: 16rpx;
+  height: 20rpx;
+}
+.box3{
+  width: 690rpx;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left:24rpx;
+  padding-top: 20rpx;
+  margin: 0 20rpx;
+  border-radius: 8rpx;
+  background-color: rgb(255, 255, 255);
+}
+.box3_images{
+  padding-bottom: 28rpx; 
+  padding-right: 24rpx; 
+  width: 204rpx;
+  height: 204rpx;
+}
+.box3_image{
+  width: 204rpx;
+  height: 204rpx;
+  display: flex;
+}
+.box3_text{
+  height: 38rpx;
+  width: 204rpx;
+  font-size: 28rpx;
+  position: relative;
+  bottom: 38rpx;
+  color: rgb(255, 255, 255);
+  background-color: rgba(31, 31, 31, 0.5)
+}

@@ -1,0 +1,2 @@
+<image src="{{url+'yongHuXieYi.png'}}" mode="widthFix"></image>
+<button type="primary" class='button' bindtap='pass'>同意</button>

@@ -1,0 +1,14 @@
+<form bindsubmit='login'>
+
+<view class='inputbox'>
+  <input name='phone' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入手机号码'></input>
+  <input name='password' maxlength='16' password="{{true}}" style='padding:10rpx 0;' placeholder='请输入密码'></input>
+</view>
+<!-- <button class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo" form-type='submit'>登录</button> -->
+<button class='button' form-type='submit'>登录</button>
+<view class='button' catchtap='register'>注册</view>
+<view class='button' catchtap='goIndex'>返回首页</view>
+
+</form>
+
+<view class='text'>客服热线：0759-3601996</view>

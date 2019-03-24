@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.ClassWithProductMapper">
+    <resultMap id="BaseResultMap" type="com.entity.ClassWithProduct">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="level2_class_id" property="level2ClassId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, level2_class_id
+    </sql>
+
+    <!--通过classid查询productid-->
+    <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select * from class_with_product where level2_class_id = #{classid}
+    </select>
+
+
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from class_with_product
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from class_with_product
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.entity.ClassWithProduct">
+        insert into class_with_product (id, product_id, level2_class_id)
+        values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{level2ClassId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.entity.ClassWithProduct">
+        insert into class_with_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="level2ClassId != null">
+                level2_class_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="level2ClassId != null">
+                #{level2ClassId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.entity.ClassWithProduct">
+        update class_with_product
+        <set>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="level2ClassId != null">
+                level2_class_id = #{level2ClassId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.entity.ClassWithProduct">
+        update class_with_product
+        set product_id      = #{productId,jdbcType=INTEGER},
+            level2_class_id = #{level2ClassId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

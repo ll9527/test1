@@ -1,0 +1,39 @@
+<view>
+  <view class='tab'>
+    <view class='tab_text onTab'>首页</view>
+    <navigator class='tab_text' url='/pages/storeAllList/storeAllList'>全部</navigator>
+    <!-- <view class='tab_text' >全部</view> -->
+    <navigator class='tab_text' url='/pages/storeNewList/storeNewList'>新品</navigator>
+    <!-- <view class='tab_text'>新品</view> -->
+  </view>
+  <view class='padding'></view>
+  <!-- <view class='image'>
+    <image class='image' src='/images/bjt.png'></image>
+  </view> -->
+  <!-- <image class='shopHead' src='/images/dptx.png'></image> -->
+  <!-- <view class='box1'>
+    <view>收藏</view>
+  </view> -->
+  <!-- ------------------------------------------------- -->
+  <!-- <view class='box2'>
+    <view class='box2_title'>店铺名：纸物文具</view>
+    <view class='box2_summary'>
+      这里是文艺大叔日常地，欢迎参观采购~  这里有儿时的回忆，这里有清新的画风，这里的文具不骄不躁，这里的大叔
+    </view>
+    <view class='box2_text'>
+      <view class='box2_text_1'>收藏人数3388</view>
+      <view class='box2_text_2'>广东省湛江市海田三路65号</view>
+      <image class='box2_image' src='/images/seat.png'></image>
+    </view>
+  </view>
+  <view class='box3'>
+      <view class='box3_images' wx:for="{{8}}">
+        <image class='box3_image' src='/images/tu1.png'></image>
+        <view class='box3_text'>￥12.0</view>
+      </view>
+  </view> -->
+  <view>
+
+  </view>
+
+</view>

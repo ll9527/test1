@@ -1,0 +1,101 @@
+page{
+  background-color: rgb(245, 245, 245)
+}
+.box1{
+  display: flex;
+  padding-top: 20rpx;
+  border-bottom: 2rpx rgb(180, 180, 180) solid;
+  justify-content:  space-between;
+}
+.box1_text{
+  font-size: 22rpx;
+  padding: 0 40rpx;
+  line-height: 80rpx;
+}
+.box1_top > view{
+  padding-right: 20rpx;
+}
+.box1_top{
+  display: flex;
+  font-size: 24rpx;
+}
+.box1_bottom{
+  font-size: 26rpx;
+  padding:10rpx 0;
+  color: rgb(128, 128, 128);
+}
+.box2{
+  display: flex;
+  margin: 20rpx 0;
+  padding: 20rpx;
+  background-color: rgb(255, 255, 255);
+  align-items: center ;
+}
+.image{
+  width: 140rpx;
+  height: 140rpx;
+}
+.red{
+  color: rgb(255, 90, 90);
+}
+.box2_right{
+  padding-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+.box2_bottom{
+  justify-content: space-between;
+}
+.box3{
+  padding: 0 20rpx;
+  background-color: rgb(255, 255, 255);
+}
+.box3_top{
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  line-height: 60rpx;
+}
+.border{
+  border-bottom: 1rpx rgb(180, 180, 180) solid;
+}
+.box4{
+  background-color: rgb(255, 255, 255);
+  padding: 0 20rpx;
+  margin: 20rpx 0;
+}
+.text_color{
+  color: rgb(128, 128, 128)
+}
+.box5{
+  width: 100%;
+  height: 80rpx;
+  position: fixed;
+  left:0;
+  bottom: 0;
+  background-color: rgb(255, 255, 255);
+}
+.padding-left{
+  padding-left:20rpx;
+}
+.box5_text{
+  line-height: 80rpx;
+}
+.box5_button{
+  background-color: rgb(255, 90, 90);
+  color: rgb(255, 255, 255);
+  width: 240rpx;
+  text-align: center;
+}
+.ziTi{
+  border: 1rpx solid rgb(255, 90, 90);
+  border-radius: 50%;
+  margin-top: 10rpx;
+  height: 40rpx;
+  width: 40rpx;
+}
+.onZiTi{
+  background-color: rgb(255, 90, 90);
+}
