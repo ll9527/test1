@@ -111,6 +111,7 @@ public class UserServiceImple implements UserService {
 		List<Coupons> couponsList = couponsMapper.selectByUserId(userid);
 		if(!couponsList.isEmpty()) {
 			map.put("couponsMoney", couponsList.get(0).getPreferentialMoney());
+			map.put("coupons", couponsList.get(0));
 		}else {
 			map.put("couponsMoney", 0);
 		}
@@ -130,6 +131,11 @@ public class UserServiceImple implements UserService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("addressList", addressList);
 		return map;
+	}
+
+	@Override
+	public void updateCoupons(Coupons coupons) {
+		couponsMapper.updateByPrimaryKeySelective(coupons);
 	}
 
 }

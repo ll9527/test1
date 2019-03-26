@@ -30,6 +30,7 @@ import com.dao.ShopProductSpecificationMapper;
 import com.dao.WxHttpRequestUtil;
 import com.dao.WxPaySignUtil;
 import com.entity.Address;
+import com.entity.Coupons;
 import com.entity.Product;
 import com.entity.Seller;
 import com.entity.SellerWithProductImg;
@@ -273,6 +274,7 @@ public class OrderController {
 			ShopProductSpecification sku = spsm.selectByPrimaryKey(skuId);
 			// 商品总价
 			BigDecimal totalPrice = sku.getPrice().multiply(new BigDecimal(num));
+//			获取运费和优惠券金额
 			Map<String, Object> map = userService.selectFreightAndCoupons(userid,productid);
 			if(isPick == 2) {
 				// 2是快递
@@ -354,7 +356,11 @@ public class OrderController {
 //					sog.setOrderId(1);
 					sog.setpVersion(version);
 					shopOrderGoodsService.insertSelective(sog);
-					
+//					更改优惠券的状态
+					Coupons coupons = (Coupons)map.get("coupons");
+					coupons.setOnDelete(1);
+					coupons.setOrderId(shopOrder.getId());
+					userService.updateCoupons(coupons);
 					return payInfo;
 				}
 				return null;

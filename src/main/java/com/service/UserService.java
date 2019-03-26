@@ -1,6 +1,7 @@
 package com.service;
 
 import com.entity.Address;
+import com.entity.Coupons;
 import com.entity.User;
 
 import java.util.List;
@@ -53,4 +54,9 @@ public interface UserService {
      * @return
      */
 	Map<String, Object> selectFreightAndCoupons(Integer userid, Integer productid);
+	/**
+	 * 更新优惠券状态
+	 * @param coupons
+	 */
+	void updateCoupons(Coupons coupons);
 }

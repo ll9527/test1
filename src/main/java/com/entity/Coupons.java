@@ -14,12 +14,32 @@ public class Coupons {
     private Integer sellerId;
 
     private Integer preferentialMoney;
+    
+    private Integer orderId;
+    
+    private Integer onDelete;
 
     private Date addTime;
 
     private Date overTime;
 
-    public Integer getId() {
+    public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getOnDelete() {
+		return onDelete;
+	}
+
+	public void setOnDelete(Integer onDelete) {
+		this.onDelete = onDelete;
+	}
+
+	public Integer getId() {
         return id;
     }
 
