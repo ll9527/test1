@@ -24,13 +24,13 @@
       <view>></view>
     </navigator>
     <view class='box3_item_border'></view>
-    <navigator class='box3_item' url='/pages/selleOrder/waitSend'>
-      <view>待发货</view>
+    <navigator class='box3_item' url='/pages/selleOrder/waitPay'>
+      <view>待支付</view>
       <view>></view>
     </navigator>
     <view class='box3_item_border'></view>
-    <navigator class='box3_item' url='/pages/selleOrder/waitPay'>
-      <view>待支付</view>
+    <navigator class='box3_item' url='/pages/selleOrder/waitSend'>
+      <view>待发货</view>
       <view>></view>
     </navigator>
     <view class='box3_item_border'></view>

@@ -14,4 +14,10 @@ public interface ReferrerMapper {
     int updateByPrimaryKeySelective(Referrer record);
 
     int updateByPrimaryKey(Referrer record);
+    /**
+     * 用uid查推荐人id
+     * @param id
+     * @return
+     */
+	Referrer selectByUId(Integer userId);
 }

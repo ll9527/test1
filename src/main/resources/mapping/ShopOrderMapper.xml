@@ -28,6 +28,12 @@
     from shop_order
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 查询未付款的订单 -->
+  <select id="selectByWaitPay" resultMap="BaseResultMap" >
+    select *
+    from shop_order
+    where order_status = 0
+  </select>
   <!-- 用订单号查询订单对象 -->
   <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -48,12 +54,32 @@
 	    	and seller_id = #{sellerId}
 	    </if>
     	AND mark IS NULL 
-    	<if test="userId != null">
+    	<!-- <if test="userId != null"> -->
     	ORDER BY add_time DESC 
-    	</if>
+    	<!-- </if>
     	<if test="sellerId != null">
     	ORDER BY add_time
-    	</if>
+    	</if> -->
+  </select>
+  <!-- 查询所有订单 -->
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    select 
+     *
+    from shop_order
+    where order_status != -1
+	    <if test="userId != null">
+	    	and user_id = #{userId}
+	    </if>
+	    <if test="sellerId != null">
+	    	and seller_id = #{sellerId}
+	    </if>
+    	AND mark IS NULL 
+    	<!-- <if test="userId != null"> -->
+    	ORDER BY add_time DESC 
+    	<!-- </if>
+    	<if test="sellerId != null">
+    	ORDER BY add_time
+    	</if> -->
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from shop_order

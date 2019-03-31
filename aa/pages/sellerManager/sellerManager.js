@@ -115,7 +115,7 @@ Page({
       if (this.data.detailsPhoto.length != 0) {
         this.uploadimg(this.data.detailsPhoto)
       }
-      传数据给后台
+      // 传数据给后台
       wx.request({
         url: 'http://192.168.0.195:8080',
         data: {

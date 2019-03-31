@@ -1,4 +1,4 @@
-<navigator class='padding_10' wx:for="{{list}}" wx:key="{{index}}" url="{{'/pages/orderDetails/orderDetails?oId='+item.shopOrder.id}}">
+<navigator class='padding_10' wx:for="{{list}}" wx:key="{{index}}" url="{{'/pages/orderDetails/orderDetails?oId='+item.shopOrder.id+'&status=0'}}">
   <view >
     <view class='box1_top box2_bottom titleBox'>
       <view>{{item.shopOrder.addTime}}</view>

@@ -10,7 +10,10 @@ Page({
   /**
  * 生命周期函数--监听页面加载
  */
-  onLoad: function (options) {
+  onLoad(options){
+
+  },
+  onShow: function (options) {
     var that = this;
     getApp().isLogin();
     wx.request({

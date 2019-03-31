@@ -22,8 +22,9 @@ Page({
     // 商品的库存
     num: 0,
     // 商品id
-    productid:""
-
+    productid:"",
+    // 拼团型号显示开关
+    showModalStatus: false
   },
   /**
    * 点击右符号 增 数量
@@ -231,6 +232,12 @@ Page({
    */
   goPay(res){
     var that = this;
+    var isGroup;
+    if (res.currentTarget.dataset.isgroup){
+      isGroup = "&isGroup=1"
+    }else{
+      isGroup = ""
+    }
     if (this.data.count <= 0){
       wx.showToast({
         title: '请选择数量',
@@ -278,13 +285,56 @@ Page({
             + "&product=" + JSON.stringify(that.data.productDetail.productList)
             + "&price=" + that.data.price
             + "&skuId=" + that.data.skuId
+            + isGroup
         })
       },
       fail(res){
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/pages/login/login'
         })
       }
     })
   },
+
+// 显示遮罩层
+  showModal: function () {
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false
+      })
+    }.bind(this), 200)
+  }
 })

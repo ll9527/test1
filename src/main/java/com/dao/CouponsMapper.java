@@ -18,4 +18,6 @@ public interface CouponsMapper {
     int updateByPrimaryKeySelective(Coupons record);
 
     int updateByPrimaryKey(Coupons record);
+
+	Coupons selectByOId(Integer o);
 }

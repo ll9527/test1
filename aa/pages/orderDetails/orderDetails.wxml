@@ -16,65 +16,87 @@
     <view class='box1_text'>地址</view>
     <view>
       <view class='box1_top'>
-        <view>名字</view>
-        <view>18718212688</view>
+        <view>{{shopOrder.userName}}</view>
+        <view>{{shopOrder.tel}}</view>
       </view>
-      <view class='box1_bottom'>广东省湛江市</view>
+      <view class='box1_bottom'>{{shopOrder.userAddress}}</view>
     </view>
   </view>
-  <view>
+  <view class='seller_name'>退款或者退货退款请联系商家,如果是10位数的请在前面加0</view>
+  <view wx:for="{{shopOrderGoodsAndSellerList}}" wx:key="{{index}}">
     <view class='seller_name'>
-      <view>七彩人生</view>
-      <view></view>
+      <view>{{item.seller.titleName}}</view>
+      <view>{{item.seller.tel}}</view>
     </view>
     <view class='box2'>
       <view class='image'>
-        <image class='image' src='/images/tuan.png'></image>
+        <image class='image' src='{{url+item.shopOrderGoods.image}}'></image>
       </view>
       <view class='box2_right'>
-        <view class='box1_bottom'>商品名字</view>
-        <view class='box1_top'>型号：</view>
+        <view class='box1_bottom'>{{item.shopOrderGoods.goodsName}}</view>
+        <view class='box1_top'>型号：{{item.shopOrderGoods.pVersion}}</view>
         <view class='box1_top box2_bottom'>
-          <view class='red'>￥ 100</view>
-          <view>X 5</view>
+          <view class='red'>￥ {{item.shopOrderGoods.price}}</view>
+          <view>X {{item.shopOrderGoods.goNum}}</view>
         </view>
       </view>
     </view>
   </view>
   <view class='box3'>
-   <view class='box3_top font_sz22'>
+    <!-- <view class='box3_top font_sz22'>
     <view>商品金额</view>
-    <view>￥ 500</view>
-   </view>
-   <view class='box3_top font_sz22'>
-    <view>运费</view>
-    <view>￥ 0</view>
-   </view>
-   <view class='box3_top font_sz22'>
-    <view>优惠券</view>
-    <view>-￥ 0</view>
-   </view>
-   <view class='box3_top font_sz22 border'>
+    <view>￥ {{shopOrder.totalMoney}}</view>
+   </view> -->
+    <view class='box3_top font_sz22'>
+      <view>运费</view>
+      <view>￥ 0</view>
+    </view>
+    <view class='box3_top font_sz22'>
+      <view>优惠券</view>
+      <view>-￥ {{coupons?coupons.preferentialMoney:0}}</view>
+    </view>
+    <!-- <view class='box3_top font_sz22 border'>
     <view>订单总价</view>
     <view>￥ 0</view>
-   </view>
-   <view class='box3_top'>
-    <view>实际付款</view>
-    <view class='red'>￥ 0</view>
-   </view>
+   </view> -->
+    <view class='box3_top'>
+      <view>实际付款</view>
+      <view class='red'>￥ {{shopOrder.totalMoney}}</view>
+    </view>
   </view>
   <view class='text margin_t'>
     <view>订单编号</view>
-    <view class='padding_left'>fdsfdafdsfsda</view>
+    <view class='padding_left'>{{shopOrder.orderSn}}</view>
+  </view>
+  <view class='text' wx:if="{{shopOrder.expressSn}}">
+    <view>快递单号</view>
+    <view class='padding_left'>{{shopOrder.expressSn}}</view>
   </view>
   <view class='text'>
     <view>下单时间</view>
-    <view class='padding_left'>fdsfdafdsfsda</view>
+    <view class='padding_left'>{{addTime}}</view>
   </view>
-  <view class='button_box margin_t backgroup_white'>
-    <view class='button_box2 '>取消订单</view>
-    <view class='button_box2 button_border red'>立即支付</view>
+
+  <view class='button_box margin_t backgroup_white' wx:if="{{status==0}}">
+    <view class='button_box2 ' catchtap='closeOrder'>取消订单</view>
+    <view class='button_box2 button_border red' catchtap='goPay'>立即支付</view>
   </view>
+  <view class='button_box margin_t backgroup_white' wx:if="{{status==1}}">
+    <!-- <view class='button_box2 ' catchtap='closeOrder'>取消订单</view> -->
+    <view></view>
+    <view class='button_box2 button_border red' data-status='1' catchtap='orderRefund'>退款</view>
+  </view>
+  <form bindsubmit='confirmG' wx:if="{{status==2}}">
+    <textarea class='textBox' name="comment" placeholder="请输入商品评价" ></textarea>
+
+    <view class='button_box margin_t backgroup_white'>
+      <view class='button_box2 ' data-status='2' catchtap='orderRefund'>退货退款</view>
+      <view class='button'>
+        <button class='button' size="mini" plain="{{true}}" form-type="submit">确认收货</button>
+      </view>
+    </view>
+  </form>
+
   <!-- <view class='box3_top box5 box5_text'>
     <view class='box3_top padding-left box5_text'>
       <view>合计：</view>

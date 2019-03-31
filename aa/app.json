@@ -1,9 +1,10 @@
 {
   "pages":[
     "pages/index/index",
-    
-    
+    "pages/comments/comments",
+    "pages/orderDelivery/orderWaitSendGoods",
     "pages/orderDetails/orderDetails",
+    "pages/orderDelivery/allOrder",
     
     "pages/sellerManager/sellerPhoto",
 
@@ -20,6 +21,7 @@
     "pages/selleOrder/waitPay",
     "pages/selleOrder/waitSend",
     "pages/selleOrder/waitRefund",
+    "pages/selleOrder/sellerOrderDetails",
 
     
     "pages/admin/admin",

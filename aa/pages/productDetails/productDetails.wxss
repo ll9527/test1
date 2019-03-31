@@ -316,3 +316,34 @@ page{
 .textSize{
   font-size: 22rpx;
 }
+.commodity_screen {
+ width: 100%;
+ height: 100%;
+ position: fixed;
+ top: 0;
+ left: 0;
+ background: #000;
+ opacity: 0.2;
+ overflow: hidden;
+ z-index: 1000;
+ color: #fff;
+}
+.commodity_attr_box {
+ width: 100%;
+ overflow: hidden;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ z-index: 2000;
+ background: #fff;
+ padding-top: 20rpx;
+}
+.buttonG{
+  width: 100%;
+  background: rgb(250, 90, 90);
+  height: 80rpx;
+  margin-top: 60rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+}

@@ -128,3 +128,50 @@ App({
     }
   }
 })
+// success(res){
+//   if (res.data.status == 200) {
+//     wx.showToast({
+//       title: '发货成功',
+//       icon: 'loading',
+//       duration: 500,
+//       mask: true,
+//       success() {
+//         setTimeout(function () {
+//           wx.navigateBack({
+//             delta: 1
+//           })
+//         }, 500)
+//       }
+//     })
+//   } else {
+//     wx.showToast({
+//       title: '请稍后再试',
+//       icon: 'loading',
+//       duration: 500,
+//       mask: true,
+//       success() {
+//         setTimeout(function () {
+//           wx.navigateBack({
+//             delta: 1
+//           })
+//         }, 500)
+//       }
+//     })
+//   }
+// },
+// fail(){
+//   wx.showToast({
+//     title: '服务器异常',
+//     icon: 'loading',
+//     duration: 500,
+//     mask: true,
+//     success() {
+//       setTimeout(function () {
+//         wx.switchTab({
+//           url: '/pages/myPage/myPage',
+//         })
+//       }, 500)
+//     }
+//   })
+// }
+//       })

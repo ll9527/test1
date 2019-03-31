@@ -27,6 +27,7 @@ import com.dao.SellerWithProductImgMapper;
 import com.dao.ShopOrderGoodsMapper;
 import com.dao.ShopOrderMapper;
 import com.dao.ShopProductSpecificationMapper;
+import com.dao.UserMapper;
 import com.dao.WxHttpRequestUtil;
 import com.dao.WxPaySignUtil;
 import com.entity.Address;
@@ -38,6 +39,7 @@ import com.entity.Shop;
 import com.entity.ShopOrder;
 import com.entity.ShopOrderGoods;
 import com.entity.ShopProductSpecification;
+import com.entity.User;
 import com.entity.WxOrderInfo;
 import com.entity.WxOrderReturnInfo;
 import com.entity.WxSignInfo;
@@ -357,10 +359,12 @@ public class OrderController {
 					sog.setpVersion(version);
 					shopOrderGoodsService.insertSelective(sog);
 //					更改优惠券的状态
-					Coupons coupons = (Coupons)map.get("coupons");
-					coupons.setOnDelete(1);
-					coupons.setOrderId(shopOrder.getId());
-					userService.updateCoupons(coupons);
+					if(map.get("coupons") != null) {
+						Coupons coupons = (Coupons)map.get("coupons");
+						coupons.setOnDelete(1);
+						coupons.setOrderId(shopOrder.getId());
+						userService.updateCoupons(coupons);
+					}
 					return payInfo;
 				}
 				return null;
@@ -497,18 +501,86 @@ public class OrderController {
 		return shopOrderService.closeOrder(shopOrder.getId());
 	}
 	
+//	待发货状态取消订单和退款
+	@RequestMapping("/orderRefund")
+	public Map<String, Object> orderRefund(ShopOrder shopOrder, Integer status) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer isOK = 0;
+		ShopOrder so = shopOrderService.selectByPrimaryKey(shopOrder.getId());
+		if(so.getOrderStatus() == 1) {
+//			直接执行退款的方法   开始
+			User user = userService.selectByPrimaryKey(so.getUserId());
+			user.setMoney(user.getMoney().add(so.getTotalMoney()));
+			userService.updateByPrimaryKeySelective(user);
+//			直接执行退款的方法   结束
+//			改订单状态
+			so.setOrderStatus(6);
+			isOK = shopOrderService.updateByPrimaryKeySelective(so);
+		}else if(so.getOrderStatus() == 2) {
+//			退货退款订单
+			so.setOrderStatus(4);
+			isOK = shopOrderService.updateByPrimaryKeySelective(so);
+		}
+		if(isOK == 1) {
+			map.put("status", 200);
+		}else {
+			map.put("status", 400);
+		}
+		return map;
+	}
+	
+//	用户确认收货
+	@RequestMapping("/confirmG")
+	public Map confirmG(ShopOrder shopOrder, String comment) {
+		return shopOrderService.confirmG(shopOrder.getId(), shopOrder.getUserId(), comment);
+	}
+	
 //	商家确认发货
 	@RequestMapping("/sendGoods")
-	public Map sendGoods(ShopOrder shopOrder) {
-		return null;
+	public Map sendGoods(Integer o, String sn) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ShopOrder shopOrder = shopOrderService.selectByPrimaryKey(o);
+		if(shopOrder.getOrderStatus() == 1) {
+//			改订单状态为已发货
+			shopOrder.setOrderStatus(2);
+			shopOrder.setExpressSn(sn);
+			Integer isOK = shopOrderService.updateByPrimaryKeySelective(shopOrder);
+			if(isOK == 1) {
+				map.put("status", 200);
+			}else {
+				map.put("status", 400);
+			}
+		}
+		return map;
+	}
+	
+//	商家确认退款
+	@RequestMapping("/refund")
+	public Map refund(Integer o, Integer s) {
+		Map map = shopOrderService.refund(o, s);
+		return map;
 	}
 	
 //	根据状态码查询的订单
 	@RequestMapping("/selectAllByUserOrSeller")
-	public List selectAllByUserOrSeller(@Param("status")Integer status, @Param("userId")Integer userId,
-			@Param("sellerId")Integer sellerId) {
+	public List selectAllByUserOrSeller(Integer status, Integer userId,
+			Integer sellerId) {
 		List list = shopOrderService.selectAllByUserOrSeller(status, userId, sellerId);
 		return list;
+	}
+	
+//	查看用户或者商户所有订单
+	@RequestMapping("/selectAllOrder")
+	public List selectAllOrder(Integer userId, Integer sellerId) {
+		List list = shopOrderService.selectAllOrder(userId, sellerId);
+		return list;
+	}
+	
+//	查询订单详情
+	@RequestMapping("/selectOrderDetailsByid")
+	public Map<String, Object> selectOrderDetailsByid(Integer o) {
+		Map<String, Object> map = shopOrderService.selectOrderDetailsByid(o);
+		return map;
 	}
 }
 

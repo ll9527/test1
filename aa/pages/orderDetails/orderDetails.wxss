@@ -11,7 +11,9 @@
   padding: 20rpx;
 } */
 
-
+button::after{
+  border: none;
+}
 page{
   background-color: rgb(245, 245, 245)
 }
@@ -151,4 +153,19 @@ page{
 }
 .backgroup_white{
   background-color: rgb(255, 255, 255)
+}
+.button{
+  padding: 0rpx;
+  border-radius: 25rpx;
+  text-align: center;
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.textBox{
+  width: 710rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  height: 180rpx;
+  border: 1rpx rgb(180, 180, 180) solid;
 }

@@ -86,7 +86,7 @@ bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'
             </view>
             <!-- 图片 -->
             <view class='body_item_images'>
-              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
+              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" wx:key="{{index}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
                 <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
                 <view>￥ {{item.price}}</view>
               </navigator>
@@ -123,7 +123,7 @@ bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'
             </view>
             <!-- 图片 -->
             <view class='body_item_images'>
-              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
+              <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" wx:key="{{index}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
                 <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
                 <view>￥ {{item.price}}</view>
               </navigator>

@@ -40,7 +40,7 @@
   <view class='box2'>
     <view class='box2_top'>
       <view class='box2_top_title'>我的订单</view>
-      <view class='box2_top_title2' bindtap='selectAllList'></view>
+      <view class='box2_top_title2' bindtap='selectAllList'>全部订单></view>
     </view>
     <view class='box2_bottom'>
       <view class='box2_bottom_icon' catchtap='dFukuan'>
@@ -55,7 +55,7 @@
         <image src='/images/dshouhuo.png'></image>
         <view>待收货</view>
       </view>
-      <view class='box2_bottom_icon'>
+      <view class='box2_bottom_icon' catchtap='dPingjia'>
         <image src='/images/dpingjia.png'></image>
         <view>待评价</view>
       </view>

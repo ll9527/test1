@@ -199,31 +199,31 @@ Page({
   // 跳转查看全部订单页面
   selectAllList : function(){
     wx.navigateTo({
-      url: '',
+      url: '/pages/orderDelivery/allOrder?o=1',
     })
   },
   // 跳转订单待付款
   dFukuan : function(){
-    // wx.navigateTo({
-    //   url: '/pages/orderDelivery/orderDelivery',
-    // })
+    wx.navigateTo({
+      url: '/pages/orderDelivery/orderDelivery',
+    })
   },
-  // 跳转订单待付款
+  // 跳转订单待发货
   dFahuo: function () {
-    // wx.navigateTo({
-    //   url: '/pages/orderDelivery/orderDelivery',
-    // })
+    wx.navigateTo({
+      url: '/pages/orderDelivery/orderWaitSendGoods',
+    })
   },
   // 跳转订单待收货
   dShouhuo: function () {
-    // wx.navigateTo({
-    //   url: '/pages/orderTakeDelivery/orderTakeDelivery',
-    // })
+    wx.navigateTo({
+      url: '/pages/orderTakeDelivery/orderTakeDelivery',
+    })
   },
   // 跳转订单待评价
   dPingjia: function () {
     wx.navigateTo({
-      url: '',
+      url: '/pages/orderDelivery/allOrder?o=0',
     })
   },
   // 跳转售后页面

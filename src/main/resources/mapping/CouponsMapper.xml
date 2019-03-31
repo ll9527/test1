@@ -32,6 +32,14 @@
     from coupons
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <!-- 用订单id查询订单的优惠券  -->
+  <select id="selectByOId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from coupons
+    where order_id = #{o,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from coupons
     where id = #{id,jdbcType=INTEGER}
