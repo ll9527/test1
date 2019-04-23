@@ -1,0 +1,4 @@
+/* pages/selleProduct/qrCode.wxss */
+image{
+  width: 750rpx;
+}

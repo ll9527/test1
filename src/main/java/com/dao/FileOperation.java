@@ -3,6 +3,8 @@ package com.dao;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.totalshop.WebConfig;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -95,6 +97,41 @@ public class FileOperation {
                     String realPath = "C:\\Users\\Administrator\\Desktop\\image\\";
                     //本机路径
 //                    String realPath = "C:\\Users\\l\\Desktop\\image\\";
+                    File file = new File(realPath);
+                    if (!file.exists()) {
+                        file.mkdirs();
+                    }
+                    // 自定义的文件名称
+                    String uuid = UUID.randomUUID().toString();
+                    trueFileName = uuid + "." + type;
+                    // 设置存放图片文件的路径
+                    path = realPath + trueFileName;
+                    try {
+                        image.transferTo(new File(path));
+                    } catch (IOException e) {
+                        System.out.println("文件路径不存在");
+                        e.printStackTrace();
+                    }
+                    return trueFileName;
+                }
+                return trueFileName;
+            }
+            return trueFileName;
+        }
+        return "error";
+    }
+//    平台照片上传方法
+    public static String adminAddImg(MultipartFile image) {
+        if (!image.isEmpty()) {
+            String fileName = image.getOriginalFilename();
+            String path = null;
+            String type = null;
+            String trueFileName = null;
+            type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()) : null;
+            if (type != null) {
+                if ("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "JPEG".equals(type.toUpperCase())) {
+//                    照片路径
+                    String realPath = WebConfig.adminImgPath;
                     File file = new File(realPath);
                     if (!file.exists()) {
                         file.mkdirs();

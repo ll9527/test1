@@ -1,0 +1,2 @@
+<!--pages/selleProduct/qrCode.wxml-->
+<image src="{{imgName}}" mode='widthFix' wx:if="{{!imaName}}"></image>

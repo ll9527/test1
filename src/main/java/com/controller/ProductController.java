@@ -274,4 +274,10 @@ public class ProductController {
         map.put("pname", pname);
         return productService.serchProduct(map);
     }
+    
+//    用商品id查评论
+    @RequestMapping("/selectCommentsByPid")
+    public List selectCommentsByPid(Integer pId) {
+    	return productService.selectCommentsByPid(pId);
+    }
 }

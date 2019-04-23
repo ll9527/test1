@@ -256,7 +256,21 @@
           AND p.status = 1
           AND swp.seller_id = #{sellerid}
     </select>
-
+	<!-- 查询所有商品（要封面） -->
+	<select id="selectAllProduct" resultMap="WithProductImg">
+        SELECT 
+		  p.id,
+		  p.title,
+		  p.price,
+		  p.group_price,
+		  i.image 
+		FROM
+		  product_item p 
+		  INNER JOIN product_img i 
+		    ON p.id = i.product_id 
+		WHERE i.is_cover = 1 
+		  AND p.status = 1 
+    </select>
     <!--查询所有（包括封面）-->
     <select id="selectAll" resultMap="All">
         SELECT p.id,

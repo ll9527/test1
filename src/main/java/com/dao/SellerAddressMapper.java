@@ -22,4 +22,10 @@ public interface SellerAddressMapper {
     int deleteBySellerId(Integer sellerid);
 
     List<SellerAddress> selectBySellerid(Integer sellerid);
+    /**
+     * 根据地区查相近的地址
+     * @param currentCity
+     * @return
+     */
+	List<SellerAddress> selectAddressLikeCity(String currentCity);
 }

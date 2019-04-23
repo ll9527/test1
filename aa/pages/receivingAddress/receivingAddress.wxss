@@ -13,7 +13,7 @@ page{
   border-top: 1rpx rgb(190, 190, 190) solid;
 }
 .box1_text1{
-  font-size: 28rpx;
+  font-size: 30rpx;
 }
 .box2{
   width: 670rpx;
@@ -31,9 +31,9 @@ page{
 .box2_text_1{
   display: flex;
   justify-content: space-between;
-  font-size: 28rpx;
+  font-size: 30rpx;
 }
 .box2_text_2{
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: rgb(128, 128, 128);
 }

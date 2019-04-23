@@ -1,0 +1,11 @@
+<!--pages/sellerManager/visit.wxml-->
+  <view class='card'>
+    <view class='card_title'>
+      <view>今日访问人数：</view>
+      <!-- <view class='toCash' bindtap='toCash'>提现</view> -->
+    </view>
+    <view class='text'>
+      <view>{{visitNum}}</view>
+      <view class='text_1'></view>
+    </view>
+  </view>

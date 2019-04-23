@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.dao.FileOperation;
+import com.dao.SellerAddressMapper;
 import com.entity.*;
 import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,24 @@ public class SellerController {
         return map;
     }
     
+    //修改商户数据
+    @RequestMapping(value = "/upData")
+    public Map upData(Seller seller, SellerAddress sellerAddress) {
+    	int isOk2 = 0;
+    	Map map = new HashMap();
+    	int isOk = sellerService.updateByPrimaryKeySelective(seller);
+    	List<SellerAddress> sellerAddressList = sellerAddressService.selectBySellerid(seller.getId());
+    	if(!sellerAddressList.isEmpty()) {
+    		SellerAddress sellerAddress2 = sellerAddressList.get(0);
+    		sellerAddress2.setAddress(sellerAddress.getAddress());
+    		isOk2 = sellerAddressService.updateByPrimaryKeySelective(sellerAddress2);
+    	}
+    	if(isOk == 1 && isOk2 == 1) {
+    		map.put("info", 1);
+    	}
+    	return map;
+    }
+    
     /**
      * 商家注册，接收商家证件图片，和插入数据
      * @param userid
@@ -135,30 +154,62 @@ public class SellerController {
 
     //显示店铺分类+每个店铺热销前三
     @RequestMapping("/selectSellerClass")
-    public List<Seller> selectSellerClass(String sellerClass) {
+    public List<Seller> selectSellerClass(String sellerClass, String currentCity) {
+    	List finalList = new ArrayList();
         //拿到此类别的所有商户
-        List<Seller> sellerList = sellerService.selectSellerFromSellerClass(sellerClass);
+        List<Seller> sellerList = sellerService.selectSellerFromSellerClass1(sellerClass, currentCity);
+        if(sellerList.isEmpty()) {
+        	return finalList;
+        }
         //遍历商户id并分别查询热销前三
-        List finalList = new ArrayList();
         for (Seller sellerTemp : sellerList) {
             Integer sellerid = sellerTemp.getId();
             List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
             if (!(sellerAndProductList.isEmpty())) {
+            	List<SellerAddress> addList = sellerAddressService.selectBySellerid(sellerid);
+            	sellerAndProductList.get(0).setSellerAddressList(addList);
                 finalList.add(sellerAndProductList);
+            }else {
+            	List<SellerCover> coverList = sellerService.selectSCover(sellerid);
+            	if(!coverList.isEmpty()) {
+            		Seller seller = sellerService.selectByPrimaryKey(sellerid);
+            		List<SellerAddress> addList = sellerAddressService.selectBySellerid(sellerid);
+            		seller.setSellerAddressList(addList);
+            		seller.setSellerCover(coverList);
+            		List<Seller> itemList = new ArrayList<Seller>();
+            		itemList.add(seller);
+            		finalList.add(itemList);
+            	}
             }
         }
         return finalList;
     }
 
     @RequestMapping("/selectAllSeller")
-    public List<Seller> selectAllSeller() {
-        List<Seller> sellerList = sellerService.selectAll();
+    public List<Seller> selectAllSeller(String currentCity) {
+    	List<SellerAddress> list = sellerService.selectSellerLikeCity(currentCity);
         List finalList = new ArrayList();
-        for (Seller sellerTemp : sellerList) {
-            Integer sellerid = sellerTemp.getId();
+        if(list.isEmpty()) {
+        	return finalList;
+        }
+        for (SellerAddress sellerTemp : list) {
+            Integer sellerid = sellerTemp.getSellerId();
             List<Seller> sellerAndProductList = sellerService.selectSellerTopThree(sellerid);
             if (!(sellerAndProductList.isEmpty())) {
+            	List<SellerAddress> addList = sellerAddressService.selectBySellerid(sellerid);
+            	sellerAndProductList.get(0).setSellerAddressList(addList);
                 finalList.add(sellerAndProductList);
+            }else {
+            	List<SellerCover> coverList = sellerService.selectSCover(sellerid);
+            	if(!coverList.isEmpty()) {
+            		Seller seller = sellerService.selectByPrimaryKey(sellerid);
+            		List<SellerAddress> addList = sellerAddressService.selectBySellerid(sellerid);
+            		seller.setSellerAddressList(addList);
+            		seller.setSellerCover(coverList);
+            		List<Seller> sellerList = new ArrayList<Seller>();
+            		sellerList.add(seller);
+            		finalList.add(sellerList);
+            	}
             }
         }
         return finalList;
@@ -196,6 +247,22 @@ public class SellerController {
     public List<SellerBcImg> getSImageList(Integer sellerId){
     	return sellerService.selectBySId(sellerId);
     }
-
+//    用商家id查询商家所有信息
+    @RequestMapping("/getSeller")
+    public Map getSeller(Integer sellerId){
+    	return sellerService.getSeller(sellerId);
+    }
+//  平台照片上传
+  @RequestMapping("/addCover")
+  public void addCover(MultipartFile image, int sta, int sid) {
+  	String ImgName = FileOperation.adminAddImg(image);
+  	if(!ImgName.equals("error")) {
+  		SellerCover sellerCover = new SellerCover();
+  		sellerCover.setName(ImgName);
+  		sellerCover.setRole(sta);
+  		sellerCover.setSid(sid);
+  		sellerService.addSellerCover(sellerCover);
+  	}
+  }
 }
 

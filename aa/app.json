@@ -1,16 +1,27 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/seller/sellerList",
+    "pages/seller/sellerMSG",
+    "pages/admin/setGG",
+    "pages/admin/upAdminImg",
+    "pages/share/share",
+    "pages/sellerManager/qrPay",
+    "pages/sellerManager/coverImg",
+    "pages/admin/adminPage",
+    "pages/admin/kouDian",
+    "pages/admin/allProduct",
     "pages/comments/comments",
     "pages/orderDelivery/orderWaitSendGoods",
     "pages/orderDetails/orderDetails",
     "pages/orderDelivery/allOrder",
-    
+    "pages/selleProduct/qrCode",
     "pages/sellerManager/sellerPhoto",
-
+    "pages/sellerManager/visit",
+    "pages/papers/papers",
     "pages/orderDelivery/orderDelivery",
     "pages/orderTakeDelivery/orderTakeDelivery",
-
+    
     "pages/order/order",
     "pages/register/yongHuXieYi",
     "pages/sellerManager/shuoMingShu",
@@ -79,6 +90,11 @@
 
     "pages/test/test"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "小程序将获得你的位置信息用于加载本地商品"
+    }
+  },
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",

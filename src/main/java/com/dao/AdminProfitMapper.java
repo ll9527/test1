@@ -1,5 +1,9 @@
 package com.dao;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import com.entity.AdminImg;
 import com.entity.AdminProfit;
 
 public interface AdminProfitMapper {
@@ -16,4 +20,7 @@ public interface AdminProfitMapper {
     int updateByPrimaryKey(AdminProfit record);
 
     AdminProfit selectAdminByVipMoney();
+
+	String selectGG();
+
 }

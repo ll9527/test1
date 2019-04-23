@@ -85,7 +85,7 @@ page{
   background-color: rgb(255, 255, 255);
 }
 .box2_1{
-  height: 60rpx;
+  height: 80rpx;
   padding-left: 20rpx;
   padding-right: 46rpx;
   border-bottom: 1rpx rgb(241, 241, 241) solid;
@@ -93,10 +93,10 @@ page{
   align-items: center;
 }
 .box2_1_body1{
-  width: 60rpx;
-  height: 30rpx;
-  line-height: 30rpx;
-  font-size: 22rpx;
+  width: 80rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
   text-align: center;
   color: rgb(255, 255, 255);
   border-radius: 4rpx;
@@ -105,14 +105,14 @@ page{
 }
 .box2_1_body2{
   width: 592rpx;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 .box2_1_body3{
-  line-height: 38rpx;
+  line-height: 80rpx;
   font-size: 36rpx;
 }
 .box2_2{
-  height: 60rpx;
+  height: 80rpx;
   padding-left: 20rpx;
   padding-right: 46rpx;
   display: flex;
@@ -125,10 +125,10 @@ page{
   align-items: center;
 }
 .box2_2_body1_1{
-  width: 60rpx;
-  height: 30rpx;
-  line-height: 30rpx;
-  font-size: 22rpx;
+  width: 80rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
   text-align: center;
   color: rgb(255, 255, 255);
   border-radius: 4rpx;
@@ -346,4 +346,36 @@ page{
   line-height: 80rpx;
   text-align: center;
   color: #fff;
+}
+.group_list{
+  width: 510rpx;
+  height: 900rpx;
+  border-radius: 8rpx;
+  background: #fff;
+  padding: 20rpx;
+  overflow: hidden;
+ position: fixed;
+ bottom: 200rpx;
+ left: 100rpx;
+ z-index: 2000;
+}
+.group_item{
+  display: flex;
+   justify-content: space-between;
+   font-size: 28rpx;
+   text-align: center;
+   width: 100%;
+   height: 80rpx;
+   align-items: center;
+   border-bottom: 1rpx rgb(180, 180, 180) solid;
+}
+.button1{
+  height: 60rpx;
+  width: 100rpx;
+  color: #fff;
+  background: rgb(250, 90, 90);
+  line-height: 60rpx;
+}
+.text1{
+  font-size: 26rpx;
 }

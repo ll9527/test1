@@ -17,10 +17,14 @@
     <result column="mark" property="mark" jdbcType="VARCHAR" />
     <result column="is_pick" property="isPick" jdbcType="INTEGER" />
     <result column="prepay_id" property="prepay_id" jdbcType="VARCHAR" />
+    <result column="is_group" property="isGroup" jdbcType="INTEGER" />
+    <result column="group_oid" property="group_oid" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_sn, express_sn, add_time, user_name, user_address, tel, user_id, seller_id, 
-    seller_name, total_money, order_status, mark, is_pick, prepay_id
+    seller_name, total_money, order_status, mark, is_pick, prepay_id, is_group, group_oid,
+    end_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -34,14 +38,62 @@
     from shop_order
     where order_status = 0
   </select>
+  <!-- 用团购订单单号查询该订单下的所有子订单 -->
+  <select id="selectByGroupOid" resultMap="BaseResultMap" >
+    select *
+    from shop_order
+    where group_oid = #{groupOid}
+    and order_status = 8
+  </select>
+  <!-- 查看用户的最后订单 -->
+  <select id="selectUserLastOrder" resultMap="BaseResultMap" >
+    SELECT 
+	  * 
+	FROM
+	  shop_order 
+	WHERE user_id = 35 
+	  AND end_time IS NOT NULL 
+	ORDER BY end_time DESC 
+  </select>
   <!-- 用订单号查询订单对象 -->
-  <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByOrderSn" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
      *
     from shop_order
     where order_sn = #{orderSn}
   </select>
-  <!-- 查询所有订单 -->
+  <!-- 今日销量 -->
+  <select id="selectSales" resultType="java.math.BigDecimal" >
+    SELECT 
+     SUM(total_money)
+    FROM shop_order
+    WHERE TO_DAYS(end_time) = TO_DAYS(NOW())
+  </select>
+  <!-- 前第七天的成交金额 -->
+  <select id="select7DaysBeforeMoney" resultType="java.math.BigDecimal" >
+	SELECT 
+	  SUM(total_money) 
+	FROM
+	  `shop_order` 
+	WHERE end_time &gt;= CONCAT(
+	    DATE_SUB(CURDATE(), INTERVAL 7 DAY),
+	    ' 00:00:00'
+	  ) 
+	  AND end_time &lt;= CONCAT(
+	    DATE_SUB(CURDATE(), INTERVAL 7 DAY),
+	    ' 23:59:59'
+	  ) 
+	  AND order_status IN (3, 9)
+  </select>
+  <!-- 总销量 -->
+  <select id="selectAllSales" resultType="java.math.BigDecimal" >
+    SELECT 
+	  SUM(total_money) 
+	FROM
+	  shop_order 
+	WHERE end_time IS NOT NULL 
+  </select>
+  <!-- 根据状态码查询用户或者商家的订单 -->
   <select id="selectAllByUserOrSeller" resultMap="BaseResultMap">
     select 
      *
@@ -61,6 +113,15 @@
     	ORDER BY add_time
     	</if> -->
   </select>
+  <!-- 查看超过15天的订单 -->
+  <select id="selectAllOrderByTime" resultMap="BaseResultMap">
+  	SELECT 
+	  * 
+	FROM
+	  shop_order
+	WHERE <![CDATA[ DATE_ADD(add_time, INTERVAL 15 DAY) < NOW()]]>
+	AND order_status = 2
+  </select>
   <!-- 查询所有订单 -->
   <select id="selectAllOrder" resultMap="BaseResultMap">
     select 
@@ -74,12 +135,27 @@
 	    	and seller_id = #{sellerId}
 	    </if>
     	AND mark IS NULL 
+    	AND order_status != 7
+    	AND order_status != 8
+    	OR order_status != -1
+		AND FIND_IN_SET('二维码付款',mark)
+		AND order_status != 0
     	<!-- <if test="userId != null"> -->
     	ORDER BY add_time DESC 
     	<!-- </if>
     	<if test="sellerId != null">
     	ORDER BY add_time
     	</if> -->
+  </select>
+  <select id="selectGroupByU" resultMap="BaseResultMap">
+    SELECT 
+	  * 
+	FROM
+	  shop_order 
+	WHERE user_id = #{u} 
+	  AND mark IS NULL 
+	  AND order_status = 8 
+	  AND is_group = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from shop_order
@@ -90,12 +166,13 @@
       add_time, user_name, user_address, 
       tel, user_id, seller_id, 
       seller_name, total_money, order_status, 
-      mark, is_pick, prepay_id)
+      mark, is_pick, prepay_id, is_group, group_oid, end_time)
     values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{expressSn,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}, 
       #{tel,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
       #{sellerName,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
-      #{mark,jdbcType=VARCHAR}, #{isPick,jdbcType=INTEGER}, #{prepay_id,jdbcType=VARCHAR})
+      #{mark,jdbcType=VARCHAR}, #{isPick,jdbcType=INTEGER}, #{prepay_id,jdbcType=VARCHAR},
+      #{isGroup,jdbcType=INTEGER}, #{group_oid,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.entity.ShopOrder" >
     insert into shop_order
@@ -143,7 +220,16 @@
         is_pick,
       </if>
       <if test="prepay_id != null" >
-        prepay_id
+        prepay_id,
+      </if>
+      <if test="isGroup != null" >
+        is_group,
+      </if>
+      <if test="group_oid != null" >
+        group_oid,
+      </if>
+      <if test="endTime != null" >
+        end_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -191,6 +277,15 @@
       </if>
       <if test="prepay_id != null" >
         #{prepay_id,jdbcType=VARCHAR},
+      </if>
+      <if test="isGroup != null" >
+        #{isGroup,jdbcType=INTEGER},
+      </if>
+      <if test="group_oid != null" >
+        #{group_oid,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -240,7 +335,16 @@
         is_pick,
       </if>
       <if test="prepay_id != null" >
-        prepay_id
+        prepay_id,
+      </if>
+      <if test="isGroup != null" >
+        is_group,
+      </if>
+      <if test="group_oid != null" >
+        group_oid,
+      </if>
+      <if test="endTime != null" >
+        end_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -288,6 +392,15 @@
       </if>
       <if test="prepay_id != null" >
         #{prepay_id,jdbcType=VARCHAR},
+      </if>
+      <if test="isGroup != null" >
+        #{isGroup,jdbcType=INTEGER},
+      </if>
+      <if test="group_oid != null" >
+        #{group_oid,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
     <selectKey resultType="int" keyProperty="id" order="AFTER">
@@ -339,6 +452,15 @@
       <if test="prepay_id != null" >
         prepay_id = #{prepay_id,jdbcType=VARCHAR},
       </if>
+      <if test="isGroup != null" >
+        is_group = #{isGroup,jdbcType=INTEGER},
+      </if>
+      <if test="group_oid != null" >
+        group_oid = #{group_oid,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP}
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -357,7 +479,10 @@
       order_status = #{orderStatus,jdbcType=INTEGER},
       mark = #{mark,jdbcType=VARCHAR},
       is_pick = #{isPick,jdbcType=INTEGER},
-      prepay_id = #{prepay_id,jdbcType=VARCHAR}
+      prepay_id = #{prepay_id,jdbcType=VARCHAR},
+      is_group = #{isGroup,jdbcType=INTEGER},
+      group_oid = #{group_oid,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

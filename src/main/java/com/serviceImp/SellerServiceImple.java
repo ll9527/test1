@@ -1,14 +1,19 @@
 package com.serviceImp;
 
+import com.dao.SellerAddressMapper;
 import com.dao.SellerBcImgMapper;
+import com.dao.SellerCoverMapper;
 import com.dao.SellerMapper;
 import com.entity.Product;
 import com.entity.Seller;
+import com.entity.SellerAddress;
 import com.entity.SellerBcImg;
+import com.entity.SellerCover;
 import com.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +24,10 @@ public class SellerServiceImple implements SellerService {
     private SellerMapper sellerMapper;
     @Autowired(required = false)
     private SellerBcImgMapper sellerBcImgMapper;
+    @Autowired(required = false)
+    private SellerAddressMapper sellerAddressMapper;
+    @Autowired(required = false)
+    private SellerCoverMapper sellerCoverMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -99,4 +108,38 @@ public class SellerServiceImple implements SellerService {
     public List<SellerBcImg> selectBySId(Integer sellerId){
     	return sellerBcImgMapper.selectBySId(sellerId);
     }
+
+	@Override
+	public Map getSeller(Integer sellerId) {
+		Map map = new HashMap();
+		Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
+		List<SellerAddress> sellerAddressList = sellerAddressMapper.selectBySellerid(sellerId);
+		map.put("seller", seller);
+		if(!sellerAddressList.isEmpty()) {
+			map.put("sellerAddressList", sellerAddressList.get(0));
+		}
+		return map;
+	}
+
+	@Override
+	public List<SellerAddress> selectSellerLikeCity(String currentCity) {
+		List<SellerAddress> sellerAddressList = sellerAddressMapper.selectAddressLikeCity(currentCity);
+		return sellerAddressList;
+	}
+
+	@Override
+	public List<Seller> selectSellerFromSellerClass1(String sellerClass, String currentCity) {
+		return sellerMapper.selectSellerFromSellerClass1(sellerClass, currentCity);
+	}
+
+	@Override
+	public void addSellerCover(SellerCover sellerCover) {
+		sellerCoverMapper.insertSelective(sellerCover);
+	}
+
+	@Override
+	public List<SellerCover> selectSCover(Integer id) {
+		// TODO Auto-generated method stub
+		return sellerCoverMapper.selectSCover(id);
+	}
 }

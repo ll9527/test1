@@ -1,4 +1,6 @@
   <view class='box3'>
+      <view class='sign position1' wx:if="{{orderNum.withTheDelivery != 0}}">{{orderNum.withTheDelivery}}</view>
+      <view class='sign position2' wx:if="{{orderNum.forTheGoods != 0}}">{{orderNum.forTheGoods}}</view>
     <navigator class='box3_item' url='/pages/selleProduct/selleProduct'>
       <view>上架中的商品</view>
       <view>></view>
@@ -38,10 +40,31 @@
       <view>待退款</view>
       <view>></view>
     </navigator>
-    <!-- <navigator class='box3_item' url='/pages/selleProduct/DealOrder'>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/selleProduct/qrCode'>
       <view>店铺二维码</view>
       <view>></view>
-    </navigator> -->
+    </navigator>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/myWallet/myWallet'>
+      <view>账户金额</view>
+      <view>></view>
+    </navigator>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/sellerManager/visit'>
+      <view>今天访客</view>
+      <view>></view>
+    </navigator>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/sellerManager/register?isUpdata=1'>
+      <view>店铺资料修改</view>
+      <view>></view>
+    </navigator>
+    <view class='box3_item_border'></view>
+    <navigator class='box3_item' url='/pages/sellerManager/coverImg'>
+      <view>增加实体店铺照片</view>
+      <view>></view>
+    </navigator>
     <!-- <navigator class='box3_item'>
       <view></view>
       <view>></view>

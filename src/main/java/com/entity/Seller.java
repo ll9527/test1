@@ -16,10 +16,22 @@ public class Seller {
     private List<SellerAddress> sellerAddressList;
 
     private List<SellerBcImg> sellerBcImgList;
+    
+    private List<SellerCover> sellerCover;
 
     private List<Product> productList;
+    
+    
 
-    public List<Product> getProductList() {
+    public List<SellerCover> getSellerCover() {
+		return sellerCover;
+	}
+
+	public void setSellerCover(List<SellerCover> sellerCover) {
+		this.sellerCover = sellerCover;
+	}
+
+	public List<Product> getProductList() {
         return productList;
     }
 

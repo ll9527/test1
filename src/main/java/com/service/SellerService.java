@@ -2,7 +2,9 @@ package com.service;
 
 import com.entity.Product;
 import com.entity.Seller;
+import com.entity.SellerAddress;
 import com.entity.SellerBcImg;
+import com.entity.SellerCover;
 
 import java.util.List;
 import java.util.Map;
@@ -52,4 +54,33 @@ public interface SellerService {
      * @return
      */
     public List<SellerBcImg> selectBySId(Integer sellerId);
+    /**
+     * 用商家id查商家所有信息
+     * @param sellerId
+     * @return
+     */
+	Map getSeller(Integer sellerId);
+	/**
+	 * 查在地区的所有商家
+	 * @return
+	 */
+	List<SellerAddress> selectSellerLikeCity(String currentCity);
+	/**
+	 * 查询地区的指定类型商家
+	 * @param sellerClass
+	 * @param currentCity
+	 * @return
+	 */
+	List<Seller> selectSellerFromSellerClass1(String sellerClass, String currentCity);
+	/**
+	 * 插入商家图片记录数据
+	 * @param sellerCover
+	 */
+	void addSellerCover(SellerCover sellerCover);
+	/**
+	 * 用商家id查商家图片
+	 * @param id
+	 * @return
+	 */
+	List<SellerCover> selectSCover(Integer id);
 }

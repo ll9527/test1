@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    url: getApp().url+"/image/",
     isPack: false, // 是否自提
     count: "", // 商品的件数
     versionName: "",// 型号名字
@@ -15,6 +16,8 @@ Page({
     freight: 0,// 运费
     coupons: 0,// 优惠券
     settlement: 0,// 合计金额
+    isGroup: 0,// 是否团购订单 1代表是
+    groupOid: ""//团购订单id
   },
   onShow(res){
     var that = this;
@@ -37,6 +40,11 @@ Page({
     console.log(res.aaa)
     console.log(JSON.parse(res.product))
     var that = this;
+    if (res.isGroup == 1){
+      this.data.isGroup = 1
+    }else{
+      this.data.isGroup = 0
+    }
     that.setData({
       count: res.count,
       versionName: res.versionName,
@@ -45,7 +53,8 @@ Page({
       product: JSON.parse(res.product)[0],
       price: res.price,
       allPrice: res.count * res.price,
-      skuId: res.skuId
+      skuId: res.skuId,
+      groupOid: res.groupOid ? res.groupOid : -1
     })
     // 获取商品得优惠卷和运费
     wx.request({
@@ -77,6 +86,15 @@ Page({
           title: '请稍等',
           mask: true
         })
+        if (that.data.addressList.length == 0){
+          wx.hideLoading();
+          return wx.showToast({
+            title: '请修改地址',
+            icon: 'loading',
+            duration: 1000,
+            mask: true
+          })
+        }
         if (res.code) {
           wx.request({
             url: getApp().url + '/order/ordPay',
@@ -89,7 +107,9 @@ Page({
               version: that.data.versionName +","+ that.data.version1Name,
               // 1是自提
               isPick: that.data.isPack ? 1 : 2,
-              addressid: that.data.addressList[0].id
+              addressid: that.data.addressList[0].id,
+              isGroup: that.data.isGroup,
+              groupOid: that.data.groupOid
             },
             success(res){
               wx.hideLoading();
@@ -125,7 +145,19 @@ Page({
                   console.log(res.data)
                 } else {
                   console.log("后台没有返回数据")
-                  console.log(res.data)
+                  wx.showToast({
+                    title: '拼另一订单',
+                    icon: 'loading',
+                    duration: 2000,
+                    mask: true,
+                    success() {
+                      setTimeout(function () {
+                        wx.navigateBack({
+                          delta: 2
+                        })
+                      }, 2000)
+                    }
+                  })
                 }
               },
               fail: function (res) {

@@ -1,0 +1,20 @@
+<!--pages/admin/setGG.wxml-->
+<form bindsubmit="commit">
+<view class='box1' >
+  <view class='text1' >公告内容设置</view>
+
+  <view class='inputBox'>
+      <view class='text'>*</view>
+      <textarea class='input' name="point" placeholder="请输入公告" ></textarea>
+  </view>
+
+  <button class='marginB' form-type="submit" type="primary">确认</button>
+  <!-- <button type="warn" catchtap='goIndex'>返回首页</button> -->
+</view>
+<!-- <view class='box1' >
+  <view class='marginB'>请登陆后在 我的 页面里打开扫一扫</view>
+  <button type="primary" catchtap='toLogin'>登陆</button>
+</view>   -->
+
+</form>
+

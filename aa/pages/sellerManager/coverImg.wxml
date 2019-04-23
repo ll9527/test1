@@ -1,0 +1,8 @@
+<form bindsubmit="{{isUpdata==1?'sellerUpData':'formSubmit'}}">
+
+<image src='{{item}}' mode="widthFix" style='width:670rpx;' wx:for="{{detailsPhoto}}" wx:key="{{index}}"></image>
+<view class='text'>*点击按钮增加店铺实体店图片</view>
+<view class='button' catchtap='seeDetailsPhoto'>上传照片</view>
+
+<button form-type="submit">提交</button>
+</form>

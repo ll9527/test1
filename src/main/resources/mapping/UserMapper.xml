@@ -161,6 +161,47 @@
         from user
         where tel = #{tel}
     </select>
+    <!-- 查积分不为0的用户 -->
+    <select id="selectUser" resultMap="BaseResultMap">
+		SELECT 
+		  * 
+		FROM
+		  USER 
+		WHERE score > 0 
+    </select>
+    <!-- 查询满足3800积分的vip -->
+    <select id="selectVipMeet" resultMap="BaseResultMap">
+		SELECT 
+		  * 
+		FROM
+		  USER 
+		WHERE is_vip = 1 
+		  AND score >= 3800 
+    </select>
+    <!-- 查询所有满足3800积分的vip的积分总和 -->
+    <select id="selectAllScore" resultType="java.lang.Integer">
+        SELECT 
+		  SUM(score) 
+		FROM
+		  USER 
+		WHERE is_vip = 1 
+		  AND score >= 3800  
+    </select>
+    <!-- 查询用户人数 -->
+    <select id="selectAllUser" resultType="java.lang.Integer">
+        SELECT 
+		  COUNT(id) 
+		FROM
+		  USER 
+    </select>
+    <!-- 查询会员人数 -->
+    <select id="selectVipUser" resultType="java.lang.Integer">
+        SELECT 
+		  COUNT(id) 
+		FROM
+		  USER 
+		WHERE is_vip = 1 
+    </select>
 
     <!--单独查询未批准用户信息-->
     <select id="selectUnconfirmByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">

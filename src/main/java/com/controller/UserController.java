@@ -253,7 +253,9 @@ public class UserController {
         for (Collect collectTemp : collects) {
             if (!collects.isEmpty()){
                 Product product = productService.selectProductWithImgF(collectTemp.getProductId());
-                finalList.add(product);
+                if(product != null && product.getStatus() == 1) {
+                	finalList.add(product);
+                }
             }
         }
         return finalList;
@@ -263,7 +265,7 @@ public class UserController {
     @RequestMapping("/isVip")
     public Integer isVip(Integer userid){
         User user = userService.selectByPrimaryKey(userid);
-        if(user.getIsVip() == 1){
+        if(user != null && user.getIsVip() == 1){
             return 1;
         }else{
             return 0;
@@ -281,4 +283,19 @@ public class UserController {
     	Map<String, Object> map = userService.selectFreightAndCoupons(userid, productid);
     	return map;
     }
+//	分享获得奖金
+	@RequestMapping("/share")
+	public void share(Integer uwea) {
+		userService.share(uwea);
+	}
+//	分享获得奖金
+	@RequestMapping("/jiangjin")
+	public Map jiangjin() {
+		return userService.jiangjin();
+	}
+//	分享人数
+	@RequestMapping("/shareNum")
+	public int shareNum(Integer uuu) {
+		return userService.shareNum(uuu);
+	}
 }

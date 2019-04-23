@@ -1,5 +1,4 @@
 /* pages/orderDelivery/allOrder.wxss */
-/* pages/orderDelivery/orderWaitSendGoods.wxss */
 page{
   background-color: rgb(245, 245, 245)
 }

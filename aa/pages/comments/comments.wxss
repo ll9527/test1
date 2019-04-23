@@ -1,1 +1,13 @@
 /* pages/comments/comments.wxss */
+.box1{
+  width: 670rpx;
+  margin: 30rpx auto;
+  border-bottom: 1rpx rgb(224, 224, 224) solid;
+  font-size: 24rpx;
+  padding-bottom: 10rpx;
+}
+.box2{
+  display: flex;
+  justify-content:space-between;
+  padding-bottom: 10rpx;
+}

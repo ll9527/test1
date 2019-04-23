@@ -1,0 +1,21 @@
+  <!-- 所有商品 -->
+  <view class='inputBox'>
+    <input class='input' name="tname" placeholder="搜索" confirm-type="search" bindconfirm="search"></input>
+  </view>
+  <view class='item' url='/pages/selleProduct/addSelleProduct' wx:for="{{list}}" wx:key="{{index}}">
+    <image src='{{url+item.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.title}}</view>
+      <view class='item_text_1_1'>
+        <view class='item_text_1_1_left'>
+          <view class='padding10'>￥{{item.price}}</view>
+          <!-- <view>已销246件</view> -->
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo'>团</view>
+          <view>￥{{item.groupPrice}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='button' data-productId='{{item.id}}' data-index='{{index}}' catchtap='onDelete'>下架</view>
+  </view>

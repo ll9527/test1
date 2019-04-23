@@ -37,4 +37,29 @@ public interface UserMapper {
 
     //selectKey
     Integer selectKey(User record);
+    /**
+     * 查询用户人数
+     * @return
+     */
+	Integer selectAllUser();
+	/**
+	 * 查询Vip人数
+	 * @return
+	 */
+	Integer selectVipUser();
+	/**
+	 * 查询达到3800积分需求的Vip
+	 * @return
+	 */
+	List<User> selectVipMeet();
+	/**
+	 * 查询所有积分
+	 * @return
+	 */
+	Integer selectAllScore();
+	/**
+	 * 查积分不为0 的user
+	 * @return
+	 */
+	List<User> selectUser();
 }

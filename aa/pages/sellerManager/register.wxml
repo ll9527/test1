@@ -1,11 +1,11 @@
-<form bindsubmit="formSubmit">
-  <input class='inputBox' name="title" maxlength="10" type="text" placeholder="请输入商店名称"></input>
+<form bindsubmit="{{isUpdata==1?'sellerUpData':'formSubmit'}}">
+  <input class='inputBox' name="title" maxlength="10" type="text" placeholder="请输入商店名称" value="{{isUpdata==1?sellerData.seller.titleName:''}}"></input>
   <view class='text'>注：商店名称最长10个汉字</view>
 
-    <input class='inputBox' name="tel" maxlength="11" type="number" placeholder="请输入商家电话"></input>
+    <input class='inputBox' name="tel" maxlength="11" type="number" placeholder="请输入商家电话" value="{{isUpdata==1?sellerData.seller.tel:''}}"></input>
     <view class='text'>注：商家电话</view>
 
-  <input class='inputBox' name="address" maxlength="30" type="text" placeholder="请输入商铺地址"></input>
+  <input class='inputBox' name="address" maxlength="30" type="text" placeholder="请输入商铺地址"  value="{{isUpdata==1?sellerData.sellerAddressList.address:''}}"></input>
   <view class='text'>注：请输入商铺地址</view>
 
   <view class="section">

@@ -1,0 +1,13 @@
+/* pages/papers/papers.wxss */
+image{
+  width: 750rpx;
+}
+.padding{
+  padding: 20rpx 0;
+}
+.text{
+  text-align: center;
+  line-height: 80rpx;
+  height: 80rpx;
+  font-size: 28rpx;
+}

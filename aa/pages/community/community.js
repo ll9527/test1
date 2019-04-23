@@ -12,6 +12,8 @@ Page({
     current: 0,
     // 导航栏的index
     currentTab: 0,
+    // 商家集合对象
+    sellerProList:{},
     // 页面配置
     winWidth: 0,
     winHeight: 0,
@@ -93,6 +95,52 @@ Page({
       })
     }
   },
+  getLocation: function () {
+    var page = this
+    wx.getLocation({
+      type: 'wgs84',   //默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标 
+      success: function (res) {
+        // success  
+        var longitude = res.longitude
+        var latitude = res.latitude
+        page.loadCity(longitude, latitude)
+      }
+    })
+  },
+  loadCity: function (longitude, latitude) {
+    var page = this
+    wx.request({
+      url: 'https://api.map.baidu.com/geocoder/v2/?ak=SSZu5mwED0o5cGTjC5duXCPFpvTas6XM&location=' + latitude + ',' + longitude + '&output=json',
+      data: {},
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        // success  
+        console.log(res);
+        var city = res.data.result.addressComponent.city;
+        page.setData({ currentCity: city });
+        //查热门商品
+        wx.request({
+          url: getApp().url + '/seller/selectAllSeller',
+          data: {
+            currentCity: res.data.result.addressComponent.city
+          },
+          success: function (res) {
+            console.log(res)
+            page.setData({
+              hotList: res.data
+            })
+            console.log(page.data.hotList)
+          }
+        })
+      },
+      fail: function () {
+        page.setData({ currentCity: "获取定位失败" });
+      },
+
+    })
+  },
   onShow(res) {
     var that = this;
     console.log(that.data.root);
@@ -102,20 +150,6 @@ Page({
     })
     console.log(that.data.root);
     console.log(getApp().root)
-    //查热门商品
-    wx.request({
-      url: getApp().url + '/seller/selectAllSeller',
-      // data: {
-      //   sellerClass: "热门"
-      // },
-      success: function (res) {
-        console.log(res)
-        that.setData({
-          hotList: res.data
-        })
-        console.log(that.data.hotList)
-      }
-    })
   },
   // 授权函数
   click: function (res) {
@@ -136,7 +170,18 @@ Page({
         console.log(res.windowHeight);
       }
     });
-
+    wx.authorize({
+      scope: 'scope.userLocation',
+      success(res) {
+        that.getLocation();
+      },
+      fail() {
+        console.log("shibai")
+        wx.authorize({
+          scope: 'scope.userLocation',
+        })
+      }
+    })
     // wx.request({
     //   url: getApp().url + '/seller/selectSellerClass',
     //   data: {
@@ -248,14 +293,25 @@ Page({
     wx.request({
       url: getApp().url + '/seller/selectSellerClass',
       data: {
-        sellerClass: sellerClass
+        sellerClass: sellerClass,
+        currentCity: that.data.currentCity
       },
       success: function (res) {
         console.log(res)
+        that.data.sellerProList[sellerClass] = res.data
         that.setData({
-          sellerProList: res.data
+          sellerProList: that.data.sellerProList
         })
+        wx.hideLoading()
         console.log(that.data.sellerProList)
+      }, fail() {
+        wx.hideLoading({
+          success() {
+            // that.setData({
+            //   isShow: true,
+            // })
+          }
+        })
       }
     })
   },
@@ -265,6 +321,10 @@ Page({
   bindChange: function (e) {
     var cur = e.detail.current;
     var that = this;
+    wx.showLoading({
+      title: '请稍等',
+      mask: true
+    })
     that.setData({
       // currentTab: e.detail.current,
       current: e.detail.current,
@@ -274,6 +334,8 @@ Page({
       //获取 类型名字
       var sellerClass = that.data.classfiy[e.detail.current - 1]
       that.selectProByClass(sellerClass, that)
+    }else{
+      wx.hideLoading()
     }
   },
 })

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    url: getApp().url+ "/image/"
   },
 
   /**
@@ -14,6 +14,9 @@ Page({
   onLoad: function (options) {
     var that = this
     getApp().isLogin();
+    that.setData({
+      sellerid: options.sellerid
+    })
     console.log("storeNewList:" + options)
     wx.request({
       url: getApp().url + '/product/selectPdBySellerid',

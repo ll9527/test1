@@ -20,6 +20,11 @@
   <select id="selectBySellerid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select * from seller_address where  seller_id = #{sellerid}
   </select>
+  
+  <!--根据sellerid查询地址-->
+  <select id="selectAddressLikeCity" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT * FROM seller_address WHERE  address LIKE "%"#{currentCity}"%" GROUP BY seller_id
+  </select>
 
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

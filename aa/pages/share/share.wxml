@@ -1,0 +1,22 @@
+
+  <view class='card'>
+    <view class='card_title'>
+      <view>分享注册成功人数：</view>
+      <!-- <view class='toCash' bindtap='toCash'>提现</view> -->
+    </view>
+    <view class='text'>
+      <view>{{shareNum}}</view>
+      <view class='text_1'></view>
+    </view>
+  </view>
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">分享成功可获得0元到20元随机金额，可用于提现</view>
+    </view>
+    <view class="page__bd">
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="default" open-type="share">分享</button>
+            <button class="weui-btn" type="default" bindtap="openMyPage">返回</button>
+        </view>
+    </view>
+</view>

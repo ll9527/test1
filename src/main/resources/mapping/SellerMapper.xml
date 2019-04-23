@@ -82,6 +82,15 @@
         where seller_class = #{sellerClass}
           AND a.address like "%湛江市%"
     </select>
+    
+    <!--通过sellerClass查找商家-->
+    <select id="selectSellerFromSellerClass1" resultMap="WithAddressImg" parameterType="java.lang.String">
+        select *
+        from seller
+        inner join seller_address a on seller.id = a.seller_id
+        where seller_class = #{sellerClass}
+          AND a.address like "%"#{currentCity}"%"
+    </select>
 
     <!--查该商家的所有上架中的商品+封面图-->
     <select id="selectSellerDetail" resultMap="WithProductAndPimg" parameterType="map">

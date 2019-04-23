@@ -91,30 +91,14 @@ public class SellerVisitServiceImple implements SellerVisitService {
     
     //定时清除每日人数
     @Override
-    public void clearSellerVisit(){
-    	//定时器 零点清空访问人数
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("启动定时器");
-                List<SellerVisit> sellerVisits = sellerVisitMapper.selectAll();
-                //循环更新sellerVist所有数据
-                for (SellerVisit vistTemp: sellerVisits ) {
-                    vistTemp.setVisitNum((long)0);
-                    sellerVisitMapper.updateByPrimaryKeySelective(vistTemp);
-                }
-            }
-        };
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date date =calendar.getTime();
-        timer.schedule( task , date);
-    }
-
+	public void clearSellerVisit() {
+		List<SellerVisit> sellerVisits = sellerVisitMapper.selectAll();
+		// 循环更新sellerVist所有数据
+		for (SellerVisit vistTemp : sellerVisits) {
+			vistTemp.setVisitNum((long) 0);
+			sellerVisitMapper.updateByPrimaryKeySelective(vistTemp);
+		}
+	};
     @Override
     public SellerVisit selectBySellerid(Integer sellerid) {
         return sellerVisitMapper.selectBySellerid(sellerid);

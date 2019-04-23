@@ -134,5 +134,15 @@ public class ProductServiceImple implements ProductService {
 		return pcfm.insertSelective(pcf);
 	}
 
+	@Override
+	public List<ProductCommentFreight> selectCommentsByPid(Integer pId) {
+		return pcfm.selectCommentsByPid(pId);
+	}
+
+	@Override
+	public List selectAllProduct() {
+		return productMapper.selectAllProduct();
+	}
+
 
 }

@@ -2,7 +2,7 @@
   <view class='head'>
     <view class='tab'>
       <!-- <navigator class='tab_text' url='/pages/storeDetails/storeDetails'>首页</navigator> -->
-      <navigator open-type="redirect" class='tab_text' url='/pages/storeAllList/storeAllList'>全部</navigator>
+      <navigator open-type="redirect" class='tab_text' url='/pages/storeAllList/storeAllList?sellerid={{sellerid}}'>全部</navigator>
       <view class='tab_text onTab'>新品</view>
     </view>
     <view class='search tabBar'>

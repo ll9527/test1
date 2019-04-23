@@ -44,6 +44,16 @@ public interface ProductService {
     List<Product> serchProduct(Map<String, Object> map);
 
     Integer setPFreight(ProductCommentFreight pcf);
-
+    /**
+     * 用商品id查评论
+     * @param pId
+     * @return
+     */
+	List<ProductCommentFreight> selectCommentsByPid(Integer pId);
+	/**
+	 * 查看所有商品
+	 * @return
+	 */
+	List selectAllProduct();
 
 }

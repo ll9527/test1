@@ -36,9 +36,8 @@ mybatis:
 logging:
   level:
     com:
-      dao:
-        debug
+      debug
   #采用相对路径方式将日志文件输出到【log\myspringboot.log】
-#  path: C:\Users\Administrator\Desktop\log
+  path: C:\Users\Administrator\Desktop\log
 #  file: log\myspringboot.log
 

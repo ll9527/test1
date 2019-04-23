@@ -1,5 +1,8 @@
 package com.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.entity.Referrer;
 
 public interface ReferrerMapper {
@@ -20,4 +23,10 @@ public interface ReferrerMapper {
      * @return
      */
 	Referrer selectByUId(Integer userId);
+	/**
+	 * 用推荐人id查所有已注册的用户
+	 * @param referrerId
+	 * @return
+	 */
+	List<Referrer> selectByRId(Integer referrerId);
 }

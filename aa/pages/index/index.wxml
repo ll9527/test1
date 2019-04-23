@@ -1,10 +1,14 @@
 <button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
+<view class='scroll_view_border'>
+<view class='zhengjian' catchtap='goPapers'>证件</view>
+<view class="srcoll_view">公告：{{gonggao}}</view>
+</view>
 <!-- 分类 -->
 <scroll-view class="categories" scroll-x="true" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-	<view class="category {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">
+	<view class="category {{current==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">
 	  热门
 	 </view>
-	<view class="category {{currentTab==index+1 ? 'on' : ''}}" data-current="{{index+1}}" bindtap="swichNav" wx:for="{{level2List}}" wx:key="{{index}}">
+	<view class="category {{current==index+1 ? 'on' : ''}}" data-current="{{index+1}}" bindtap="swichNav" wx:for="{{isShowLevel2?level2List:level2List2}}" wx:key="{{index}}">
 	  {{item.className}}
 	 </view>
 	<!-- <view class="category {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">
@@ -37,7 +41,7 @@ bindchange="bindChange" style="height:{{winHeight-44+'px'}}">
             <block wx:for="{{imgUrls}}" wx:key="*this">  
               <swiper-item>  
                 <!-- <navigator url="{{item.link}}">   -->
-                  <image src="{{url+item.url}}"/>
+                  <image src="{{url+'/image/admin/'+item.name}}"/>
                  <!-- </navigator>   -->
                </swiper-item>  
              </block>  
@@ -97,10 +101,10 @@ bindchange="bindChange" style="height:{{winHeight-44+'px'}}">
     <!-- 服饰 -->
     <swiper-item wx:for="{{level2List}}" wx:key="{{index}}">  
       <!-- <view>服饰</view>  -->
-      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll" hidden='{{!isShow}}'>
         <!-- 产品列表区 -->
         <!-- <view>ffffffaaa</view> -->
-        <view class="producs2" wx:for="{{pList}}" wx:key="{{index}}">
+        <view class="producs2" wx:for="{{pList['id'+item.classId]}}" wx:key="{{index}}">
           <!-- 标题块 -->
           <!-- <view class="produc" bindtap="goDetails"  hover-class="navigator-hover">    -->
           <navigator url="/pages/productDetails/productDetails?productid={{item.id}}" class="produc" hover-class="navigator-hover">   

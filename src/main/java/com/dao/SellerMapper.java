@@ -40,5 +40,12 @@ public interface SellerMapper {
 
     //查询商家所有上架商品+图片
     List<Seller> selectSellerDetail(Map<String, Object> map);
+    /**
+     * 查询地区的指定类型商家
+     * @param sellerClass
+     * @param currentCity
+     * @return
+     */
+	List<Seller> selectSellerFromSellerClass1(String sellerClass, String currentCity);
     
 }

@@ -127,7 +127,7 @@
   text-align: center;
   line-height: 108rpx;
   font-size: 28rpx;
-  color: rgb(31, 31, 31);
+  color: rgb(0, 0, 0);
 }
 .on{ 
   color: rgb(255, 90, 90); 
@@ -176,7 +176,7 @@
   line-height: 28rpx;
   font-size: 24rpx;
   /* vertical-align:top; */
-  color: rgb(31, 31, 31);
+  color: rgb(0, 0, 0);
 }
 
 

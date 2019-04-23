@@ -16,7 +16,7 @@ Page({
     var that = this
     getApp().isLogin();
     that.setData({
-      pname: res.body,
+      // pname: res.body,
       sellerid: res.sellerid
     })
     console.log(res)

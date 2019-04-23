@@ -67,6 +67,26 @@ Page({
           userData: e.data
         })
         wx.request({
+          url: getApp().url + '/user/isVip',
+          data: {
+            userid: e.data.userId
+          },success(res){
+            that.setData({
+              isVip: res.data
+            })
+          }
+        })
+        wx.request({
+          url: getApp().url + '/order/getUserOrderNum',
+          data: {
+            uuuuu: e.data.userId
+          }, success(res) {
+            that.setData({
+              orderNum: res.data
+            })
+          }
+        })
+        wx.request({
           url: getApp().url + '/user/selectMark',
           data: {
             userid: e.data.userId
@@ -90,6 +110,26 @@ Page({
             })
           }
         })
+        // 用用户id查该用户的已付款拼团订单
+        wx.request({
+          url: getApp().url + '/order/selectGroupByU',
+          data: {
+            u: e.data.userId
+          },
+          success: function (res) {
+            that.setData({
+              orderList: res.data
+            })
+          }
+        })
+        wx.request({
+          url: getApp().url +  '/user/jiangjin',
+          success(res){
+            that.setData({
+              jiangjin: res.data
+            })
+          }
+        })
       },
       fail: function(){
         wx.reLaunch({
@@ -97,6 +137,17 @@ Page({
         })
       }
     })   
+  },
+  /** 打开扫一扫 */
+  qr(){
+    wx.scanCode({
+      success(res) {
+        console.log(res)
+        wx.navigateTo({
+          url: "/" + res.path,
+        })
+      }
+    })
   },
   // 跳转商家后台
   goSellerManager(res){
@@ -186,15 +237,15 @@ Page({
   },
   // 我的团购页面
   toTuangou : function(){
-    // wx.navigateTo({
-    //   url: '/pages/myGroup/myGroup',
-    // })
+    wx.navigateTo({
+      url: '/pages/myGroup/myGroup',
+    })
   },
   // 去业绩积分
   toYeji: function () {
-    wx.navigateTo({
-      url: '',
-    })
+    // wx.navigateTo({
+    //   url: '',
+    // })
   },
   // 跳转查看全部订单页面
   selectAllList : function(){
@@ -232,15 +283,4 @@ Page({
       url: '/pages/myAfterSale/myAfterSale',
     })
   },
-  // 分享触发函数
-  onShareAppMessage(res){
-    wx.showShareMenu({
-      withShareTicket: true
-    })
-    return {
-      title: '共店商城',
-      path: '/pages/index/index?refereesId=123',
-      imageUrl: "/images/shareCover.jpg"
-    }
-  }
 })

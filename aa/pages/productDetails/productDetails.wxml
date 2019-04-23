@@ -18,18 +18,26 @@
     </view>
   </view>
   <view class='box2'>
-    <navigator url='/pages/comments/comments' class='box2_1'>
+    <navigator url='/pages/comments/comments?pId={{productDetail.productList[0].id}}' class='box2_1'>
       <view class='box2_1_body1'>评论</view>
       <view class='box2_1_body2'>买家评论</view>
       <view class='box2_1_body3'>></view>
     </navigator>
-    <view class='box2_2' catchtap='goGroup'>
-      <view class='box2_2_body1'>
-        <view class='box2_2_body1_1'>加团</view>
-        <view class='box2_1_body2'>3人正在开团，点击参与</view>
-      </view>
+
+    <view catchtap='showGroupListModal' class='box2_1'>
+      <view class='box2_1_body1'>加团</view>
+      <view class='box2_1_body2'>{{orderList.length?orderList.length:0}}人正在开团，满3人成功拼团，点击参与</view>
       <view class='box2_1_body3'>></view>
     </view>
+
+    <!-- <view class='box2_2' catchtap='showGroupListModal'>
+      <view class='box2_2_body1'>
+        <view class='box2_2_body1_1'>加团</view>
+        <view class='box2_1_body2'>{{orderList.length?orderList.length:0}}人正在开团，满3人成功拼团，点击参与</view>
+      </view>
+      <view class='box2_1_body3'>></view>
+    </view> -->
+    
     <view class='box2_3'>
       <view class='box2_3_body1'>商品分类，型号：</view>
       <!-- <view class='box2_1_body3'>></view> -->
@@ -70,6 +78,15 @@
     </view>
 
     <!-- --------------------------------------------- -->
+    <view class="commodity_screen" bindtap="hideGroupListModal" wx:if="{{showGroupListStatus}}"></view>
+      <scroll-view class='group_list' scroll-y="{{true}}" animation="{{animationDataGroup}}" class="group_list" wx:if="{{showGroupListStatus}}">
+        <view class='group_item' wx:for="{{orderList}}" wx:key="{{index}}">
+          <view class='text1'>{{item.orderNum}} 人在团</view>
+          <view>{{item.shopOrderGroup.addTime}}</view>
+          <view class='button1' data-oid='{{item.shopOrderGroup.id}}' catchtap='pindan'>拼单</view>
+        </view>
+      </scroll-view>
+    <!-- ---------------------------------------------------------------------- -->
     <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
     <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
       <view class='box2_3'>
@@ -107,7 +124,7 @@
         库存：{{num}}
       </view>
     </view>
-    <view class='buttonG' data-isgroup='1' catchtap='goPay'>开团</view>
+    <view class='buttonG' data-isgroup='1' catchtap='goPay'>{{groupOid?"拼团":"开团"}}</view>
     </view>  
     
     <!-- <navigator class='box4' url='/pages/storeAllList/storeAllList?sellerid={{productDetail.sellerid}}'> -->

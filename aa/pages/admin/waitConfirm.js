@@ -23,10 +23,15 @@ Page({
       },
       success:function(res){
         console.log(1+res.data)
+        if (res.data.tel.toString().length == 10){
+          res.data.tel = "0" + res.data.tel.toString()
+          console.log(res.data.tel)
+        }
         that.setData({
           // 商品详情信息
           sellsMessage: res.data,
-          url: getApp().url
+          url: getApp().url,
+          sta: options.sta
         })
       }
     })
@@ -82,7 +87,5 @@ Page({
       })
     }
    },
-  onShareAppMessage: function () {
 
-  }
 })

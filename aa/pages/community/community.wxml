@@ -71,31 +71,38 @@ bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'
           <!-- item -->
           <view class='body_item' wx:for="{{hotList}}" wx:key="{{index}}">
             <!-- 头部 -->
-            <view class='body_item_head'>
+            <navigator class='body_item_head' url="{{'/pages/storeAllList/storeAllList?sellerid='+item[0].id}}">
               <!-- <image src='/images/15.png'></image> -->
               <!-- <view class='body_item_title'> -->
-              <navigator class='body_item_title' url="{{'/pages/storeAllList/storeAllList?sellerid='+item[0].id}}">
+              <view class='body_item_title' >
                 <view class='body_item_title_1'>{{item[0].titleName}}</view>
                 <!-- <view class='body_item_title_2'>来这里吃冰淇淋，小心没舌头哦！</view> -->
-              </navigator>
+              </view>
               <!-- </view> -->
               <view class='body_item_collect'>
+                <view class='body_item_collect2'>进店</view>
                 <!-- <view class='{{showCollect?"body_item_collect1":"body_item_collect2"}}' bindtap='switchCollect'>{{showCollect?"收藏":"已收藏"}}</view> -->
                 <!-- <view class='body_item_collect2' wx:if="{{showCollect}}" bindtap='switchCollect'>已收藏</view> -->
               </view>
-            </view>
+            </navigator>
             <!-- 图片 -->
-            <view class='body_item_images'>
+            <view class='body_item_images' wx:if="{{item[0].productList}}">
               <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" wx:key="{{index}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
                 <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
                 <view>￥ {{item.price}}</view>
               </navigator>
             </view>
+            <view class='body_item_images' wx:if="{{!item[0].productList}}">
+              <view class='body_item_images_navigator' wx:for="{{item[0].sellerCover}}" wx:key="{{index}}">
+                <image src="{{url+'/image/admin/'+item.name}}"></image>
+                <!-- <view>￥ {{item.price}}</view> -->
+              </view>
+            </view>
             <!-- 位置 -->
-            <!-- <view class='body_item_seat'>
-              <view class='body_item_seat_text'>{{item.}}</view>
+            <view class='body_item_seat'>
               <image src='/images/seat.png'></image>
-            </view>       -->
+              <view class='body_item_seat_text'>{{item[0].sellerAddressList[0].address}}</view>
+            </view>      
           </view>
         </view>
       </scroll-view>
@@ -106,7 +113,7 @@ bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'
         <!-- style="height:{{winHeight-88-50}}px" -->
         <view class='body'>
           <!-- item -->
-          <view class='body_item' wx:for="{{sellerProList}}" wx:key="{{index}}">
+          <view class='body_item' wx:for="{{sellerProList[item]}}" wx:key="{{index}}">
             <!-- 头部 -->
             <view class='body_item_head'>
               <!-- <image src='/images/15.png'></image> -->
@@ -122,17 +129,23 @@ bindchange="bindChange" style="height:{{winHeight-88-50}}px" class='bBackground'
               </view>
             </view>
             <!-- 图片 -->
-            <view class='body_item_images'>
+            <view class='body_item_images' wx:if="{{item[0].productList}}">
               <navigator class='body_item_images_navigator' wx:for="{{item[0].productList}}" wx:key="{{index}}" url='/pages/productDetails/productDetails?productid={{item.id}}'>
                 <image src="{{url+'/image/'+item.productImgList[0].image}}"></image>
                 <view>￥ {{item.price}}</view>
               </navigator>
             </view>
+            <view class='body_item_images' wx:if="{{!item[0].productList}}">
+              <view class='body_item_images_navigator' wx:for="{{item[0].sellerCover}}" wx:key="{{index}}">
+                <image src="{{url+'/image/admin/'+item.name}}"></image>
+                <!-- <view>￥ {{item.price}}</view> -->
+              </view>
+            </view>
             <!-- 位置 -->
-            <!-- <view class='body_item_seat'>
-              <view class='body_item_seat_text'>{{item.}}</view>
+            <view class='body_item_seat'>
               <image src='/images/seat.png'></image>
-            </view>       -->
+              <view class='body_item_seat_text'>{{item[0].sellerAddressList[0].address}}</view>
+            </view>  
           </view>
         </view>
       </scroll-view>

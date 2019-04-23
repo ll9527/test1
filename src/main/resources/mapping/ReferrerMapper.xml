@@ -21,6 +21,12 @@
     from referrer
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <!-- 用推荐人id查所有已注册的用户 -->
+  <select id="selectByRId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from referrer
+    where referrer_id = #{referrerId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from referrer
     where id = #{id,jdbcType=INTEGER}

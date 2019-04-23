@@ -1,0 +1,22 @@
+/* pages/admin/kouDian.wxss */
+/* pages/sellerManager/qrPay.wxss */
+.box1{
+  margin: 100rpx;
+}
+.inputBox{
+  border-bottom: 1rpx rgb(223, 223, 223) solid;
+  display: flex;
+  margin-bottom: 100rpx;
+}
+.text1{
+  font-size: 22rpx;
+  color: rgb(131, 131, 131);
+  padding-bottom: 20rpx;
+}
+.text{
+  font-size: 42rpx;
+  padding-right: 20rpx;
+}
+.marginB{
+  margin-bottom: 30rpx;
+}

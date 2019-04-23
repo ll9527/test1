@@ -1,2 +1,8 @@
 <!--pages/comments/comments.wxml-->
-<text>pages/comments/comments.wxml</text>
+<view class='box1' wx:for="{{list}}" wx:key="{{index}}">
+  <view class='box2'>
+    <view>{{index}}：</view>
+    <view></view>
+  </view>
+  <view>{{item.comment}}</view>
+</view>

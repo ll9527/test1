@@ -1,10 +1,12 @@
 <button open-type="getUserInfo" bindgetuserinfo="click"  style='height:{{winHeight}}px;width:{{winWidth}}px' hidden='{{root}}' class='rootBox'></button>
 <view class='page' style='height:{{winHeight}}px'>
+  <view class='sign position1' wx:if="{{orderNum.withTheDelivery != 0}}">{{orderNum.withTheDelivery}}</view>
+  <view class='sign position2' wx:if="{{orderNum.forTheGoods != 0}}">{{orderNum.forTheGoods}}</view>
   <view class='box1'>
     <view class='box1_top'>
       <!-- <image class='box1_top_image' src='/images/tx@2x.png'></image> -->
       <view class='box1_top_mid'>
-        <view class='box1_top_mid_title'>{{username}}</view>
+        <view class='box1_top_mid_title'>{{username}} <image class='vipImage' wx:if="{{isVip==1}}" src='/images/vip.png'></image></view>
         <view class='box1_top_mid_title2'>
           <view style='margin-right:20rpx' bindtap='toDianZhang'>升级店长</view>
           <view bindtap='toKaiDian'>线下开店</view>
@@ -24,7 +26,7 @@
         <image src='/images/tuan.png'></image>
         <view>
           <view class='box1_bottom_1_title'>我的团购></view>
-          <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>22</view>
+          <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>{{orderList.length}}</view>
         </view>
       </view>
       <view class='box1_bottom_2'></view>
@@ -79,11 +81,11 @@
   </view> -->
   <view class='bonusPool'>
     <view class='bonusPool_1'>
-      <view>3698</view>
+      <view>{{jiangjin.discountAmount}}</view>
       <view>今日活动奖金</view>
     </view>
     <view class='bonusPool_1'>
-      <view>8888</view>
+      <view>{{jiangjin.bonusPools}}</view>
       <view>今日奖励奖金</view>
     </view>
   </view>
@@ -96,6 +98,11 @@
           </view>
     </view>
     <view class='box3_item_border'></view>
+    <view class='box3_item' catchtap='qr'>
+      <view>扫一扫</view>
+      <view>></view>
+    </view>
+    <view class='box3_item_border'></view>
     <navigator class='box3_item' url='/pages/myWallet/myWallet'>
       <view>我的钱包</view>
       <view>></view>
@@ -105,16 +112,16 @@
       <view>我的收藏</view>
       <view>></view>
     </navigator>
-    <!-- <view class='box3_item_border'></view>
-    <navigator class='box3_item'>
-      <view>我的评论</view>
-      <view>></view>
-    </navigator> -->
     <view class='box3_item_border'></view>
-    <button class='button box3_item' open-type="share">
-      <view>我的分享</view>
+    <navigator url='/pages/share/share' class='box3_item'>
+      <view>我的分享（有奖）</view>
       <view>></view>
-    </button>
+    </navigator>
+    <!-- <view class='box3_item_border'></view>
+    <button class='button box3_item' open-type="share">
+      <view>我的分享（有奖）</view>
+      <view>></view>
+    </button> -->
     <!-- <view class='box3_item_border'></view>
     <navigator class='box3_item' url='/pages/userData/userData'>
       <view>个人资料</view>
@@ -136,7 +143,8 @@
       <view>></view>
     </view>
     <view class='box3_item_border' wx:if="{{userData.info==1}}"></view>
-    <navigator class='box3_item' url='/pages/admin/admin' wx:if="{{userData.info==1}}">
+    <!-- <navigator class='box3_item' url='/pages/admin/admin' wx:if="{{userData.info==1}}"> -->
+    <navigator class='box3_item' url='/pages/admin/adminPage' wx:if="{{userData.info==1}}">
       <view>管理员后台</view>
       <view>></view>
     </navigator>

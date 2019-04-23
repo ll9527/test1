@@ -33,7 +33,28 @@ public class ShopOrder {
     private Integer isPick;
     
     private String prepay_id;
+    
+    private Integer isGroup;
+    
+    private Integer group_oid;
 
+    private Date endTime;
+
+	public Integer getGroup_oid() {
+		return group_oid;
+	}
+
+	public void setGroup_oid(Integer group_oid) {
+		this.group_oid = group_oid;
+	}
+
+	public Integer getIsGroup() {
+		return isGroup;
+	}
+
+	public void setIsGroup(Integer isGroup) {
+		this.isGroup = isGroup;
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -154,4 +175,12 @@ public class ShopOrder {
     public void setIsPick(Integer isPick) {
         this.isPick = isPick;
     }
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 }

@@ -37,6 +37,19 @@ Page({
   onLoad: function (options) {
     var that = this
     getApp().isLogin();
+    if (options.isUpdata == 1){
+      wx.request({
+        url: getApp().url + '/seller/getSeller',
+        data:{
+          sellerId: wx.getStorageSync("sellerId")
+        },success(res){
+          that.setData({
+            sellerData: res.data,
+            isUpdata: 1
+          })
+        }
+      })
+    }
     wx.getStorage({
       key: 'userData',
       success: function(res) {
@@ -209,6 +222,51 @@ Page({
                 mask: true
               })
             }
+          }
+        })
+      }
+    } else {
+      wx.showToast({
+        title: '输入框不能为空',
+        icon: 'loading',
+        duration: 1000,
+        mask: true
+      })
+    }
+  },
+  /** 更新数据 */
+  sellerUpData: function (e) {
+    var that = this
+    if (e.detail.value.title != "" && e.detail.value.tel != "" && e.detail.value.address != "") {
+      if (that.data.sellerClass == "") {
+        wx.showToast({
+          title: '请选择类型',
+          icon: 'loading',
+          duration: 1000,
+          mask: true
+        })
+        return;
+      }
+      else {
+        // 传数据给后台
+        wx.request({
+          url: getApp().url + '/seller/upData',
+          data: {
+            userid: userId,
+            titleName: e.detail.value.title,
+            tel: e.detail.value.tel,
+            address: e.detail.value.address,
+            sellerClass: that.data.sellerClass,
+            id: wx.getStorageSync("sellerId")
+          },
+          success: function (e) {
+            console.log(e)
+            if (e.data.info === 1 && that.data.detailsPhoto.length > 0) {
+              that.uploadimg(that.data.detailsPhoto, userId)
+            }
+            wx.switchTab({
+              url: '/pages/myPage/myPage',
+            })
           }
         })
       }

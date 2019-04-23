@@ -40,8 +40,8 @@ Page({
    * 提现功能
    */
   toCash: function(e){
-    wx.navigateTo({
-      url: '/pages/msg/msg_success'
-    })
+    // wx.navigateTo({
+    //   url: '/pages/msg/msg_success'
+    // })
   }
 })

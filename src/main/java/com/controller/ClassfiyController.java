@@ -26,4 +26,11 @@ public class ClassfiyController {
     public List<Shop> selectTwo(){
         return shopService.selectTwo();
     }
+    
+    //查询二级目录
+    @RequestMapping("/selectLevel2")
+    public Boolean selectLevel2(){
+    	return true;
+    }
+    
 }

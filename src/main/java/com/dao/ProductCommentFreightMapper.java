@@ -23,4 +23,10 @@ public interface ProductCommentFreightMapper {
     int updateByPrimaryKeySelective(ProductCommentFreight record);
 
     int updateByPrimaryKey(ProductCommentFreight record);
+    /**
+     * 查商品评论
+     * @param pId
+     * @return
+     */
+	List<ProductCommentFreight> selectCommentsByPid(Integer pId);
 }

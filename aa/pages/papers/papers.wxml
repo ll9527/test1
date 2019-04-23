@@ -1,0 +1,3 @@
+<!--pages/papers/papers.wxml-->
+<image class='padding' src="{{url+item.name}}" mode='widthFix' wx:for="{{imgList}}" wx:key="{{index}}"></image>
+<view class='text'>备案号：粤ICP备19015002号</view>

@@ -32,7 +32,11 @@ public class QuartzScheduler {
      */
     public void startJob() throws SchedulerException {
         startJob1(scheduler);
-//        startJob2(scheduler);
+        startJob2(scheduler);
+        startJob3(scheduler);
+        startJob4(scheduler);
+        startJob5(scheduler);
+//        startJob6(scheduler);
         scheduler.start();
     }
 
@@ -152,9 +156,39 @@ public class QuartzScheduler {
 
     private void startJob2(Scheduler scheduler) throws SchedulerException {
         JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob2.class).withIdentity("job2", "group2").build();
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0/15 * * * ?");
         CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job2", "group2")
                 .withSchedule(cronScheduleBuilder).build();
         scheduler.scheduleJob(jobDetail, cronTrigger);
+    }
+    
+    private void startJob3(Scheduler scheduler) throws SchedulerException {
+    	JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob3.class).withIdentity("job3", "group3").build();
+    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 6 * * ?");
+    	CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job3", "group3")
+    			.withSchedule(cronScheduleBuilder).build();
+    	scheduler.scheduleJob(jobDetail, cronTrigger);
+    }
+    
+    private void startJob4(Scheduler scheduler) throws SchedulerException {
+    	JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob4.class).withIdentity("job4", "group4").build();
+    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 0/2 * * ?");
+    	CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job4", "group4")
+    			.withSchedule(cronScheduleBuilder).build();
+    	scheduler.scheduleJob(jobDetail, cronTrigger);
+    }
+    private void startJob5(Scheduler scheduler) throws SchedulerException {
+    	JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob5.class).withIdentity("job5", "group5").build();
+    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 1 * * ?");
+    	CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job5", "group5")
+    			.withSchedule(cronScheduleBuilder).build();
+    	scheduler.scheduleJob(jobDetail, cronTrigger);
+    }
+    private void startJob6(Scheduler scheduler) throws SchedulerException {
+    	JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob6.class).withIdentity("job6", "group6").build();
+    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 3 * * ?");
+    	CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job6", "group6")
+    			.withSchedule(cronScheduleBuilder).build();
+    	scheduler.scheduleJob(jobDetail, cronTrigger);
     }
 }

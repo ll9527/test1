@@ -1,7 +1,13 @@
 package com.serviceImp;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +23,10 @@ import com.dao.ReferrerMapper;
 import com.dao.SellerMapper;
 import com.dao.SellerWithProductImgMapper;
 import com.dao.ShopOrderGoodsMapper;
+import com.dao.ShopOrderGroupMapper;
 import com.dao.ShopOrderMapper;
 import com.dao.UserMapper;
+import com.dao.WxHttpRequestUtil;
 import com.entity.AdminProfit;
 import com.entity.Coupons;
 import com.entity.ProductCommentFreight;
@@ -27,6 +35,7 @@ import com.entity.Seller;
 import com.entity.SellerWithProductImg;
 import com.entity.ShopOrder;
 import com.entity.ShopOrderGoods;
+import com.entity.ShopOrderGroup;
 import com.entity.User;
 import com.service.ShopOrderService;
 
@@ -51,6 +60,8 @@ public class ShopOrderServiceImple implements ShopOrderService{
 	private ProductCommentFreightMapper pcfm;
 	@Autowired(required = false)
 	private ReferrerMapper referrerMapper;
+	@Autowired(required = false)
+	private ShopOrderGroupMapper shopOrderGroupMapper;
 	
 	@Override
 	public Integer vipPay(ShopOrder shopOrder) {
@@ -69,7 +80,7 @@ public class ShopOrderServiceImple implements ShopOrderService{
 		user.setIsVip(1);
 		Integer code = shopOrderMapper.updateByPrimaryKeySelective(so);
 		Integer code1 = userMapper.updateByPrimaryKeySelective(user);
-		if(code==1 && code==1) {
+		if(code==1 && code1==1) {
 			return 1;
 		}
 		return 0;
@@ -160,6 +171,7 @@ public class ShopOrderServiceImple implements ShopOrderService{
 			if(shopOrder.getOrderStatus() == 2) {
 //				修改订单状态
 				shopOrder.setOrderStatus(3);
+				shopOrder.setEndTime(new Date());
 				shopOrderMapper.updateByPrimaryKeySelective(shopOrder);
 //				插入评论
 				ShopOrderGoods shopOrderGoods = shopOrderGoodsMapper.selectByOId(id).get(0);
@@ -170,7 +182,10 @@ public class ShopOrderServiceImple implements ShopOrderService{
 //				商家余额加入金额
 				Seller se = sellerMapper.selectByPrimaryKey(shopOrder.getSellerId());
 				User seller = userMapper.selectByPrimaryKey(se.getUserId());
-				seller.setMoney(seller.getMoney().add(shopOrder.getTotalMoney()));
+//				平台扣点比例
+				BigDecimal shopPercent = new BigDecimal(adminPM.selectAdminByVipMoney().getShopPercent().toString());
+				BigDecimal money = shopOrder.getTotalMoney().subtract(shopOrder.getTotalMoney().multiply(shopPercent));
+				seller.setMoney(seller.getMoney().add(money));
 				userMapper.updateByPrimaryKeySelective(seller);
 //				用户积分增加
 				User user = userMapper.selectByPrimaryKey(shopOrder.getUserId());
@@ -228,5 +243,151 @@ public class ShopOrderServiceImple implements ShopOrderService{
 		}
 		return map;
 	}
-	
+
+	@Override
+	public int insertSelectiveRetKey(ShopOrderGroup shopOrderGroup) {
+		return shopOrderGroupMapper.insertSelective(shopOrderGroup);
+	}
+
+	@Override
+	public List<ShopOrder> selectByGroupOid(Integer groupOid) {
+		return shopOrderMapper.selectByGroupOid(groupOid);
+	}
+
+	@Override
+	public List selectGroupByP(Integer p) {
+		List list = new ArrayList<>();
+//		用商品id查团购订单
+		List<ShopOrderGroup> groupList = shopOrderGroupMapper.selectByPid(p);
+		if(!groupList.isEmpty()) {
+			for (ShopOrderGroup shopOrderGroup : groupList) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				Integer orderNum = shopOrderMapper.selectByGroupOid(shopOrderGroup.getId()).size();
+				if(orderNum > 0 && orderNum < 3) {
+					map.put("shopOrderGroup", shopOrderGroup);
+					map.put("orderNum", orderNum);
+					list.add(map);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List selectGroupByU(Integer u) {
+		List list = new ArrayList();
+		// 获取所有订单
+		List<ShopOrder> orderList = shopOrderMapper.selectGroupByU(u);
+		for (ShopOrder shopOrder : orderList) {
+			List<ShopOrderGoods> shopOrderGoodsList = shopOrderGoodsMapper.selectByOId(shopOrder.getId());
+			Map map = new HashMap();
+			map.put("shopOrder", shopOrder);
+			map.put("shopOrderGoodsList", shopOrderGoodsList);
+			list.add(map);
+		}
+		return list;
+	}
+
+	@Override
+	public List<ShopOrder> selectAllOrderByTime() {
+		return shopOrderMapper.selectAllOrderByTime();
+	}
+
+	@Override
+	public ShopOrderGroup selectGroupByKey(Integer id) {
+		return shopOrderGroupMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateGroupSelective(ShopOrderGroup shopOrderGroup) {
+		return shopOrderGroupMapper.updateByPrimaryKeySelective(shopOrderGroup);
+	}
+
+	@Override
+	public String getQrCode(Integer sel) {
+		String ACCESS_TOKEN = adminPM.selectAdminByVipMoney().getPercentClass();
+		String scene = sel.toString();
+		try {
+			return WxHttpRequestUtil.getQrCode(ACCESS_TOKEN, scene, sel);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Integer upQrCodePay(String string) {
+		ShopOrder so = shopOrderMapper.selectByOrderSn(string);
+		so.setOrderStatus(9);
+		so.setEndTime(new Date());
+		Integer userId = sellerMapper.selectByPrimaryKey(so.getSellerId()).getUserId();
+		User seller = userMapper.selectByPrimaryKey(userId);
+//		平台扣点比例
+		BigDecimal shopPercent = new BigDecimal(adminPM.selectAdminByVipMoney().getShopPercent().toString());
+		BigDecimal money = so.getTotalMoney().subtract(so.getTotalMoney().multiply(shopPercent));
+		seller.setMoney(seller.getMoney().add(money));
+		
+//		用户积分增加
+		User user = userMapper.selectByPrimaryKey(so.getUserId());
+		user.setScore(user.getScore()+so.getTotalMoney().intValue());
+		userMapper.updateByPrimaryKeySelective(user);
+//		推荐人积分增加
+		Referrer ref = referrerMapper.selectByUId(user.getId());
+		if(ref !=null) {
+			User referrer = userMapper.selectByPrimaryKey(ref.getReferrerId());
+			referrer.setScore(referrer.getScore()+so.getTotalMoney().intValue()/2);
+			userMapper.updateByPrimaryKeySelective(referrer);
+		}
+		
+		Integer code = shopOrderMapper.updateByPrimaryKeySelective(so);
+		Integer code1 = userMapper.updateByPrimaryKeySelective(seller);
+		if(code==1 && code1==1) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public BigDecimal selectSales() {
+		return shopOrderMapper.selectSales();
+	}
+
+	@Override
+	public BigDecimal selectAllSales() {
+		return shopOrderMapper.selectAllSales();
+	}
+
+	@Override
+	public void upBonus() {
+		BigDecimal money = shopOrderMapper.select7DaysBeforeMoney();
+		AdminProfit ap = adminPM.selectAdminByVipMoney();
+		if(money != null) {
+			ap.setDiscountAmount(new BigDecimal(ap.getDiscountPersent().toString()).divide(new BigDecimal("100")).multiply(money));
+			ap.setBonusPools(new BigDecimal(ap.getPoolsPersent().toString()).divide(new BigDecimal("100")).multiply(money));
+		}else {
+			ap.setDiscountAmount(new BigDecimal(0));
+			ap.setBonusPools(new BigDecimal(0));
+		}
+		adminPM.updateByPrimaryKeySelective(ap);
+	}
+
+	@Override
+	public Map getUserOrderNum(Integer userId) {
+		Map map = new HashMap();
+		int withTheDelivery = shopOrderMapper.selectAllByUserOrSeller(1, userId, null).size();
+		int forTheGoods = shopOrderMapper.selectAllByUserOrSeller(2, userId, null).size();
+		map.put("withTheDelivery", withTheDelivery);
+		map.put("forTheGoods", forTheGoods);
+		return map;
+	}
+	@Override
+	public Map getSOrderNum(Integer sellerId) {
+		Map map = new HashMap();
+		int withTheDelivery = shopOrderMapper.selectAllByUserOrSeller(1, null, sellerId).size();
+		int forTheGoods = shopOrderMapper.selectAllByUserOrSeller(4, null, sellerId).size();
+		map.put("withTheDelivery", withTheDelivery);
+		map.put("forTheGoods", forTheGoods);
+		return map;
+	}
 }

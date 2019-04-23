@@ -91,7 +91,8 @@
 }
 /* 头部 */
 .body_item_head{
-
+  display: flex;
+  justify-content: space-between;
 }
 .body_item_head > image{
   width: 64rpx;
@@ -110,7 +111,7 @@
 .body_item_title_1{
   font-size: 30rpx;
   line-height: 32rpx;
-  color: rgb(31, 31, 31);
+  color: rgb(0, 0, 0);
 }
 .body_item_title_2{
   font-size: 22rpx;
@@ -120,9 +121,9 @@
 .body_item_collect{
   width: 106rpx;
   height: 46rpx;
-  position: relative;
+  /* position: relative;
   bottom: 20rpx;
-  left: 60rpx;
+  left: 60rpx; */
 }
 .body_item_collect1{
   width: 100rpx;
@@ -185,19 +186,19 @@
   line-height: 24rpx;
 }
 .body_item_seat_text{
-  width: 400rpx;
+  /* width: 400rpx; */
   height: 24rpx;
   display: inline-block;
   line-height: 24rpx;
-  font-size: 20rpx;
+  font-size: 24rpx;
   color: rgb(128, 128, 128);
 }
 .body_item_seat > image{
-  width: 16rpx;
-  height: 20rpx;
-  padding-left: 220rpx;
+  width: 25rpx;
+  height: 30rpx;
+  padding: 0 20rpx;
 }
 
 .bBackground{
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(255, 255, 255);
 }

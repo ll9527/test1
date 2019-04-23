@@ -59,4 +59,36 @@ public interface UserService {
 	 * @param coupons
 	 */
 	void updateCoupons(Coupons coupons);
+	/**
+	 * 查询公告
+	 * @return
+	 */
+	String selectGG();
+	/**
+	 * 查用户人数
+	 * @return
+	 */
+	Integer selectAllUser();
+	/**
+	 * 查Vip人数
+	 * @return
+	 */
+	Integer selectVipUser();
+	/**
+	 * 发钱给达到要求vip
+	 */
+	void sendVipMoney();
+	/**
+	 * 清空30天内没购物的会员积分
+	 */
+	void removeScore();
+	/**
+	 * 用户分享
+	 * @param uwea
+	 */
+	void share(Integer uwea);
+
+	Map<String, Object> jiangjin();
+
+	int shareNum(Integer uuu);
 }

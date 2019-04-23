@@ -1,0 +1,17 @@
+<!--pages/sellerManager/qrPay.wxml-->
+<form bindsubmit="pay">
+<view class='box1' wx:if="{{isShow}}">
+  <view class='text1'>金额</view>
+  <view class='inputBox'>
+      <view class='text'>￥</view>
+      <input class='input' name="price" placeholder="输入金额" type="digit"></input>
+  </view>
+  <button class='marginB' form-type="submit" type="primary">付款</button>
+  <button type="warn" catchtap='goIndex'>返回首页</button>
+</view>
+<view class='box1' wx:if="{{!isShow}}">
+  <view class='marginB'>请登陆后在 我的 页面里打开扫一扫</view>
+  <button type="primary" catchtap='toLogin'>登陆</button>
+</view>  
+
+</form>

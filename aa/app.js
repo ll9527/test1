@@ -1,7 +1,7 @@
 //app.js
 App({
-  // url: "https://www.gongshop.com.cn",
-  url: "http://127.0.0.1:8080",
+  url: "https://www.gongshop.com.cn",
+  // url: "http://127.0.0.1:8080",
   // 推荐人id
   refereesId:"",
   
@@ -13,7 +13,7 @@ App({
     // 检测是否有新版本，如有下载更新
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
-      console.log(res.hasUpdate)
+      // console.log(res.hasUpdate)
       if (res.hasUpdate) {
         updateManager.onUpdateReady(function () {
           updateManager.applyUpdate()
@@ -51,7 +51,7 @@ App({
               try {
                 wx.clearStorageSync()
               } catch (e) {
-                console.log(e)
+                // console.log(e)
                 wx.reLaunch({
                   url: '/pages/login/login',
                 })
@@ -86,7 +86,7 @@ App({
   //授权函数
   click: function (res, that) {
     // var that = this
-    console.log("res1:" + res)
+    // console.log("res1:" + res)
     // wx.getUserInfo({
     //   success: function (res) {
     //     console.log(res)
@@ -109,22 +109,22 @@ App({
       success(res) {
         if (res.code) {
           // 发起网络请求
-          console.log(res.code)
+          // console.log(res.code)
           
         } else {
-          console.log('登录失败！' + res.errMsg)
+          // console.log('登录失败！' + res.errMsg)
         }
       }
     })
   },
   onShow(res){
-    console.log(res)
+    // console.log(res)
     if (res.query.refereesId){
       // 如果是通过分享连接进来的，都有推荐人id
       this.refereesId = res.query.refereesId;
-      console.log(res.query.refereesId)
-      console.log(this.refereesId)
-      console.log("get:"+getApp().refereesId)
+      // console.log(res.query.refereesId)
+      // console.log(this.refereesId)
+      // console.log("get:"+getApp().refereesId)
     }
   }
 })

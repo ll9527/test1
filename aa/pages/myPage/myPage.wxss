@@ -4,6 +4,27 @@
   flex-direction: column; */
   background-color: rgb(245, 245, 245);
 }
+.sign{
+  background: rgb(255, 90, 90);
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  font-size: 22rpx;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  line-height: 36rpx;
+  overflow: hidden;
+}
+.position1{
+  position: absolute;
+  top: 340rpx;
+  left: 250rpx;
+}
+.position2{
+  position: absolute;
+  top: 340rpx;
+  left: 410rpx;
+}
 .box1{
   width: 710rpx;
   height: 250rpx;
@@ -33,11 +54,16 @@
   flex-direction: column;
 }
 .box1_top_mid_title{
-  height: 36rpx;
-  line-height: 32rpx;
-  align-content: center;
+  height: 40rpx;
+  line-height: 40rpx;
+  /* align-content: center; */
   font-size: 30rpx;
   color: rgb(31, 31, 31);
+}
+.vipImage{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
 }
 .box1_top_mid_title2{
   margin-top: 10rpx; 

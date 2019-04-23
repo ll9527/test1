@@ -1,0 +1,23 @@
+<!--pages/admin/kouDian.wxml-->
+<!--pages/sellerManager/qrPay.wxml-->
+<form bindsubmit="commit">
+<view class='box1' >
+  <view class='text1' wx:if="{{sta==1}}">抽活动奖设置</view>
+  <view class='text1' wx:if="{{sta==2}}">抽奖励奖设置</view>
+  <view class='text1' wx:if="{{sta==3}}">扣点设置</view>
+  <view class='inputBox'>
+      <view class='text'>*</view>
+      <input class='input' name="point" placeholder="输入扣点" value='{{dianShu}}' type="number" ></input>
+  </view>
+  <view class='marginB'  wx:if="{{sta==1}}">* 注意：输入抽活动奖扣点数，抽2个点填写2就行</view>
+  <view class='marginB' wx:if="{{sta==2}}">* 注意：输入抽奖励奖扣点数，抽2个点填写2就行</view>
+  <view class='marginB' wx:if="{{sta==3}}">* 注意：输入扣点数，抽6个点填写6就行</view>
+  <button class='marginB' form-type="submit" type="primary">确认</button>
+  <!-- <button type="warn" catchtap='goIndex'>返回首页</button> -->
+</view>
+<!-- <view class='box1' >
+  <view class='marginB'>请登陆后在 我的 页面里打开扫一扫</view>
+  <button type="primary" catchtap='toLogin'>登陆</button>
+</view>   -->
+
+</form>

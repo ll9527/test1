@@ -22,3 +22,24 @@
 .box3_item_border{
   border-top: 1rpx rgb(196,196,196) solid;
 }
+.sign{
+  background: rgb(255, 90, 90);
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  font-size: 22rpx;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  line-height: 36rpx;
+  overflow: hidden;
+}
+.position1{
+  position: absolute;
+  top: 530rpx;
+  left: 150rpx;
+}
+.position2{
+  position: absolute;
+  top: 612rpx;
+  left: 150rpx;
+}

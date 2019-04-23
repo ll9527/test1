@@ -8,7 +8,7 @@
 <view class='title'>店铺地址：</view>
 <view class='text' wx:for="{{sellsMessage.sellerAddressList}}" wx:key="{{index}}">{{item.address}}</view>
 <image class='image' mode='widthFix' wx:for="{{sellsMessage.sellerBcImgList}}" src="{{url+'/image/'+item.img}}" wx:key="{{index}}"></image>
-
+<view wx:if="{{sta != 1}}">
 <view class='title'>拒绝理由：</view>
 <form bindsubmit='refuse' bindreset='approval'>
 
@@ -16,4 +16,6 @@
 
 <button class='margin' type='primary' form-type="reset">批准入驻</button>
 <button class='margin' type='warn' form-type="submit">拒绝入驻</button>
+
 </form>
+</view>

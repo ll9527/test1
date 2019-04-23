@@ -1,17 +1,25 @@
 package com.controller;
 
 import com.dao.FileOperation;
+import com.entity.AdminImg;
+import com.entity.AdminProfit;
+import com.entity.Product;
 import com.entity.Seller;
 import com.entity.SellerBcImg;
 import com.entity.User;
+import com.service.AdminProfitService;
+import com.service.ProductService;
 import com.service.SellerAddressService;
 import com.service.SellerBcImgService;
 import com.service.SellerService;
+import com.service.ShopOrderService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +36,12 @@ public class AdminController {
     private SellerBcImgService sellerBcImgService;
     @Autowired(required = false)
     private SellerAddressService sellerAddressService;
+    @Autowired(required = false)
+    private ShopOrderService shopOrderService;
+    @Autowired(required = false)
+    private AdminProfitService adminProfitService;
+    @Autowired(required = false)
+    private ProductService productService;
 
     //查询未批示商户信息
     @RequestMapping("/selectWtihoutConfirm")
@@ -113,5 +127,104 @@ public class AdminController {
         User user = userService.selectByPrimaryKey(userid);
         return user.getIsAdmin();
     }
-
+//    查询公告
+    @RequestMapping("/selectGG")
+    public String selectGG(){
+    	return userService.selectGG();
+    }
+//	平台管理页面查询
+    @RequestMapping("/selectAllUserOrVip")
+    public Map selectAllUserOrVip(){
+    	Map map = new HashMap();
+    	Integer vip = userService.selectVipUser();
+    	Integer user = userService.selectAllUser();
+    	BigDecimal sales = shopOrderService.selectSales();
+    	BigDecimal allSales = shopOrderService.selectAllSales();
+    	AdminProfit adminProfit = adminProfitService.selectAdmin();
+    	BigDecimal activityBonus = adminProfit.getDiscountAmount();
+    	BigDecimal rewardPool = adminProfit.getBonusPools();
+    	map.put("vip", vip);
+    	map.put("user", user);
+    	map.put("sales", sales==null?0:sales);
+    	map.put("allSales", allSales==null?0:allSales);
+    	map.put("activityBonus", activityBonus==null?0:activityBonus);
+    	map.put("rewardPool", rewardPool==null?0:rewardPool);
+    	return map;
+    }
+//    抽活动奖设置
+    @RequestMapping("/upPoint")
+    public Integer upPoint(Integer sta, String point) {
+    	if(point != null) {
+    		return adminProfitService.upPoint(sta, point);
+    	}
+    	return 0;
+    }
+//    获得管理员设置
+    @RequestMapping("/selectAP")
+    public AdminProfit selectAP() {
+    	return adminProfitService.selectAdmin();
+    }
+//    查询所有商家
+    @RequestMapping("/selectAllSeller")
+    public List<Seller> selectAllSeller() {
+    	return sellerService.selectAll();
+    }
+//    更新公告
+    @RequestMapping("/upAdminP")
+    public void upAdminP(AdminProfit admin) {
+    	admin.setId(1);
+    	adminProfitService.updateByPrimaryKeySelective(admin);
+    }
+//    查看平台证件照
+    @RequestMapping("/adminZImg")
+    public List<AdminImg> adminZImg() {
+    	return adminProfitService.selectAdminZImg();
+    }
+//    查看平台广告照
+    @RequestMapping("/adminGGImg")
+    public List<AdminImg> adminGGImg() {
+    	return adminProfitService.selectAdminGGImg();
+    }
+//  查看平台广告照
+	@RequestMapping("/adminShareImg")
+	public List<AdminImg> adminShareImg() {
+		return adminProfitService.selectAdminShareImg();
+	}
+//    平台照片上传
+    @RequestMapping("/upload")
+    public void upload(MultipartFile image, int sta) {
+    	String ImgName = FileOperation.adminAddImg(image);
+    	if(!ImgName.equals("error")) {
+    		AdminImg adminImg = new AdminImg();
+    		adminImg.setName(ImgName);
+    		adminImg.setRole(String.valueOf(sta));
+    		adminProfitService.inserAdminImg(adminImg);
+    	}
+    }
+//    根据状态码删除平台照片
+    @RequestMapping("/deleteImg")
+    public void deleteImg(int sta) {
+    	if(sta == 2) {
+    		List<AdminImg> adminImgList = adminProfitService.selectAdminGGImg();
+    		if(!adminImgList.isEmpty()) {
+    			for (AdminImg adminImg : adminImgList) {
+    				adminImg.setRole("-2");
+    				adminProfitService.updataAdminImg(adminImg);
+				}
+    		}
+    	}else if(sta == 3){
+    		List<AdminImg> adminImgList = adminProfitService.selectAdminShareImg();
+    		if(!adminImgList.isEmpty()) {
+    			for (AdminImg adminImg : adminImgList) {
+    				adminImg.setRole("-3");
+    				adminProfitService.updataAdminImg(adminImg);
+				}
+    		}
+    	}
+    }
+//    查看平台所有商品
+    @RequestMapping("/allProduct")
+    public List allProduct() {
+    	return productService.selectAllProduct();
+    }
 }

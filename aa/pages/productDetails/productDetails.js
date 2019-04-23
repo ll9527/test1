@@ -24,7 +24,11 @@ Page({
     // 商品id
     productid:"",
     // 拼团型号显示开关
-    showModalStatus: false
+    showModalStatus: false,
+    // 拼团列表显示开关
+    showGroupListStatus: false,
+    // 拼团订单的id
+    groupOid:""
   },
   /**
    * 点击右符号 增 数量
@@ -134,6 +138,22 @@ Page({
     })
     
   },
+  onShow(res){
+    var that = this;
+    wx.request({
+      url: getApp().url + '/order/selectGroupByP',
+      data: {
+        p: this.data.productid
+      }, success(e) {
+        for (var i in e.data) {
+          e.data[i].shopOrderGroup.addTime = new Date(+new Date(e.data[i].shopOrderGroup.addTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+        }
+        that.setData({
+          orderList: e.data
+        })
+      }
+    })
+  },
   /**
    * 查询sku得方法
    */
@@ -231,13 +251,15 @@ Page({
    * 跳转订单页面
    */
   goPay(res){
+    console.log("groupOid"+this.data.groupOid)
     var that = this;
     var isGroup;
     if (res.currentTarget.dataset.isgroup){
-      isGroup = "&isGroup=1"
+      isGroup = 1
     }else{
-      isGroup = ""
+      isGroup = 0
     }
+    console.log(isGroup)
     if (this.data.count <= 0){
       wx.showToast({
         title: '请选择数量',
@@ -279,13 +301,15 @@ Page({
         }else{
           version1Name = ""
         }
+        var url = '/pages/order/order?userid=' + res.data + "&versionName=" + that.data.classify[that.data.radioId].versionName
+          + "&version1Name=" + version1Name + "&count=" + that.data.count
+          + "&product=" + JSON.stringify(that.data.productDetail.productList)
+          + "&price=" + (isGroup == 1 ? that.data.groupPrice : that.data.price)
+          + "&skuId=" + that.data.skuId
+          + "&isGroup=" + isGroup
+          + "&groupOid=" + that.data.groupOid
         wx.navigateTo({
-          url: '/pages/order/order?userid=' + res.data + "&versionName=" + that.data.classify[that.data.radioId].versionName
-            + "&version1Name=" + version1Name  + "&count=" + that.data.count 
-            + "&product=" + JSON.stringify(that.data.productDetail.productList)
-            + "&price=" + that.data.price
-            + "&skuId=" + that.data.skuId
-            + isGroup
+          url: url
         })
       },
       fail(res){
@@ -308,7 +332,9 @@ Page({
     animation.translateY(300).step()
     this.setData({
       animationData: animation.export(),
-      showModalStatus: true
+      showModalStatus: true,
+      // 清空groupOid
+      groupOid: ""
     })
     setTimeout(function () {
       animation.translateY(0).step()
@@ -336,5 +362,72 @@ Page({
         showModalStatus: false
       })
     }.bind(this), 200)
+  },
+
+  // 显示遮罩层
+  showGroupListModal: function () {
+    var that = this;
+    wx.request({
+      url: getApp().url + '/order/selectGroupByP',
+      data: {
+        p: this.data.productid
+      }, success(e) {
+        for (var i in e.data) {
+          e.data[i].shopOrderGroup.addTime = new Date(+new Date(e.data[i].shopOrderGroup.addTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+        }
+        that.setData({
+          orderList: e.data
+        })
+      }
+    })
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationDataGroup: animation.export(),
+      showGroupListStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationDataGroup: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  hideGroupListModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationDataGroup: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationDataGroup: animation.export(),
+        showGroupListStatus: false
+      })
+    }.bind(this), 200)
+  },
+  /** 点击拼单执行的方法 */
+  pindan(res){
+    var that = this;
+    this.hideGroupListModal();
+    this.showModal();
+    console.log(res)
+    this.setData({
+      groupOid: res.currentTarget.dataset.oid
+    })
+    console.log(this.data.groupOid)
   }
 })

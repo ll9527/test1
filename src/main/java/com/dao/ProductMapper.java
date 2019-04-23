@@ -37,6 +37,11 @@ public interface ProductMapper {
 
     //全局模糊查询
     List<Product> serchProduct(Map<String, Object> map);
+    /**
+     * 查看平台所有商品
+     * @return
+     */
+	List selectAllProduct();
 
 
 }

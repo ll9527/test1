@@ -17,10 +17,20 @@ public class PayConfigure {
 		private static String notify_url = "https://gongshop.com.cn/order/payCallback";
 		//订单支付的回调地址
 		private static String ord_notify_url = "https://gongshop.com.cn/order/pricePayCallback";
+		//订单支付的回调地址
+		private static String qr_notify_url = "https://gongshop.com.cn/order/qrPayCallback";
 		//统一下单API接口链接
 	    private static String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		
+	    
 
+		public static String getQr_notify_url() {
+			return qr_notify_url;
+		}
+
+		public static void setQr_notify_url(String qr_notify_url) {
+			PayConfigure.qr_notify_url = qr_notify_url;
+		}
 
 		public static String getOrd_notify_url() {
 			return ord_notify_url;

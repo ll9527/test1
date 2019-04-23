@@ -12,7 +12,7 @@
   </view>
   <view class='box2'>
     <view class='image'>
-      <image class='image' src='/images/tuan.png'></image>
+      <image class='image' src='{{url+product.productImgList[0].image}}'></image>
     </view>
     <view class='box2_right'>
       <view class='box1_bottom'>{{product.title}}</view>

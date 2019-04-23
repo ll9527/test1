@@ -1,3 +1,38 @@
+.srcoll_view{
+position: absolute;
+top:0rpx;
+/* right: 0; */
+height: 50rpx;
+font-size: 30rpx;
+white-space: nowrap;
+line-height: 50rpx;
+color: rgb(255, 90, 90);
+animation:myfirst 20s linear infinite;
+}
+@keyframes myfirst
+{
+  0% {margin-left:750rpx;}
+  100% {margin-left:-1500rpx;}
+}
+.scroll_view_border{
+position: relative;
+width: 100%;
+/* background: rgba(0, 0, 0, 0.2); */
+height: 50rpx;
+overflow: hidden;
+}
+.zhengjian{
+  position: absolute;
+  top:0rpx;
+  width: 80rpx;
+  height: 50rpx;
+  background:rgb(255, 90, 90);
+  color: rgb(255, 255, 255);
+  font-size: 22rpx;
+  line-height: 50rpx;
+  text-align: center;
+  z-index: 1000;
+}
 /* 轮播图 */
 .swiper {
   height: 280rpx;
@@ -9,7 +44,7 @@
 } 
 /* 分类 */
 .box{
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
 }
 .box swiper-item{
   height:100%;
@@ -76,28 +111,33 @@
   background-color: rgb(255, 255, 255);
 }
 .producs2{
-  height: 243rpx;
+  /* height: 243rpx; */
   overflow: hidden;
   margin : 20rpx 20rpx 0rpx 20rpx;
   background-color: rgb(255, 255, 255);
 }
 .produc{
-  height: 223rpx;
-  margin-top: 16rpx;
-  margin: 20rpx 20rpx 0rpx 20rpx;
-  border-bottom: 1rpx solid rgb(233, 233, 233);
+  /* height: 223rpx; */
+  height: 240rpx;
+  margin-top: 20rpx;
+  /* margin: 20rpx 20rpx 0rpx 20rpx; */
+  /* border-bottom: 1rpx solid rgb(233, 233, 233); */
   overflow: hidden;
   background-color: rgb(255, 255, 255);
 }
 .produc > image{
-  width: 204rpx;
-  height: 204rpx;
+  /* width: 204rpx;
+  height: 204rpx; */
+  width: 240rpx;
+  height: 240rpx;
   vertical-align:top;
 }
 .produc_right{
   display: inline-block;
   width: 444rpx;
-  height: 204rpx; 
+  /* width: 420rpx; */
+  /* height: 204rpx;  */
+  height: 240rpx;
   margin-left: 20rpx;
 }
 .produc_right_title{
@@ -109,20 +149,21 @@
   padding-top: 8rpx;
   padding-right: 38rpx; 
   font-size: 28rpx;
-  color: rgb(31, 31, 31);
+  color: rgb(0, 0, 0);
 }
 .produc_right_bottom{
-  height: 60rpx;
+  /* height: 60rpx; */
+  height: 80rpx;
   margin-top: 60rpx;
   overflow: hidden;
 }
 .produc_right_bottom_l{
-  width: 300rpx;
-  height: 54rpx;
+  width: 250rpx;
+  height: 80rpx;
   overflow: hidden;
   display: inline-block;
   line-height: 24rpx;
-  font-size: 22rpx;
+  font-size: 24rpx;
   color: rgb(128, 128, 128);
 }
 .produc_right_bottom_price{
@@ -137,9 +178,10 @@
   color: red;
 }
 .produc_right_bottom_2{
-  width: 140rpx;
+  /* width: 140rpx; */
   height: 40rpx;
-  position : static;
+  line-height: 40rpx;
+  /* position : static; */
   display: inline-block;
   color: red;
   padding-left: 0rpx;
