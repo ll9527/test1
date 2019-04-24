@@ -88,6 +88,7 @@ public class UserController {
                     referrer.setReferrerId(referrer_id);
                     referrer.setUserId(user.getId());
                     referrerService.insertSelective(referrer);
+                    userService.share(referrer_id);
                 }
                 map.put("status", "ok");
                 map.put("info", 1);//1代表注册成功
@@ -131,7 +132,7 @@ public class UserController {
         }
         Map<String, Object> map = new HashMap<>();
         map.put("mark", user.getAppliedMark());
-        map.put("username", user.getUsername());
+        map.put("username", user.getTel());
         map.put("score", user.getScore());
         return map;
     }
@@ -286,7 +287,7 @@ public class UserController {
 //	分享获得奖金
 	@RequestMapping("/share")
 	public void share(Integer uwea) {
-		userService.share(uwea);
+//		userService.share(uwea);
 	}
 //	分享获得奖金
 	@RequestMapping("/jiangjin")

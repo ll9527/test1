@@ -158,6 +158,9 @@ Page({
    * 查询sku得方法
    */
   selectSku(that){
+    if (!that.data.radioId || !that.data.radioId1){
+      return;
+    }
     var skuName = that.data.classify[that.data.radioId].versionName + that.data.classify1[that.data.radioId1].versionName
     var index = that.data.skuNameList.indexOf(skuName)
     if (index != -1){

@@ -12,7 +12,6 @@ Page({
       sta:op.sta,
       count: op.count
     })
-    
   },
   /**
    * 获取要上传的产品详情图路径
@@ -49,19 +48,37 @@ Page({
         }
       })
     }
+    wx.hideLoading()
+    wx.navigateBack({
+      delta: 1,
+    })
   },
 
   /**
    * form提交
    */
   formSubmit: function (e) {
-    wx.request({
-      url: getApp().url + '/admin/deleteImg',
-      data:{sta: this.data.sta}
-    })
-    this.uploadimg(this.data.detailsPhoto, this.data.sta)
-    wx.navigateBack({
-      delta: 1,
-    })
+    var that = this;
+    if (this.data.detailsPhoto && this.data.detailsPhoto.length > 0){
+      wx.showLoading({
+        title: "请稍等",
+        mask: true
+      })
+      wx.request({
+        url: getApp().url + '/admin/deleteImg',
+        data:{sta: this.data.sta},
+        success(res){
+          that.uploadimg(that.data.detailsPhoto, that.data.sta)
+        }
+      })
+    }else{
+      wx.showLoading({
+        title: '请上传图片',
+        mask: true
+      })
+      setTimeout(function(){
+        wx.hideLoading()
+      },1000)
+    }
   },
 })

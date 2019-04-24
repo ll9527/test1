@@ -1,3 +1,7 @@
 <!--pages/papers/papers.wxml-->
-<image class='padding' src="{{url+item.name}}" mode='widthFix' wx:for="{{imgList}}" wx:key="{{index}}"></image>
+<view class='padding' wx:for="{{imgList}}" wx:key="{{index}}">
+  <image src="{{url+item.name}}" mode='widthFix' ></image>
+  <button type="warn" wx:if="{{isShow}}" data-id='{{item.id}}' data-index='{{index}}' catchtap='del'>删除</button>
+</view>
+
 <view class='text'>备案号：粤ICP备19015002号</view>

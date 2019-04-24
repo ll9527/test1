@@ -222,6 +222,11 @@ public class AdminController {
     		}
     	}
     }
+//    删除平台证件照
+    @RequestMapping("/deleteZImg")
+    public int deleteZImg(int imgId) {
+    	return adminProfitService.deleteZImg(imgId);
+    }
 //    查看平台所有商品
     @RequestMapping("/allProduct")
     public List allProduct() {

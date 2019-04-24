@@ -10,15 +10,15 @@ Page({
         })
       }
     })
-    wx.request({
-      url: getApp().url + '/user/shareNum',
-      data:{uuu: wx.getStorageSync("userid")},
-      success(res){
-        that.setData({
-          shareNum: res.data
-        })
-      }
-    })
+    // wx.request({
+    //   url: getApp().url + '/user/shareNum',
+    //   data:{uuu: wx.getStorageSync("userid")},
+    //   success(res){
+    //     that.setData({
+    //       shareNum: res.data
+    //     })
+    //   }
+    // })
   },
   openSuccess: function () {
     

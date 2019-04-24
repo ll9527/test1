@@ -31,10 +31,10 @@
 <!-- 主体 -->
 <view class="box">
 	<swiper current="{{currentTab}}" duration="200"  circular=false
-bindchange="bindChange" style="height:{{winHeight-44+'px'}}"> 
+bindchange="bindChange" style="height:{{winHeight-44-25+'px'}}"> 
 		<!-- 热门 --> 
 		<swiper-item >  
-      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll">
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll" bindscrolltolower="hotReachBottom">
         <!-- 轮播图 -->
         <view  class="swiper">
           <swiper indicator-dots="{{indicatorDots}}"   class="swiper" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">  
@@ -101,7 +101,7 @@ bindchange="bindChange" style="height:{{winHeight-44+'px'}}">
     <!-- 服饰 -->
     <swiper-item wx:for="{{level2List}}" wx:key="{{index}}">  
       <!-- <view>服饰</view>  -->
-      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll" hidden='{{!isShow}}'>
+      <scroll-view scroll-y="{{true}}" scroll-top="{{topNum}}" scroll-with-animation="{{ true}}" style="height:100%;overflow:scroll" hidden='{{!isShow}}' bindscrolltolower="pReachBottom">
         <!-- 产品列表区 -->
         <!-- <view>ffffffaaa</view> -->
         <view class="producs2" wx:for="{{pList['id'+item.classId]}}" wx:key="{{index}}">

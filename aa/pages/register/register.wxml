@@ -1,8 +1,8 @@
 <form bindsubmit='register'>
 
 <view class='inputbox'>
-  <view class='title'>用户名:</view>
-  <input name='username' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入用户名'></input>
+  <!-- <view class='title'>用户名:</view>
+  <input name='username' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入用户名'></input> -->
   <view class='title'>手机号码:</view>
   <input name='phone' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入手机号码'></input>
   <view class='title'>密码:</view>

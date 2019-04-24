@@ -26,7 +26,8 @@
         <image src='/images/tuan.png'></image>
         <view>
           <view class='box1_bottom_1_title'>我的团购></view>
-          <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>{{orderList.length}}</view>
+          <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>好友 {{shareNum}}</view>
+          <!-- <view class='box1_bottom_1_num' style='color: rgb(250, 90, 90);'>{{orderList.length}}</view> -->
         </view>
       </view>
       <view class='box1_bottom_2'></view>

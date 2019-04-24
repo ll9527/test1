@@ -4,7 +4,10 @@ var app = getApp();
 
 Page({
   data:{
-
+    orderNum: {
+      withTheDelivery: 0,
+      forTheGoods: 0
+    }
   },
   /**
    * 页面加载时触发
@@ -37,7 +40,7 @@ Page({
     try {
       wx.clearStorageSync()
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
     wx.switchTab({
       url: '/pages/index/index',
@@ -77,6 +80,15 @@ Page({
           }
         })
         wx.request({
+          url: getApp().url + '/user/shareNum',
+          data: { uuu: e.data.userId},
+          success(res){
+            that.setData({
+              shareNum: res.data
+            })
+          }
+        })
+        wx.request({
           url: getApp().url + '/order/getUserOrderNum',
           data: {
             uuuuu: e.data.userId
@@ -92,7 +104,7 @@ Page({
             userid: e.data.userId
           },
           success: function (res) {
-            console.log(res.data)
+            // console.log(res.data)
             that.setData({
               username: res.data.username,
               mark: res.data.mark
@@ -111,17 +123,17 @@ Page({
           }
         })
         // 用用户id查该用户的已付款拼团订单
-        wx.request({
-          url: getApp().url + '/order/selectGroupByU',
-          data: {
-            u: e.data.userId
-          },
-          success: function (res) {
-            that.setData({
-              orderList: res.data
-            })
-          }
-        })
+        // wx.request({
+        //   url: getApp().url + '/order/selectGroupByU',
+        //   data: {
+        //     u: e.data.userId
+        //   },
+        //   success: function (res) {
+        //     that.setData({
+        //       orderList: res.data
+        //     })
+        //   }
+        // })
         wx.request({
           url: getApp().url +  '/user/jiangjin',
           success(res){

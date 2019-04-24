@@ -19,11 +19,11 @@ Page({
           mask: true
         })
     }else{
-      if (e.detail.value.username != "" && e.detail.value.phone != "" && e.detail.value.password != "") {
+      if (e.detail.value.phone != "" && e.detail.value.password != "") {
         wx.request({
           url: getApp().url +'/user/registered',
           data: {
-            username: e.detail.value.username,
+            // username: e.detail.value.username,
             tel: e.detail.value.phone,
             password: e.detail.value.password,
             referrer_id: getApp().refereesId ? getApp().refereesId : -1

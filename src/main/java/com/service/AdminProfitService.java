@@ -43,5 +43,7 @@ public interface AdminProfitService {
 	 * @param adminImg
 	 */
 	void inserAdminImg(AdminImg adminImg);
+
+	int deleteZImg(int imgId);
 	
 }

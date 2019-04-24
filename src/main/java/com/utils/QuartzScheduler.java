@@ -179,7 +179,7 @@ public class QuartzScheduler {
     }
     private void startJob5(Scheduler scheduler) throws SchedulerException {
     	JobDetail jobDetail = JobBuilder.newJob(SchedulerQuartzJob5.class).withIdentity("job5", "group5").build();
-    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 1 * * ?");
+    	CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 0 * * ?");
     	CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity("job5", "group5")
     			.withSchedule(cronScheduleBuilder).build();
     	scheduler.scheduleJob(jobDetail, cronTrigger);

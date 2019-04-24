@@ -1,17 +1,16 @@
 
-  <view class='card'>
+  <!-- <view class='card'>
     <view class='card_title'>
       <view>分享注册成功人数：</view>
-      <!-- <view class='toCash' bindtap='toCash'>提现</view> -->
     </view>
     <view class='text'>
       <view>{{shareNum}}</view>
       <view class='text_1'></view>
     </view>
-  </view>
+  </view> -->
 <view class="page">
     <view class="page__hd">
-        <view class="page__title">分享成功可获得0元到20元随机金额，可用于提现</view>
+        <view class="page__title">分享后，好友注册，你即可获得今日活动奖金0元到20元随机金额，可用于提现</view>
     </view>
     <view class="page__bd">
         <view class="weui-btn-area">

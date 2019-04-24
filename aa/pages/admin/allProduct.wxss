@@ -2,10 +2,11 @@
   border: 1rpx rgb(241, 241, 241) solid;
   border-radius: 10rpx;
   width: 710rpx;
-  height: 60rpx;
+  height: 70rpx;
   margin: 20rpx auto;
 }
 .input{
+  height: 70rpx;
   margin-left: 60rpx;
 }
 .item{

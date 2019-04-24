@@ -73,4 +73,12 @@ public class AdminProfitServiceImpl implements AdminProfitService {
 		adminImgMapper.insertSelective(adminImg);
 	}
 
+	@Override
+	public int deleteZImg(int imgId) {
+		// TODO Auto-generated method stub
+		AdminImg img = adminImgMapper.selectByPrimaryKey(imgId);
+		img.setRole(String.valueOf(-1));
+		return adminImgMapper.updateByPrimaryKeySelective(img);
+	}
+
 }

@@ -1,4 +1,4 @@
-<form bindsubmit="{{isUpdata==1?'sellerUpData':'formSubmit'}}">
+<form bindsubmit="formSubmit">
 
 <image src='{{item}}' mode="widthFix" style='width:670rpx;' wx:for="{{detailsPhoto}}" wx:key="{{index}}"></image>
 <view class='text' wx:if="{{sta==1}}">*点击按钮增加证件照片,最多9张照片</view>

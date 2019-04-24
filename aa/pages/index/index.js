@@ -8,18 +8,7 @@ Page({
     // root: getApp().root,
     //轮播图
     url: getApp().url,
-    imgUrls: [
-      // {
-      //   // link: '/pages/test/test',
-      //   url: '/image/14.png'
-      // }, {
-      //   // link: '/pages/test/test',
-      //   url: '/image/14.png'
-      // }, {
-      //   // link: '/pages/test/test',
-      //   url: '/image/14.png'
-      // }
-    ],
+    imgUrls: [],
     indicatorDots: true,  //小点
     autoplay: true,  //是否自动轮播
     interval: 3000,  //间隔时间
@@ -38,6 +27,10 @@ Page({
     isShow: true,
     // 商品所有数据集合，对象
     pList:{},
+    // 剩余要显示得商品集合
+    allPList:{},
+    // 剩余要显示得热门商品
+    allHotList:[],
     // 是否显示二级目录
     isShowLevel2: false,
     // 二级目录
@@ -118,7 +111,21 @@ Page({
         console.log(that.data.isShowLevel2)
       }
     })
-    
+    // 获得热门商品
+    wx.request({
+      url: getApp().url + '/product/selectHotP',
+      success: function (res) {
+        // console.log(res)
+        var plist = res.data.splice(0, 20)
+        that.setData({
+          hotList: plist,
+          allHotList: res.data
+        })
+        // that.setData({
+        //   hotList: res.data
+        // })
+      }
+    })
     // 获取所有的二级目录
     // wx.request({
     //   url: getApp().url +'/classfiy/selectTwo',
@@ -153,16 +160,6 @@ Page({
     })
     // console.log(that.data.root);
     // console.log(getApp().root)
-    // 获得热门商品
-    wx.request({
-      url: getApp().url +'/product/selectHotP',
-      success: function(res){
-        // console.log(res)
-        that.setData({
-          hotList: res.data
-        })
-      }
-    })
     wx.request({
       url: getApp().url + '/admin/selectGG',
       success: function (res) {
@@ -174,28 +171,45 @@ Page({
   },
   // 获取二级目录下的所有商品函数
   select2PList: function(id,that){
-    wx.request({
-      url: getApp().url + '/product/selectLevel1P',
-      data: {
-        classid: id,
-        operationCode: 0
-      },
-      success: function (res) {
-        // console.log(res)
-        that.data.pList["id"+id] = res.data
-        that.setData({
-          pList: that.data.pList,
-        })
-        setTimeout(function () {
+    if (that.data.pList["id" + id] == null){
+      wx.request({
+        url: getApp().url + '/product/selectLevel1P',
+        data: {
+          classid: id,
+          operationCode: 0
+        },
+        success: function (res) {
+          // console.log(res)
+          that.data.pList["id" + id] = res.data.splice(0, 20)
+          that.data.allPList["id" + id] = res.data
+          that.setData({
+            pList: that.data.pList
+          })
+          // that.data.pList["id"+id] = res.data
+          // that.setData({
+          //   pList: that.data.pList,
+          // })
+          setTimeout(function () {
+            wx.hideLoading({
+              success(){
+                that.setData({
+                  isShow: true,
+                })
+              }
+            })
+          }, 700)
+        },fail(){
           wx.hideLoading({
-            success(){
+            success() {
               that.setData({
                 isShow: true,
               })
             }
           })
-        }, 1500)
-      },fail(){
+        }
+      })
+    }else{
+      setTimeout(function () {
         wx.hideLoading({
           success() {
             that.setData({
@@ -203,8 +217,48 @@ Page({
             })
           }
         })
-      }
+      }, 500)
+    }  
+  },
+  /** 热门商品触底触发方法 */
+  hotReachBottom() {
+    var that = this;
+    if (that.data.allHotList.length <= 0) {
+      return;
+    }
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
     })
+    var plist = that.data.allHotList.splice(0, 20);
+    that.data.hotList = that.data.hotList.concat(plist)
+    that.setData({
+      hotList: that.data.hotList
+    })
+    setTimeout(function () {
+    wx.hideLoading()
+    }, 400)
+  },
+  /** 其他商品触底触发方法 */
+  pReachBottom() {
+    var that = this;
+    var index = that.data.current - 1
+    var id = that.data.level2List[index].classId
+    if (that.data.allPList["id"+id].length <= 0) {
+      return;
+    }
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    })
+    var plist = that.data.allPList["id" + id].splice(0, 20);
+    that.data.pList["id" + id] = that.data.pList["id" + id].concat(plist)
+    that.setData({
+      pList: that.data.pList
+    })
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 400)
   },
   /** 
   * 滑动切换tab 
