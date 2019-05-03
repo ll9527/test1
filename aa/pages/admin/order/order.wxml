@@ -1,0 +1,51 @@
+<view>
+  <view class='box1' catchtap='goSetAddr'>
+    <view class='box1_text'>地址</view>
+    <view>
+      <view class='box1_top'>
+        <view>{{addressList[0].userName}}</view>
+        <view>{{addressList[0].tel}}</view>
+      </view>
+      <view class='box1_bottom'>{{addressList[0].address}}</view>
+    </view>
+    <view class='box1_text'>修改</view>
+  </view>
+  <view class='box2'>
+    <view class='image'>
+      <image class='image' src='{{url+product.productImgList[0].image}}'></image>
+    </view>
+    <view class='box2_right'>
+      <view class='box1_bottom'>{{product.title}}</view>
+      <view class='box1_top'>型号：{{versionName}}，{{version1Name}}</view>
+      <view class='box1_top box2_bottom'>
+        <view class='red'>￥ {{price}}</view>
+        <view>X {{count}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='box3'>
+   <view class='box3_top border'>
+    <view>商品金额</view>
+    <view>￥ {{allPrice}}</view>
+   </view>
+   <view class='box3_top border'>
+    <view>运费</view>
+    <view>￥ {{freight}}</view>
+   </view>
+   <view class='box3_top border'>
+    <view>优惠券</view>
+    <view>-￥ {{coupons}}</view>
+   </view>
+   <view class='box3_top' catchtap='ziTi'>
+    <view>需要自提请点击</view>
+    <view class="ziTi {{isPack?'onZiTi':''}}"></view>
+   </view>
+  </view>
+  <view class='box3_top box5 box5_text'>
+    <view class='box3_top padding-left box5_text'>
+      <view>合计：</view>
+      <view>￥ {{settlement}}</view>
+    </view>
+    <view class='box5_button' catchtap='pay'>免费领取</view>
+  </view>
+</view>

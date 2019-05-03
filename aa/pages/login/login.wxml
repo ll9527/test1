@@ -1,8 +1,14 @@
 <form bindsubmit='login'>
 
 <view class='inputbox'>
-  <input name='phone' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入手机号码'></input>
-  <input name='password' maxlength='16' password="{{true}}" style='padding:10rpx 0;' placeholder='请输入密码'></input>
+  <input name='phone' type="number" maxlength='11' style='padding:20rpx 0;' placeholder='请输入手机号码' bindinput="getTel"></input>
+  <!-- <input name='password' maxlength='16' password="{{true}}" style='padding:10rpx 0;' placeholder='请输入密码'></input> -->
+  <view class="form_group">
+      <input type="number" name='password' class="sendmsg_input" placeholder="短信验证码" placeholder-class="placeholder_style"/>
+      <view class='vertificate' bindtap="getVerificationCode">{{time}}
+        <text>{{suffix}}</text>
+      </view>
+    </view>
 </view>
 <!-- <button class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo" form-type='submit'>登录</button> -->
 <button class='button' form-type='submit'>登录</button>

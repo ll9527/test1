@@ -1,0 +1,12 @@
+<!--pages/friendShare/friendShare.wxml-->
+<view class='movie'>
+  <view class='movie-list' wx:for="{{navs}}" wx:key="{{index}}">
+    <image src='{{url + item.product.productImgList[0].image}}'></image>
+    <view class='movie-text-btn'>
+      <view class='text-view'>
+        <text>{{item.product.title}}</text>
+      </view>
+      <button class='receiveBtn' type='butten' catchtap='receiveBtn' data-item='{{item}}'>领取</button>
+    </view>
+  </view>
+</view>

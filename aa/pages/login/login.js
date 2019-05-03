@@ -5,14 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    time: "获取验证码",
+    currentTime: 61,
+    disabled: false,
+    suffix: '',
+    phone: '',
   },
   /**
    * 跳转注册页面
    */
   register: function(e){
-    wx.navigateTo({
-      url: '/pages/register/yongHuXieYi'
+    wx.redirectTo({
+      url: '/pages/register/yongHuXieYi',
     })
   },
   /**
@@ -35,7 +39,7 @@ Page({
           console.log(e.data.info)
           if(e.data.info === -1){
             wx.showToast({
-              title: '手机或密码错误',
+              title: '手机或验证码错误',
               icon: 'loading',
               duration: 1000,
               mask: true
@@ -97,10 +101,68 @@ Page({
   onLoad: function (options) {
 
   },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  /** 获得验证码 */
+  getVerificationCode() {
+    var that = this;
+    if (that.data.disabled || !that.isPhoneAvailable(that.data.phone)) {
+      return
+    }
+    wx.showLoading({
+      title: '请稍等',
+      mask: true
+    })
+    wx.request({
+      url: getApp().url + '/user/loginSMSCode',
+      data: {
+        tel: this.data.phone
+      },
+      success(res) {
+        if (res.data == -1) {
+          wx.showToast({
+            title: '用户不存在',
+            icon: 'loading',
+            duration: 1000,
+            mask: true
+          })
+          wx.hideLoading()
+        } else if (res.data == 1) {
+          that.setData({
+            disabled: true
+          })
+          wx.hideLoading()
+          let currentTime = that.data.currentTime;
+          var interval = ''
+          interval = setInterval(function () {
+            currentTime--;
+            that.setData({
+              time: currentTime,
+              suffix: '秒后可重新获取'
+            })
+            if (currentTime <= 0) {
+              clearInterval(interval)
+              that.setData({
+                time: '重新发送',
+                suffix: '',
+                currentTime: 61,
+                disabled: false
+              })
+            }
+          }, 1000)
+        }
+      }, fail() { wx.hideLoading() }
+    })
+  },
+  /** 获得手机输入框的值 */
+  getTel(e) {
+    this.data.phone = e.detail.value
+  },
+  // 验证手机号码是否有效
+  isPhoneAvailable(phone) {
+    var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    if (!myreg.test(phone)) {
+      return false;
+    } else {
+      return true;
+    }
+  },
 })

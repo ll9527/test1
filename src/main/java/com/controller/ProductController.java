@@ -46,6 +46,8 @@ public class ProductController {
     private SellerService sellerService;
     @Autowired
     private ShopProductSpecificationService spss;
+    @Autowired
+    private AdminProfitService adminProfitService;
 
     //通过sellerid查询商家所有上架商品+图片
     @RequestMapping("/selectPdBySellerid")
@@ -119,7 +121,7 @@ public class ProductController {
     //添加商品，做商品表和版本表操作
     @RequestMapping(value = "/insertP")
     public Map insertP(Product product, String versionList, String versionList1, String skuList, 
-    		Integer allSku, Integer sellerid, Integer cid, Integer freight) {
+    		Integer allSku, Integer sellerid, Integer cid, Integer freight, Integer peopleNum, Integer sta) {
         Map<String, Object> map = new HashMap<>();
         /*
         //若团购价格不为0则设置为团购商品
@@ -201,12 +203,23 @@ public class ProductController {
 			product.setPrice(new BigDecimal(price));
 			product.setGroupPrice(new BigDecimal(groupPrice));
 			product.setNum(1);
+			
+			if(peopleNum != null && sta != null) {
+//				插入平台活动商品的数据
+	        	product.setStatus((byte) 4);
+	        	AdminProduct adminProduct = new AdminProduct();
+	        	adminProduct.setPeopleNum(peopleNum);
+	        	adminProduct.setProductId(product.getId());
+	        	adminProduct.setStatus(sta);
+	        	adminProfitService.inserAdminPro(adminProduct);
+	        }
 			productService.updateByPrimaryKeySelective(product);
             //插入运费
             ProductCommentFreight pcf = new ProductCommentFreight();
             pcf.setFreight(new BigDecimal(freight));
             pcf.setProductId(product.getId());
             productService.setPFreight(pcf);
+            
             // 拼装返回的数据
             map.put("status", "yes");
             map.put("info", 1);
@@ -247,6 +260,12 @@ public class ProductController {
     @RequestMapping("/selectDetail")
     public Map selectDetail(Integer productid) {
         return productService.selectProductDetail(productid);
+    }
+    
+//    查看平台活动商品的详情信息
+    @RequestMapping("/selectAdminProDetail")
+    public Map selectAdminProDetail(Integer productid) {
+    	return productService.selectAdminProDetail(productid);
     }
 
     @RequestMapping("/productDown")

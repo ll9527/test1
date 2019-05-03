@@ -1,0 +1,84 @@
+/* pages/admin/goods/shelves.wxss */
+page{
+  width: 670rpx;
+  margin: 0 40rpx;
+}
+.inputBox{
+  padding-left: 20rpx;
+  height: 60rpx;
+  border-radius: 8rpx;
+  border: 1rpx rgb(179, 172, 172) solid;
+}
+.text{
+  color: rgb(46, 46, 46);
+  font-size: 26rpx;
+  padding-left: 20rpx;
+  margin-bottom: 20rpx;
+}
+.button{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: rgb(233, 102, 102);
+  border-radius: 8rpx;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+.picker{
+  line-height: 60rpx;
+}
+.priceClass{
+  border-radius: 8rpx;
+  border-bottom: 1rpx rgb(179, 172, 172) solid;
+  margin-bottom: 20rpx;
+}
+.priceClass2{
+  display: flex;
+  height: 60rpx;
+  border-radius: 8rpx;
+  border: 1rpx rgb(179, 172, 172) solid;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  line-height: 60rpx;
+  font-size: 24rpx;
+}
+.priceClass1{
+  display: flex;
+  height: 60rpx;
+  border-radius: 8rpx;
+  border: 1rpx rgb(179, 172, 172) solid;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  line-height: 60rpx;
+  border-bottom: 0rpx;
+  font-size: 24rpx;
+}
+.margin{
+  margin-bottom: 1rpx;
+}
+.input1{
+  width: 115rpx;
+  height: 60rpx;
+}
+.input2{
+  width: 65rpx;
+  height: 60rpx;
+}
+.input3{
+  width: 240rpx;
+  height: 60rpx;
+  margin-left: 10rpx;
+}
+.inputView1{
+  width: 250rpx;
+}
+.inputView2{
+  width: 115rpx;
+}
+.inputView3{
+  width: 115rpx;
+}
+.inputView4{
+  width: 65rpx;
+}

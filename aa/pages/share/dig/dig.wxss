@@ -1,0 +1,54 @@
+/* pages/wa/wa.wxss */
+.wabao{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: green;
+  
+}
+image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  
+}
+.wabao-img{
+  width: 80rpx;
+  height: 80rpx;
+ 
+}
+.wabao-img1{
+  margin-top: 20rpx;
+  padding: 40rpx;
+  justify-content: center;
+}
+
+.wabao-text{
+  position: relative;
+  top: 180rpx;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 80rpx;
+}
+.wabao-button{
+  justify-content: center;
+  position: relative;
+  margin-bottom: 300rpx;
+  top: 300rpx;
+  height: 300rpx;
+ 
+}
+
+text{
+  font-size: 30rpx;
+}
+
+
+

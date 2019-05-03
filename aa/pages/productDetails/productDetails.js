@@ -18,7 +18,7 @@ Page({
     // 用户选择商品的型号(颜色)index
     radioId1:"0",
     // 用户选择商品得数量
-    count: 0,
+    count: 1,
     // 商品的库存
     num: 0,
     // 商品id
@@ -263,7 +263,7 @@ Page({
       isGroup = 0
     }
     console.log(isGroup)
-    if (this.data.count <= 0){
+    if (this.data.count <= 0 || this.data.num == 0 || this.data.num == null){
       wx.showToast({
         title: '请选择数量',
         icon: 'loading',

@@ -155,7 +155,8 @@
         WHERE u.is_apply = 1
           and u.is_seller = 0
     </select>
-
+    
+    <!--根据用户电话查询用户-->
     <select id="checkTel" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select *
         from user

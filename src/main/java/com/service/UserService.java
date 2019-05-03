@@ -2,6 +2,7 @@ package com.service;
 
 import com.entity.Address;
 import com.entity.Coupons;
+import com.entity.Referrer;
 import com.entity.User;
 
 import java.util.List;
@@ -91,4 +92,34 @@ public interface UserService {
 	Map<String, Object> jiangjin();
 
 	int shareNum(Integer uuu);
+	/**
+	 * 根据电话查询用户
+	 * @return
+	 */
+	User selectUserByTel(Long tel);
+	/**
+	 * 用用户id查推荐人id
+	 * @param id
+	 * @return
+	 */
+	Referrer selectReferrerByUid(Integer id);
+	/**
+	 * 查看是否达标领奖要求
+	 * @param userid
+	 * @param productid
+	 * @return
+	 */
+	Boolean selectIsReachShare(Integer userid, Integer productid);
+	/**
+	 * 插入领取活动奖品记录
+	 * @param userid
+	 * @param productid
+	 */
+	void insertAwardHis(Integer userid, Integer productid);
+	/**
+	 * 获取分享剩余的积分
+	 * @param uuu
+	 * @return
+	 */
+	int shareScore(Integer uuu);
 }

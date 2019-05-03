@@ -26,5 +26,28 @@ Page({
         })
       }
     })
+    wx.request({
+      url: getApp().url + '/order/selectAllByUserOrSeller',
+      data: {
+        status: 1,
+        sellerId: -1
+      },
+      success(res) {
+        that.setData({
+          waitSendNum: res.data.length ? res.data.length : 0
+        })
+      }
+    })
+    wx.request({
+      url: getApp().url + '/order/selectAllOrder',
+      data: {
+        sellerId: -1
+      },
+      success(res) {
+        that.setData({
+          allOrderNum: res.data.length ? res.data.length : 0
+        })
+      }
+    })
   },
 })

@@ -38,6 +38,7 @@ import com.dao.UserMapper;
 import com.dao.WxHttpRequestUtil;
 import com.dao.WxPaySignUtil;
 import com.entity.Address;
+import com.entity.AwardHistory;
 import com.entity.Coupons;
 import com.entity.Product;
 import com.entity.Seller;
@@ -357,6 +358,254 @@ public class OrderController {
 				Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
 				shopOrder.setSellerName(seller.getTitleName());
 				
+				
+				shopOrder.setTotalMoney((new BigDecimal(wxOrderInfo.getTotal_fee()).divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)));
+				shopOrder.setOrderStatus(0);
+				shopOrder.setIsPick(isPick);
+				shopOrder.setPrepay_id(signInfo.getPrepay_id());
+				
+				if(isGroup == 1) {
+//					如果拼团订单的id为空则代表自己开团，创建拼团订单
+					if(groupOid != -1) {
+						ShopOrderGroup shopOrderGroup = shopOrderService.selectGroupByKey(groupOid);
+						if(shopOrderGroup.getStatus() == -1) {
+							return null;
+						}
+//						拼团订单不为空，检查该订单是否有三个锁定订单
+						Integer itemNum = shopOrderService.selectByGroupOid(groupOid).size();
+						if(itemNum > 0 && itemNum < 3) {
+							shopOrder.setGroup_oid(groupOid);
+							shopOrder.setOrderStatus(7);
+						}else {
+							return null;
+//							作废该订单
+//							ShopOrderGroup shopOrderGroup = new ShopOrderGroup();
+//							shopOrderGroup.setAddTime(new Date());
+//							shopOrderService.insertSelectiveRetKey(shopOrderGroup);
+//							shopOrder.setGroup_oid(shopOrderGroup.getId());
+//							shopOrder.setOrderStatus(-1);
+						}
+					}else {
+//						自己开团，创建拼团订单
+						ShopOrderGroup shopOrderGroup = new ShopOrderGroup();
+						shopOrderGroup.setAddTime(new Date());
+						shopOrderGroup.setProductId(productid);
+						shopOrderGroup.setStatus(0);
+						shopOrderService.insertSelectiveRetKey(shopOrderGroup);
+						shopOrder.setGroup_oid(shopOrderGroup.getId());
+						shopOrder.setOrderStatus(7);
+					}
+				}
+				if(shopOrderService.insertSelectiveRetKey(shopOrder) == 1) {
+//					if(som.insertSelective(shopOrder) == 1) {
+					// 创建商品订单表
+					ShopOrderGoods sog = new ShopOrderGoods();
+					sog.setGoodsId(productid);
+					sog.setUserId(userid);
+					sog.setAddTime(shopOrder.getAddTime());
+					sog.setGoodsName(pro.getTitle());
+					sog.setIsGroup(isGroup);
+					if(isGroup == 1) {
+						sog.setPrice(sku.getGroupPrice());
+					}else {
+						sog.setPrice(sku.getPrice());
+					}
+					sog.setGoNum(num);
+					sog.setTotalPrice(totalPrice);
+					sog.setOrderId(shopOrder.getId());
+					sog.setpVersion(version);
+					shopOrderGoodsService.insertSelective(sog);
+//					更改优惠券的状态
+					if(map.get("coupons") != null) {
+						Coupons coupons = (Coupons)map.get("coupons");
+						coupons.setOnDelete(1);
+						coupons.setOrderId(shopOrder.getId());
+						userService.updateCoupons(coupons);
+					}
+					return payInfo;
+				}
+				return null;
+				// 业务逻辑结束
+//-----------------------------------------------------------------
+				
+			}
+//			payInfo.put("status", 500);
+//			payInfo.put("msg", "统一下单失败!");
+			return null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 领取平台  助力  活动商品的接口
+	 * @return
+	 */
+	@RequestMapping("/ordPayAdminPro")
+	public Map ordPayAdminPro(String jscode, Integer userid, Integer productid, Integer isGroup,
+			Integer num, String version, Integer isPick, Integer addressid, Integer skuId, Integer groupOid) {
+//		查看是否达标领奖要求,与是否领取过
+		boolean isOk= userService.selectIsReachShare(userid, productid);
+		System.out.println(isOk);
+		if(!isOk) {
+//			如果没达标要求
+			Map payInfo = new HashMap();
+			payInfo.put("status", 404);
+			return payInfo;
+			
+		}
+//		插入领取记录
+		userService.insertAwardHis(userid, productid);
+		try {
+//			用jscode 请求微信url获得openid
+			Map msgMap = WxHttpRequestUtil.getOpenid(jscode);
+			String openid = (String)msgMap.get("openid");
+			if(openid == null) {
+//				拿不到openid
+				return null;
+			}
+			//用商品id查询商品
+			Product pro = productService.selectByPrimaryKey(productid);
+			//组装统一下单数据
+			WxOrderInfo wxOrderInfo = new WxOrderInfo();
+			wxOrderInfo.setAppid(PayConfigure.getAppID());
+			wxOrderInfo.setMch_id(PayConfigure.getMch_id());
+			wxOrderInfo.setNonce_str(UUID.randomUUID().toString().trim().replaceAll("-", ""));
+			wxOrderInfo.setSign_type("MD5");
+			
+			Shop shopClass = shopService.selectByPrimaryKey(pro.getCid());
+			wxOrderInfo.setBody("共店-"+shopClass.getClassName());// 商品
+			// 数据库的订单号
+			wxOrderInfo.setOut_trade_no(UUID.randomUUID().toString().trim().replaceAll("-", ""));
+//			sku
+			ShopProductSpecification sku = spsm.selectByPrimaryKey(skuId);
+			// 商品总价
+			BigDecimal totalPrice;
+			if(isGroup == 1) {
+				totalPrice = sku.getGroupPrice().multiply(new BigDecimal(num));
+			}else {
+				totalPrice = sku.getPrice().multiply(new BigDecimal(num));
+			}
+//			获取运费和优惠券金额
+			Map<String, Object> map = userService.selectFreightAndCoupons(userid,productid);
+			if(isPick == 2) {
+				// 2是快递
+				totalPrice = totalPrice.add(new BigDecimal(String.valueOf(map.get("freight"))));
+			}
+			totalPrice = totalPrice.subtract(new BigDecimal(String.valueOf(map.get("couponsMoney"))));
+			wxOrderInfo.setTotal_fee(totalPrice.multiply(new BigDecimal("100")).intValue());//金额
+			wxOrderInfo.setSpbill_create_ip(PayConfigure.getSpbill_create_ip());
+			wxOrderInfo.setNotify_url(PayConfigure.getOrd_notify_url());
+			wxOrderInfo.setTrade_type(PayConfigure.getTrade_type());
+			wxOrderInfo.setOpenid(openid);
+			// 签名
+			wxOrderInfo.setSign(WxPaySignUtil.getSign(wxOrderInfo));
+//			如果订单的金额是0，即要加钱，直接创建订单
+			if(wxOrderInfo.getTotal_fee() == 0) {
+	//				创建订单
+				ShopOrder shopOrder = new ShopOrder();
+				shopOrder.setOrderSn(wxOrderInfo.getOut_trade_no());
+				shopOrder.setAddTime(new Date());
+				shopOrder.setIsGroup(isGroup);
+				// 收货地址
+				Address address = addressMapper.selectByPrimaryKey(addressid);
+				shopOrder.setUserAddress(address.getAddress());
+				shopOrder.setUserName(address.getUserName());
+				shopOrder.setTel(Long.valueOf(address.getTel()));
+				shopOrder.setUserId(userid);
+				//用商品id查询商家
+				Integer sellerId = swpm.selectByPId(productid).getSellerId();
+				shopOrder.setSellerId(sellerId);
+//				Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
+//				shopOrder.setSellerName(seller.getTitleName());
+				
+				
+				shopOrder.setTotalMoney((new BigDecimal(wxOrderInfo.getTotal_fee()).divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)));
+				shopOrder.setOrderStatus(1);
+				shopOrder.setIsPick(isPick);
+				if(shopOrderService.insertSelectiveRetKey(shopOrder) == 1) {
+	//				if(som.insertSelective(shopOrder) == 1) {
+					// 创建商品订单表
+					ShopOrderGoods sog = new ShopOrderGoods();
+					sog.setGoodsId(productid);
+					sog.setUserId(userid);
+					sog.setAddTime(shopOrder.getAddTime());
+					sog.setGoodsName(pro.getTitle());
+					sog.setIsGroup(isGroup);
+					if(isGroup == 1) {
+						sog.setPrice(sku.getGroupPrice());
+					}else {
+						sog.setPrice(sku.getPrice());
+					}
+					sog.setGoNum(num);
+					sog.setTotalPrice(totalPrice);
+					sog.setOrderId(shopOrder.getId());
+					sog.setpVersion(version);
+					shopOrderGoodsService.insertSelective(sog);
+	//				更改优惠券的状态
+					if(map.get("coupons") != null) {
+						Coupons coupons = (Coupons)map.get("coupons");
+						coupons.setOnDelete(1);
+						coupons.setOrderId(shopOrder.getId());
+						userService.updateCoupons(coupons);
+					}
+					Map payInfo = new HashMap();
+					payInfo.put("status", 300);
+					return payInfo;
+				}
+			}
+//			如果订单金额不为0
+			// 发送参数给 微信，完成统一下单
+			String result = WxHttpRequestUtil.sendPost(PayConfigure.getUrl(), wxOrderInfo);
+			logger.info("完成统一下单返回得："+result);
+			XStream xStream = new XStream();
+			// 将微信得xml返回值转回对象
+			xStream.alias("xml", WxOrderReturnInfo.class);
+			WxOrderReturnInfo returnInfo = (WxOrderReturnInfo) xStream.fromXML(result);
+
+			// 二次签名
+			Map payInfo = new HashMap();
+			if ("SUCCESS".equals(returnInfo.getReturn_code())
+					&& returnInfo.getReturn_code().equals(returnInfo.getResult_code())) {
+				WxSignInfo signInfo = new WxSignInfo();
+				signInfo.setAppId(PayConfigure.getAppID());
+				long time = System.currentTimeMillis() / 1000;
+				signInfo.setTimeStamp(String.valueOf(time));
+				signInfo.setNonceStr(UUID.randomUUID().toString().trim().replaceAll("-", ""));
+				signInfo.setPrepay_id("prepay_id=" + returnInfo.getPrepay_id());
+				signInfo.setSignType("MD5");
+				// 生成签名
+				String sign1 = WxPaySignUtil.getSign(signInfo);
+				payInfo.put("timeStamp", signInfo.getTimeStamp());
+				payInfo.put("nonceStr", signInfo.getNonceStr());
+				payInfo.put("package", signInfo.getPrepay_id());
+				payInfo.put("signType", signInfo.getSignType());
+				payInfo.put("paySign", sign1);
+				payInfo.put("status", 200);
+				payInfo.put("msg", "统一下单成功!");
+//-----------------------------------------------------------------
+				// 此处可以写唤起支付前的业务逻辑
+				
+//					创建订单
+				ShopOrder shopOrder = new ShopOrder();
+				shopOrder.setOrderSn(wxOrderInfo.getOut_trade_no());
+				shopOrder.setAddTime(new Date());
+				shopOrder.setIsGroup(isGroup);
+				
+
+				// 收货地址
+				Address address = addressMapper.selectByPrimaryKey(addressid);
+				shopOrder.setUserAddress(address.getAddress());
+				shopOrder.setUserName(address.getUserName());
+				shopOrder.setTel(Long.valueOf(address.getTel()));
+				shopOrder.setUserId(userid);
+				//用商品id查询商家
+				Integer sellerId = swpm.selectByPId(productid).getSellerId();
+				shopOrder.setSellerId(sellerId);
+//				Seller seller = sellerMapper.selectByPrimaryKey(sellerId);
+//				shopOrder.setSellerName(seller.getTitleName());
 				
 				shopOrder.setTotalMoney((new BigDecimal(wxOrderInfo.getTotal_fee()).divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)));
 				shopOrder.setOrderStatus(0);

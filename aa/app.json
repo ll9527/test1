@@ -1,11 +1,25 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/share/friendShare",
+    "pages/share/sharePage",
+    "pages/share/treasure/treasure",
+    "pages/share/dig/dig",
+    
+    "pages/login/login",
+    "pages/admin/goods/shelves",
+    "pages/admin/goods/putaway",
+    "pages/admin/goods/cancel",
+    "pages/admin/goods/orderList",
+    "pages/admin/adminProductDetails/adminProductDetails",
+    "pages/admin/order/order",
     "pages/seller/sellerList",
     "pages/seller/sellerMSG",
     "pages/admin/setGG",
     "pages/admin/upAdminImg",
     "pages/share/share",
+    
+    
     "pages/sellerManager/qrPay",
     "pages/sellerManager/coverImg",
     "pages/admin/adminPage",
@@ -41,7 +55,6 @@
     "pages/searchItems/search2search",
     
 
-    "pages/login/login",
 
     "pages/register/register",
     "pages/sellerManager/sellerManager",

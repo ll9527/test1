@@ -1,0 +1,8 @@
+<view class='share-shop'>
+  <view>邀请{{item.adminProduct.peopleNum}}个好友即可领取</view>
+  <view>您已分享了{{shareNum}}个好友</view>
+  <image src='{{url + item.product.productImgList[0].image}}'></image>
+  <view>{{item.product.title}}</view>
+  <button wx:if='{{item.adminProduct.peopleNum > shareNum}}' name='shareBtn' open-type='share'>再邀请</button>
+  <button wx:else='{{item.adminProduct.peopleNum <= shareNum}}' name='receiveBtn' data-productid="{{item.product.id}}" catchtap='receiveBtn'>领取</button>
+</view>

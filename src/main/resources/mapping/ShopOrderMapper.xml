@@ -138,6 +138,12 @@
     	AND order_status != 7
     	AND order_status != 8
     	OR order_status != -1
+    	<if test="userId != null">
+	    	and user_id = #{userId}
+	    </if>
+	    <if test="sellerId != null">
+	    	and seller_id = #{sellerId}
+	    </if>
 		AND FIND_IN_SET('二维码付款',mark)
 		AND order_status != 0
     	<!-- <if test="userId != null"> -->

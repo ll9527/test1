@@ -55,5 +55,23 @@ public interface ProductService {
 	 * @return
 	 */
 	List selectAllProduct();
+	/**
+	 * 查看平台活动的商品
+	 * @param sta
+	 * @return
+	 */
+	List selectActivityPro(Integer sta);
+	/**
+	 * 下架平台的活动商品
+	 * @param productid
+	 * @return
+	 */
+	Integer productDown(Integer productid);
+	/**
+	 * 查看平台活动商品的详情信息
+	 * @param productid
+	 * @return
+	 */
+	Map selectAdminProDetail(Integer productid);
 
 }

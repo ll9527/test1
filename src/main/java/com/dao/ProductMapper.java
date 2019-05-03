@@ -42,6 +42,12 @@ public interface ProductMapper {
      * @return
      */
 	List selectAllProduct();
+	/**
+	 * 用id查询商品和封面，无论什么状态
+	 * @param productId
+	 * @return
+	 */
+	Product selectAdminProductByKey(Integer productId);
 
 
 }

@@ -1,0 +1,159 @@
+<view>
+  <!-- <view>
+    <image src='/images/xq.png' mode="widthFix" class='image'></image>
+  </view> -->
+  <view class='box1'>
+    <view class='box1_1'>
+      <view class='box1_1_left'>
+        <!-- <view class='box1_1_left_1' wx:if="{{productDetail.productList[0].isGroup == 1}}">团</view>
+        <view class='box1_1_left_2' wx:if="{{productDetail.productList[0].isGroup == 1}}">￥{{groupPrice}}</view> -->
+        <view class='box1_1_left_3'>秒杀价：￥{{price}}</view>
+      </view>
+      <!-- <view class='box1_1_right'>已销{{productDetail.productList[0].salesVolume}}件</view> -->
+    </view>
+    <view class='box1_2'>{{productDetail.productList[0].title}}</view>
+    <!-- <view class='box1_3'>
+      <image src='/images/seat.png'></image>
+      <view>{{productDetail.addressList[0].address}}</view>
+    </view> -->
+  </view>
+  <!-- <view class='box2'>
+    <navigator url='/pages/comments/comments?pId={{productDetail.productList[0].id}}' class='box2_1'>
+      <view class='box2_1_body1'>评论</view>
+      <view class='box2_1_body2'>买家评论</view>
+      <view class='box2_1_body3'>></view>
+    </navigator>
+
+    <view catchtap='showGroupListModal' class='box2_1'>
+      <view class='box2_1_body1'>加团</view>
+      <view class='box2_1_body2'>{{orderList.length?orderList.length:0}}人正在开团，满3人成功拼团，点击参与</view>
+      <view class='box2_1_body3'>></view>
+    </view> -->
+
+  <!-- <view class='box2_2' catchtap='showGroupListModal'>
+      <view class='box2_2_body1'>
+        <view class='box2_2_body1_1'>加团</view>
+        <view class='box2_1_body2'>{{orderList.length?orderList.length:0}}人正在开团，满3人成功拼团，点击参与</view>
+      </view>
+      <view class='box2_1_body3'>></view>
+    </view> -->
+
+  <view class='box2_3'>
+    <view class='box2_3_body1'>商品分类，型号：</view>
+    <!-- <view class='box2_1_body3'>></view> -->
+  </view>
+</view>
+<radio-group class='classify' bindchange="radioChange">
+  <label wx:for='{{classify}}' wx:key='{{index}}'>
+    <radio value='{{index}}'></radio>
+    <view class="{{index==radioId?'on':''}}">{{item.versionName}}</view>
+  </label>
+</radio-group>
+
+<view class='box2_3'>
+  <view class='box2_3_body1'>商品分类，型号（颜色）：</view>
+  <!-- <view class='box2_1_body3'>></view> -->
+</view>
+<radio-group class='classify' bindchange="radioChange1">
+  <label wx:for='{{classify1}}' wx:key='{{index}}'>
+    <radio value='{{index}}'></radio>
+    <view class="{{index==radioId1?'on':''}}">{{item.versionName}}</view>
+  </label>
+</radio-group>
+
+<!-- <view class='box3'>
+    <view class='box3_1'>数量</view>
+    <view class='box3_2'>
+      <text decode='{{true}}' catchtap='reduce' class='box3_2_text'>&lt;</text>
+      <view class='box3_2_num'>{{count}}</view>
+      <text decode='{{true}}' catchtap='add' class='box3_2_text'>></text>
+    </view>
+  </view> -->
+<!-- <view> -->
+  <!-- <view class='box2_3_body1 backgroundC textcolor textSize'>
+      库存：{{num}}
+    </view>
+    <view class='box2_3_body1 backgroundC'>
+      商家承诺：全场包邮（新疆内蒙除外），7天退还，48小时发货，假一罚十
+    </view> -->
+
+  <!-- --------------------------------------------- -->
+  <!-- <view class="commodity_screen" bindtap="hideGroupListModal" wx:if="{{showGroupListStatus}}"></view>
+      <scroll-view class='group_list' scroll-y="{{true}}" animation="{{animationDataGroup}}" class="group_list" wx:if="{{showGroupListStatus}}">
+        <view class='group_item' wx:for="{{orderList}}" wx:key="{{index}}">
+          <view class='text1'>{{item.orderNum}} 人在团</view>
+          <view>{{item.shopOrderGroup.addTime}}</view>
+          <view class='button1' data-oid='{{item.shopOrderGroup.id}}' catchtap='pindan'>拼单</view>
+        </view>
+      </scroll-view> -->
+  <!-- ---------------------------------------------------------------------- -->
+  <!-- <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+    <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+      <view class='box2_3'>
+        <view class='box2_3_body1'>商品分类，型号：</view>
+      </view>
+    <radio-group class='classify' bindchange="radioChange">
+      <label wx:for='{{classify}}' wx:key='{{index}}'>
+        <radio value='{{index}}'></radio>
+        <view class="{{index==radioId?'on':''}}">{{item.versionName}}</view>
+      </label>
+    </radio-group>
+
+    <view class='box2_3'>
+      <view class='box2_3_body1'>商品分类，型号（颜色）：</view>
+    </view>
+    <radio-group class='classify' bindchange="radioChange1">
+      <label wx:for='{{classify1}}' wx:key='{{index}}'>
+        <radio value='{{index}}'></radio>
+        <view class="{{index==radioId1?'on':''}}">{{item.versionName}}</view>
+      </label>
+    </radio-group>
+
+    <view class='box3'>
+      <view class='box3_1'>数量</view>
+      <view class='box3_2'>
+        <text decode='{{true}}' catchtap='reduce' class='box3_2_text'>&lt;</text>
+        <view class='box3_2_num'>{{count}}</view>
+        <text decode='{{true}}' catchtap='add' class='box3_2_text'>></text>
+      </view>
+    </view>
+    <view>
+      <view class='box2_3_body1 backgroundC textcolor textSize'>
+        库存：{{num}}
+      </view>
+    </view>
+    <view class='buttonG' data-isgroup='1' catchtap='goPay'>{{groupOid?"拼团":"开团"}}</view>
+    </view>   -->
+
+
+  <!-- <view class='box4'>
+
+    <view class='box4_1'>
+
+      <view class='box4_1_text'>{{productDetail.sellerTitleName}}</view>
+    </view>
+    <navigator class='box4_text' url='/pages/sellerManager/sellerPhoto?sellerid={{productDetail.sellerid}}&sellerName={{productDetail.sellerTitleName}}'>证件照</navigator>
+    <navigator class='box4_text' url='/pages/storeAllList/storeAllList?sellerid={{productDetail.sellerid}}'>进店选购</navigator>
+  </view>
+</view> -->
+<view class='box5'>
+  <image wx:for="{{productDetail.productList[0].productImgList}}" wx:key="{{index}}" src="{{url+item.image}}" class='box5_image' mode='widthFix'></image>
+</view>
+<view class='box6'>
+  <!-- <view class='box6_1'>
+    <navigator class='box6_1_goShop' url='/pages/storeAllList/storeAllList?sellerid={{productDetail.sellerid}}'>
+      <image src='/images/dp.png' class='box6_1_goShop_image'></image>
+      <view class='box6_1_goShop_text'>店铺</view>
+    </navigator>
+    <view class='box6_1_goShop' catchtap='onCollection'>
+      <image hidden='{{collection}}' src='/images/sc.png' class='box6_1_goShop_image'></image>
+      <image hidden='{{!collection}}' src='/images/ysc.png' class='box6_1_goShop_image'></image>
+      <view class="box6_1_goShop_text {{collection?'onCollection':''}}">收藏</view>
+    </view>
+  </view> -->
+  <view class='box6_2'>
+    <view class='box6_2_goOrder' catchtap='goPay'>领取</view>
+    <!-- <view class='box6_2_goGroup' catchtap='showModal'>开团</view> -->
+  </view>
+</view>
+<!-- </view> -->

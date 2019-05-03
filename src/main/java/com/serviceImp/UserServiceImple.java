@@ -1,7 +1,9 @@
 package com.serviceImp;
 
 import com.dao.AddressMapper;
+import com.dao.AdminProductMapper;
 import com.dao.AdminProfitMapper;
+import com.dao.AwardHistoryMapper;
 import com.dao.CouponsMapper;
 import com.dao.Md5Util;
 import com.dao.ProductCommentFreightMapper;
@@ -10,13 +12,17 @@ import com.dao.ReferrerMapper;
 import com.dao.ShopOrderMapper;
 import com.dao.UserMapper;
 import com.entity.Address;
+import com.entity.AdminProduct;
 import com.entity.AdminProfit;
+import com.entity.AwardHistory;
 import com.entity.Coupons;
 import com.entity.ProductCommentFreight;
 import com.entity.Referrer;
 import com.entity.ShopOrder;
 import com.entity.User;
 import com.service.UserService;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +52,10 @@ public class UserServiceImple implements UserService {
     private ShopOrderMapper shopOrderMapper;
     @Autowired(required = false)
     private ReferrerMapper referrerMapper;
+    @Autowired(required = false)
+    private AdminProductMapper adminProductMapper;
+    @Autowired(required = false)
+    private AwardHistoryMapper awardHistoryMapper;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -81,8 +91,7 @@ public class UserServiceImple implements UserService {
 
     @Override
     public User login(Map<String, Object> map) {
-        Md5Util md5Util = new Md5Util();
-        map.put("password", md5Util.md5(map.get("password").toString()));
+        map.put("password", map.get("password").toString());
         return userMapper.login(map);
     }
 
@@ -254,6 +263,58 @@ public class UserServiceImple implements UserService {
 	@Override
 	public int shareNum(Integer uuu) {
 		return referrerMapper.selectByRId(uuu).size();
+	}
+
+	@Override
+	public User selectUserByTel(Long tel) {
+		// TODO Auto-generated method stub
+		return userMapper.checkTel(tel);
+	}
+
+	@Override
+	public Referrer selectReferrerByUid(Integer id) {
+		// TODO Auto-generated method stub
+		return referrerMapper.selectByUId(id);
+	}
+
+	@Override
+	public Boolean selectIsReachShare(Integer userid, Integer productid) {
+		// TODO Auto-generated method stub
+		int shareScore = shareScore(userid);
+		AdminProduct adminProduct = adminProductMapper.selectByPid(productid);
+		boolean isOk = shareScore >= adminProduct.getPeopleNum();
+//		AwardHistory awardHistory = awardHistoryMapper.selectByAProId(adminProduct.getId(), userid);
+//		if(awardHistory == null && isOk) {
+//			return true;
+//		}else {
+//			return false;
+//		}
+		return isOk;
+	}
+
+	@Override
+	public void insertAwardHis(Integer userid, Integer productid) {
+		// TODO Auto-generated method stub
+		AdminProduct adminProduct = adminProductMapper.selectByPid(productid);
+		AwardHistory ah = new AwardHistory();
+		ah.setAdminProId(adminProduct.getId());
+		ah.setUserId(userid);
+		ah.setStatus(adminProduct.getStatus());
+		awardHistoryMapper.insertSelective(ah);
+	}
+
+	@Override
+	public int shareScore(Integer uuu) {
+		// TODO Auto-generated method stub
+//		分享人数
+		int shareNum = shareNum(uuu);
+//		已领奖的积分总和
+		int allScore = 0;
+		List<AwardHistory> awardHistoryList = awardHistoryMapper.selectByUId(uuu);
+		for (AwardHistory awardHistory : awardHistoryList) {
+			allScore += adminProductMapper.selectByPrimaryKey(awardHistory.getAdminProId()).getPeopleNum();
+		}
+		return shareNum-allScore;
 	}
 
 }

@@ -1,0 +1,8 @@
+<!--pages/sharePage/sharePage.wxml-->
+<view class='movie'>
+  <view>您已分享了1个好友</view>
+  <view>还需要分享1个好友即可领取</view>
+  <image src='/images/timg.jpg'></image>
+  <button type='warn'>领取</button>
+
+</view>

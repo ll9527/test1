@@ -1,0 +1,21 @@
+<!--pages/dig/dig.wxml-->
+<view>待开发</view>
+
+<view class='wabao' hidden='{{true}}'>
+    <image class='wabao-img' src='{{url}}admin/ren.jpg'></image>
+
+  <view class='wabao-img1' wx:for="{{navs}}" wx:key="{{index}}" data-item='{{item}}' bindtap='pageShare'>
+    <image src="{{imgUrl}}"></image>
+  </view>
+
+
+  <view class='wabao-text'>
+    <text>温馨提示：要分享不同的好友才能领取</text>
+    <text class='wabao-text2'>分享人数越多，得到的宝箱就越多</text>
+  </view>
+
+  <view class='wabao-button'>
+    <button type='warn' open-type='share'>开始</button>
+  </view>
+
+</view>

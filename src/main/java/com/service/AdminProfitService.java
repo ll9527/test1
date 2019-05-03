@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.entity.AdminImg;
+import com.entity.AdminProduct;
 import com.entity.AdminProfit;
 
 public interface AdminProfitService {
@@ -45,5 +46,10 @@ public interface AdminProfitService {
 	void inserAdminImg(AdminImg adminImg);
 
 	int deleteZImg(int imgId);
+	/**
+	 * 插入平台活动商品的数据
+	 * @param adminProduct
+	 */
+	void inserAdminPro(AdminProduct adminProduct);
 	
 }

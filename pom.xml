@@ -136,6 +136,11 @@
 		    <version>5.1.4.RELEASE</version>
 		</dependency>
         
+        <dependency>
+		  <groupId>com.github.qcloudsms</groupId>
+		  <artifactId>qcloudsms</artifactId>
+		  <version>1.0.6</version>
+		</dependency>
     </dependencies>
 
     <build>

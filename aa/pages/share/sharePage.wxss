@@ -1,0 +1,17 @@
+.share-shop {
+  text-align: center;
+  padding: 50rpx 10%;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+}
+
+image{
+  height: 600rpx;
+  width: 100%;
+}
+
+button{
+  background-color: rgb(168, 180, 219);
+  border-radius: 100rpx;
+}

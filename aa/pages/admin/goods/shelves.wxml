@@ -1,0 +1,87 @@
+<!--pages/admin/goods/shelves.wxml-->
+<form bindsubmit="formSubmit">
+  <input class='inputBox' name="title" maxlength="25" type="text" placeholder="请输入商品标题"></input>
+  <view class='text'>注：商品标题最长25个汉字</view>
+
+    <!-- <input class='inputBox' name="num" maxlength="3" type="number" placeholder="请输入商品库存数量"></input>
+    <view class='text'>注：商品最大库存</view>
+
+    <input class='inputBox' name="freight" maxlength="3" type="number" placeholder="商品运费"></input>
+    <view class='text'>注：商品运费</view> -->
+
+    <input class='inputBox' name="peopleNum" maxlength="10" type="number" placeholder="{{sta==1?'请输入助力达标人数':'请输入挖宝分享达标人数'}}"></input>
+    <view class='text'>{{sta==1?'请输入助力达标人数':'请输入挖宝分享达标人数'}}</view>
+
+    <view class='text'>型号：{{version}}</view>
+    <input class='inputBox' maxlength="10" value='{{versionValue}}' bindconfirm="addVersion" type="text" placeholder="请输入商品型号"></input>
+    <view class='text'>例如：衣服的M和L码数,输入一个型号按键盘上的完成,再输入下一个型号</view>
+
+    <view class='text'>型号（颜色）：{{version1}}</view>
+    <input class='inputBox' maxlength="10" value='{{versionValue}}' bindconfirm="addVersion1" type="text" placeholder="请输入商品颜色"></input>
+    <view class='text'>例如：颜色,输入一个型号按键盘上的完成,再输入下一个型号</view>
+  <view class='priceClass2'>
+        <view class='inputView1'>
+        <input class='input3' value='全部' disabled="{{true}}"></input>
+        </view>
+        <view class='inputView2'>
+        <input class='input1' value='全部' disabled="{{true}}"></input>
+        </view>
+        <view class='inputView3'>
+          <input class='input1' name="allPrice" placeholder="正价" type="number"></input>
+        </view>
+        <view class='inputView3'>
+          <input class='input1' name="allGroupPrice" placeholder="团购价" type="number"></input>
+        </view>
+        <view class='inputView4'>
+          <input class='input2' name="allNum" placeholder="库存" type="number" maxlength='3'></input>
+        </view>
+      </view>
+  <view class='text'>如果商品的所有型号价格一样，在 全部-全部 这条栏目填价钱，否则填以下栏目</view>
+  <view class='priceClass' hidden='{{version1.length>0?false:true}}'>
+    <view wx:for="{{version}}" wx:key="{{index}}">
+      <view class='priceClass1' wx:for="{{version1}}" wx:key="{{index1}}" wx:for-item="item1" wx:for-index="index1">
+        <view class='inputView1'>
+        <input class='input3' value='{{item}}' disabled="{{true}}"></input>
+        </view>
+        <view class='inputView2'>
+        <input class='input1' value='{{item1}}' disabled="{{true}}"></input>
+        </view>
+        <view class='inputView3'>
+          <input class='input1' name="price{{index+'-'+index1}}" placeholder="正价" type="number"></input>
+        </view>
+        <view class='inputView3'>
+          <input class='input1' name="groupPrice{{index+'-'+index1}}" placeholder="团购价" type="number"></input>
+        </view>
+        <view class='inputView4'>
+          <input class='input2' name="num{{index+'-'+index1}}" placeholder="库存" type="number" maxlength='3'></input>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+<!-- <input class='inputBox' name="price" maxlength="10" type="digit" placeholder="商品价钱"></input>
+    <view class='text'>注：这个是商品正价</view>
+
+<input class='inputBox' name="groupPrice" maxlength="10" type="digit" placeholder="商品团购价"></input>
+    <view class='text'>注：如不参加团购，不输入即可</view> -->
+
+<view class="section padding">
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{twoLevelName}}" >
+    <view class="inputBox picker">
+      类型：{{index? twoLevelName[index]:"请点选择类型"}}
+    </view>
+  </picker>
+</view>
+
+
+
+<image src='{{item}}' mode="widthFix" style='width:670rpx;' wx:for="{{headPhoto}}" wx:key="{{index}}"></image>
+<view class='text'>点击按钮上传产品头像,建议750px*750px</view>
+<view class='button' catchtap='seeHeadPhoto'>上传产品头像图片</view>
+
+<image src='{{item}}' mode="widthFix" style='width:670rpx;' wx:for="{{detailsPhoto}}" wx:key="{{index}}"></image>
+<view class='text'>点击按钮上传产品详情图,建议宽度710px的图片</view>
+<view class='button' catchtap='seeDetailsPhoto'>上传产品详情图</view>
+
+<button form-type="submit">提交</button>
+</form>

@@ -71,3 +71,39 @@
     <view class='text1'>平台商品管理</view>
   </navigator>
 </view>
+<view class='box1'>
+  <navigator url="/pages/admin/goods/shelves?sta=1" class='item'>
+    <view></view>
+    <view class='text1'>助力商品上架</view>
+  </navigator>
+  <navigator url='/pages/admin/goods/cancel?sta=1' class='item'>
+    <view></view>
+    <view class='text1'>助力商品下架</view>
+  </navigator>
+  <navigator url='/pages/admin/goods/shelves?sta=2' class='item'>
+    <text></text>
+    <view class='text1'>挖宝商品上架</view>
+  </navigator>
+  <navigator url='/pages/admin/goods/cancel?sta=2' class='item'>
+    <text></text>
+    <view class='text1'>挖宝商品下架</view>
+  </navigator>
+</view>
+<view class='box1'>
+  <navigator class='item' url="/pages/admin/goods/orderList?sta=1">
+    <view>{{waitSendNum}}</view>
+    <view class='text'>待发货</view>
+  </navigator>
+  <navigator class='item' url="/pages/selleProduct/DealProduct?status=-1">
+    <view>{{allOrderNum}}</view>
+    <view class='text'>所有领奖订单</view>
+  </navigator>
+  <view class='item'>
+    <view></view>
+    <view class='text'></view>
+  </view>
+  <view class='item'>
+    <view></view>
+    <view class='text'></view>
+  </view>
+</view>

@@ -49,18 +49,18 @@ bindchange="bindChange" style="height:{{winHeight-44-25+'px'}}">
          </view>
         <!-- ------------------------------------------------------- -->
         <!-- 品牌区 -->
-        <!-- <view class="brands"> -->
+        <view class="brands">
           <!-- <view class="brand"  hover-class="navigator-hover" bindtap="toSupermarket"> -->
-          <!-- <view class="brand"  hover-class="navigator-hover"> -->
+          <navigator class="brand" url='/pages/share/friendShare'>
             <!-- <view>百货超市</view> -->
-            <!-- <image src="/images/superMarket.png"></image> -->
-           <!-- </view> -->
+            <image src="{{url+'/image/admin/zhuli.png'}}"></image>
+           </navigator>
           <!-- <view class="brand"  hover-class="navigator-hover" bindtap="toBrand"> -->
-          <!-- <view class="brand"  hover-class="navigator-hover"> -->
+          <navigator class="brand" url='/pages/share/dig/dig' >
             <!-- <view>连锁品牌</view> -->
-            <!-- <image src="/images/brand.png"></image> -->
-           <!-- </view> -->
-         <!-- </view> -->
+            <image src="{{url+'/image/admin/xunbao.png'}}"></image>
+           </navigator>
+         </view>
          <!-- --------------------------------------------------------- -->
         <!-- 置顶按钮 -->  
         <view  class="goTop" bindtap="goTop">

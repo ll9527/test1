@@ -39,6 +39,12 @@
     from shop_product_specification
     where product_id = #{productId} and price IS NOT NULL
   </select>
+  <!-- 用商品id和型号名字查sku -->
+  <select id="selectSkuByPidAndVers" resultMap="BaseResultMap" >
+    select *
+    from shop_product_specification
+    where product_id = #{pid} and version_name = #{version}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from shop_product_specification

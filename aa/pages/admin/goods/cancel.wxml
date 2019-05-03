@@ -1,0 +1,19 @@
+<!--pages/admin/goods/cancel.wxml-->
+  <view class='item' wx:for="{{productList}}" wx:key="{{index}}">
+    <image src='{{url+item.product.productImgList[0].image}}'></image>
+    <view class='item_text'>
+      <view class='item_text_1'>{{item.product.title}}</view>
+      <view class='item_text_1_1'>
+        <view>达标人数：{{item.adminProduct.peopleNum}}</view>
+        <!-- <view class='item_text_1_1_left'>
+          <view class='padding10'>达标人数：{{item.price}}</view>
+          <view>已销246件</view>
+        </view>
+        <view class='item_text_1_1_right'>
+          <view class='groupLogo'>团</view>
+          <view>￥{{item.groupPrice}}</view>
+        </view> -->
+      </view>
+    </view>
+    <view class='button' data-productId='{{item.adminProduct.id}}' catchtap='onDelete'>下架</view>
+  </view>

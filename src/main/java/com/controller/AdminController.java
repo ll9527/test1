@@ -232,4 +232,16 @@ public class AdminController {
     public List allProduct() {
     	return productService.selectAllProduct();
     }
+    
+  //查看平台的活动商品
+    @RequestMapping("/selectActivityPro")
+    public List selectActivityPro(Integer sta) {
+        return productService.selectActivityPro(sta);
+    }
+    
+    //下架平台的活动商品
+    @RequestMapping("/productDown")
+    public Integer productDown(Integer productid) {
+    	return productService.productDown(productid);
+    }
 }

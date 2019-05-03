@@ -8,12 +8,17 @@ Page({
     statusList: [
       "待支付", "待发货", "待收货", "交易成功", "买家退货中", "退款成功", "退款成功"
     ],
+    sellerId:''
   },
   /**
  * 生命周期函数--监听页面加载
  */
   onLoad(options) {
-
+    if (options.status == -1){
+      this.data.sellerId = -1
+    }else{
+      this.data.sellerId = wx.getStorageSync("sellerId")
+    }
   },
   onShow: function (options) {
     var that = this;
@@ -21,7 +26,7 @@ Page({
     wx.request({
       url: getApp().url + '/order/selectAllOrder',
       data: {
-        sellerId: wx.getStorageSync("sellerId")
+        sellerId: that.data.sellerId
       },
       success(res) {
         for (var i in res.data) {

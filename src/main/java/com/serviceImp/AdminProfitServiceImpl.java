@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dao.AdminImgMapper;
+import com.dao.AdminProductMapper;
 import com.dao.AdminProfitMapper;
 import com.entity.AdminImg;
+import com.entity.AdminProduct;
 import com.entity.AdminProfit;
 import com.service.AdminProfitService;
 
@@ -21,6 +23,8 @@ public class AdminProfitServiceImpl implements AdminProfitService {
 	private AdminProfitMapper adminProfitMapper;
 	@Autowired
 	private AdminImgMapper adminImgMapper;
+	@Autowired
+	private AdminProductMapper adminProductMapper;
 
 	@Override
 	public AdminProfit selectAdmin() {
@@ -79,6 +83,12 @@ public class AdminProfitServiceImpl implements AdminProfitService {
 		AdminImg img = adminImgMapper.selectByPrimaryKey(imgId);
 		img.setRole(String.valueOf(-1));
 		return adminImgMapper.updateByPrimaryKeySelective(img);
+	}
+
+	@Override
+	public void inserAdminPro(AdminProduct adminProduct) {
+		// TODO Auto-generated method stub
+		adminProductMapper.insertSelective(adminProduct);
 	}
 
 }

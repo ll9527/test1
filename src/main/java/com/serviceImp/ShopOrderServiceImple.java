@@ -19,16 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dao.AdminProfitMapper;
 import com.dao.CouponsMapper;
 import com.dao.ProductCommentFreightMapper;
+import com.dao.ProductMapper;
 import com.dao.ReferrerMapper;
 import com.dao.SellerMapper;
 import com.dao.SellerWithProductImgMapper;
 import com.dao.ShopOrderGoodsMapper;
 import com.dao.ShopOrderGroupMapper;
 import com.dao.ShopOrderMapper;
+import com.dao.ShopProductSpecificationMapper;
 import com.dao.UserMapper;
 import com.dao.WxHttpRequestUtil;
 import com.entity.AdminProfit;
 import com.entity.Coupons;
+import com.entity.Product;
 import com.entity.ProductCommentFreight;
 import com.entity.Referrer;
 import com.entity.Seller;
@@ -36,6 +39,7 @@ import com.entity.SellerWithProductImg;
 import com.entity.ShopOrder;
 import com.entity.ShopOrderGoods;
 import com.entity.ShopOrderGroup;
+import com.entity.ShopProductSpecification;
 import com.entity.User;
 import com.service.ShopOrderService;
 
@@ -62,6 +66,10 @@ public class ShopOrderServiceImple implements ShopOrderService{
 	private ReferrerMapper referrerMapper;
 	@Autowired(required = false)
 	private ShopOrderGroupMapper shopOrderGroupMapper;
+	@Autowired(required = false)
+	private ProductMapper productMapper;
+	@Autowired(required = false)
+	private ShopProductSpecificationMapper spsm;
 	
 	@Override
 	public Integer vipPay(ShopOrder shopOrder) {
@@ -175,6 +183,17 @@ public class ShopOrderServiceImple implements ShopOrderService{
 				shopOrderMapper.updateByPrimaryKeySelective(shopOrder);
 //				插入评论
 				ShopOrderGoods shopOrderGoods = shopOrderGoodsMapper.selectByOId(id).get(0);
+//				更改商品销量
+				Product product = productMapper.selectByPrimaryKey(shopOrderGoods.getGoodsId());
+				product.setSalesVolume(product.getSalesVolume()+1);
+				productMapper.updateByPrimaryKeySelective(product);
+//				更改产品库存
+				String version = shopOrderGoods.getpVersion().replaceAll(",", "");
+				int pid = shopOrderGoods.getGoodsId();
+				ShopProductSpecification sps = spsm.selectSkuByPidAndVers(pid, version);
+				sps.setNum(sps.getNum()-shopOrderGoods.getGoNum());
+				spsm.updateByPrimaryKeySelective(sps);
+//				插入评论
 				ProductCommentFreight pcf = new ProductCommentFreight();
 				pcf.setProductId(shopOrderGoods.getGoodsId());
 				pcf.setComment(comment);
@@ -185,8 +204,10 @@ public class ShopOrderServiceImple implements ShopOrderService{
 //				平台扣点比例
 				BigDecimal shopPercent = new BigDecimal(adminPM.selectAdminByVipMoney().getShopPercent().toString());
 				BigDecimal money = shopOrder.getTotalMoney().subtract(shopOrder.getTotalMoney().multiply(shopPercent));
-				seller.setMoney(seller.getMoney().add(money));
-				userMapper.updateByPrimaryKeySelective(seller);
+				if(seller != null) {
+					seller.setMoney(seller.getMoney().add(money));
+					userMapper.updateByPrimaryKeySelective(seller);
+				}
 //				用户积分增加
 				User user = userMapper.selectByPrimaryKey(shopOrder.getUserId());
 				user.setScore(user.getScore()+shopOrder.getTotalMoney().intValue());

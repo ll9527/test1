@@ -36,4 +36,11 @@ public interface ShopProductSpecificationMapper {
     int updateByPrimaryKeySelective(ShopProductSpecification record);
 
     int updateByPrimaryKey(ShopProductSpecification record);
+    /**
+     * 用商品id和型号名字查sku
+     * @param pid
+     * @param version
+     * @return
+     */
+	ShopProductSpecification selectSkuByPidAndVers(int pid, String version);
 }
