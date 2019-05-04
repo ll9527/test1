@@ -257,6 +257,15 @@ Page({
     console.log("groupOid" + this.data.groupOid)
     var that = this;
     var isGroup;
+    if (that.data.num<1){
+      wx.showToast({
+        title: '库存不足',
+        icon: 'loading',
+        duration: 1000,
+        mask: true
+      })
+      return;
+    }
     if (res.currentTarget.dataset.isgroup) {
       isGroup = 1
     } else {

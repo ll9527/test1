@@ -112,7 +112,7 @@ Page({
               if (res.data != "") {
                 if(res.data.status == 300){
                   wx.showToast({
-                    title: '支付成功',
+                    title: '领取成功',
                     icon: 'success',
                     duration: 500,
                     mask: true,
