@@ -1,11 +1,10 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/share/friendShare",
     "pages/share/sharePage",
     "pages/share/treasure/treasure",
     "pages/share/dig/dig",
-    
     "pages/login/login",
     "pages/admin/goods/shelves",
     "pages/admin/goods/putaway",
@@ -18,8 +17,6 @@
     "pages/admin/setGG",
     "pages/admin/upAdminImg",
     "pages/share/share",
-    
-    
     "pages/sellerManager/qrPay",
     "pages/sellerManager/coverImg",
     "pages/admin/adminPage",
@@ -35,72 +32,51 @@
     "pages/papers/papers",
     "pages/orderDelivery/orderDelivery",
     "pages/orderTakeDelivery/orderTakeDelivery",
-    
     "pages/order/order",
     "pages/register/yongHuXieYi",
     "pages/sellerManager/shuoMingShu",
     "pages/sellerManager/sellerShuoMingShu",
     "pages/sellerManager/kouDianBiao",
-    
     "pages/admin/waitConfirm",
     "pages/selleOrder/waitPay",
     "pages/selleOrder/waitSend",
     "pages/selleOrder/waitRefund",
     "pages/selleOrder/sellerOrderDetails",
-
-    
     "pages/admin/admin",
-    
     "pages/sellerManager/register",
     "pages/searchItems/search2search",
-    
-
-
     "pages/register/register",
     "pages/sellerManager/sellerManager",
-
     "pages/search/search",
-    "pages/userData/userData",  
-
+    "pages/userData/userData",
     "pages/selleProduct/selleProduct",
     "pages/selleProduct/addSelleProduct",
     "pages/selleProduct/DealOrder",
-    
-    
     "pages/selleProduct/DealProduct",
     "pages/myPage/myPage",
     "pages/myAfterSale/myAfterSale",
     "pages/myCollection/myCollection",
     "pages/myGroup/myGroup",
     "pages/myWallet/myWallet",
-    
-    
     "pages/storeNewList/storeNewList",
     "pages/storeAllList/storeAllList",
     "pages/searchItems/searchItems",
-    
     "pages/storeDetails/storeDetails",
-    
-    
     "pages/receivingAddress/receivingAddress",
     "pages/setAddress/setAddress",
-    
     "pages/checkPage/checkPage",
     "pages/productDetails/productDetails",
     "pages/goGroup/goGroup",
     "pages/shopCart/shopCart",
-
     "pages/setUp/setUp",
     "pages/community/community",
     "pages/community/community1",
     "pages/msg/msg",
     "pages/msg/msg_success",
     "pages/msg/msg_fail",
-    
     "pages/upgradeStoreManager/msg",
     "pages/upgradeStoreManager/msg_success",
     "pages/upgradeStoreManager/msg_fail",
-
     "pages/test/test"
   ],
   "permission": {
@@ -108,36 +84,42 @@
       "desc": "小程序将获得你的位置信息用于加载本地商品"
     }
   },
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
-  "tabBar":{
+  "tabBar": {
     "color": "#a9b7b7",
     "selectedColor": "#FF5A5A",
     "borderStyle": "white",
     "backgroundColor": "rgb(255,255,255)",
-    "list":[{
-      "selectedIconPath": "images/sy_h@2x.png",
-      "iconPath": "images/sy@2x.png",      
-      "pagePath": "pages/index/index",
-      "text": "首页"
-    },{
-      "iconPath": "images/search@2x.png",
-      "selectedIconPath": "images/searchIcon@2x.png",
-      "pagePath": "pages/search/search",
-      "text": "搜索"
-    },{
-      "iconPath": "images/sq@2x.png",
-      "selectedIconPath": "images/sqIcon@2x.png",
-      "pagePath": "pages/community/community",
-      "text": "本地"
-    },{
-      "iconPath": "images/my.png",
-      "selectedIconPath": "images/myIcon.png",
-      "pagePath": "pages/myPage/myPage",
-      "text": "我的"
-    }]
-  }
+    "list": [
+      {
+        "selectedIconPath": "images/sy_h@2x.png",
+        "iconPath": "images/sy@2x.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "iconPath": "images/search@2x.png",
+        "selectedIconPath": "images/searchIcon@2x.png",
+        "pagePath": "pages/search/search",
+        "text": "搜索"
+      },
+      {
+        "iconPath": "images/sq@2x.png",
+        "selectedIconPath": "images/sqIcon@2x.png",
+        "pagePath": "pages/community/community",
+        "text": "本地"
+      },
+      {
+        "iconPath": "images/my.png",
+        "selectedIconPath": "images/myIcon.png",
+        "pagePath": "pages/myPage/myPage",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

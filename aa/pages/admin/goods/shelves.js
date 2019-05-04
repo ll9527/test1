@@ -148,14 +148,15 @@ Page({
     var eValue = e.detail.value;
     console.log(eValue)
     // 如果全部得价钱填写了，则发送全部得价钱
-    if (eValue.allPrice != "" && eValue.allGroupPrice != "" && eValue.allNum != "") {
+    // if (eValue.allPrice != "" && eValue.allGroupPrice != "" && eValue.allNum != "") {
+    if (eValue.allNum != "") {
       for (var i in this.data.version) {
         for (var a in this.data.version1) {
           var sku = {
             version: this.data.version[i],
             version1: this.data.version1[a],
-            price: eValue["allPrice"],
-            groupPrice: eValue["allGroupPrice"],
+            price: "0",
+            groupPrice: "0",
             num: eValue["allNum"],
           }
           skuList.push(sku)
@@ -167,32 +168,33 @@ Page({
       // 全部的价钱没 没有全部填写 
       for (var i in this.data.version) {
         for (var a in this.data.version1) {
-          if (eValue["price" + i + "-" + a] != "" && eValue["groupPrice" + i + "-" + a] != "" && eValue["num" + i + "-" + a] != "") {
+          // if (eValue["price" + i + "-" + a] != "" && eValue["groupPrice" + i + "-" + a] != "" && eValue["num" + i + "-" + a] != "") {
+          if (eValue["num" + i + "-" + a] != "") {
             // console.log(this.data.version[i] + this.data.version1[a])
             var sku = {
               version: this.data.version[i],
               version1: this.data.version1[a],
-              price: eValue["price" + i + "-" + a],
-              groupPrice: eValue["groupPrice" + i + "-" + a],
+              price: "0",
+              groupPrice: "0",
               num: eValue["num" + i + "-" + a],
             }
             skuList.push(sku)
-          } else if (eValue["price" + i + "-" + a] == "") {
-            wx.showToast({
-              title: '请填入正价',
-              icon: 'loading',
-              duration: 1000,
-              mask: true
-            })
-            return;
-          } else if (eValue["groupPrice" + i + "-" + a] == "") {
-            wx.showToast({
-              title: '请填入团购价',
-              icon: 'loading',
-              duration: 1000,
-              mask: true
-            })
-            return;
+          // } else if (eValue["price" + i + "-" + a] == "") {
+          //   wx.showToast({
+          //     title: '请填入正价',
+          //     icon: 'loading',
+          //     duration: 1000,
+          //     mask: true
+          //   })
+          //   return;
+          // } else if (eValue["groupPrice" + i + "-" + a] == "") {
+          //   wx.showToast({
+          //     title: '请填入团购价',
+          //     icon: 'loading',
+          //     duration: 1000,
+          //     mask: true
+          //   })
+          //   return;
           } else if (eValue["num" + i + "-" + a] == "") {
             wx.showToast({
               title: '请填入库存',

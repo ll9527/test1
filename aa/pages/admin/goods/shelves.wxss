@@ -62,6 +62,7 @@ page{
   height: 60rpx;
 }
 .input2{
+  /* width: 290rpx; */
   width: 65rpx;
   height: 60rpx;
 }
@@ -80,5 +81,6 @@ page{
   width: 115rpx;
 }
 .inputView4{
-  width: 65rpx;
+  /* width: 65rpx; */
+  width: 240rpx;
 }
