@@ -59,13 +59,19 @@ public class UserController {
 	    	userService.updateByPrimaryKeySelective(user);
 	    	return 1;
     	}else {
-    		return -1;
+//    		新用户
+    		User u = new User();
+			String randomNum = SMSUtil.sMSCode(tel);
+			u.setTel(new Long(tel));
+			u.setPassword(randomNum);
+			userService.insertSelective(u);
+    		return 1;
     	}
     }
     
     //用户登录
     @RequestMapping(value = "/login")
-    public Map login(User user) {
+    public Map login(User user, Integer referrer_id) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> usermap = new HashMap<>();
 //        usermap.put("username", user.getUsername());
@@ -77,6 +83,17 @@ public class UserController {
         } else {
             User newUser = userService.login(usermap);
             if (newUser != null) {
+//            	查看是否有推荐人
+            	Referrer ref = userService.selectReferrerByUid(newUser.getId());
+            	if(referrer_id != null && referrer_id != -1 && ref == null){
+//                	插入推荐人
+                    Referrer referrer = new Referrer();
+                    referrer.setReferrerId(referrer_id);
+                    referrer.setUserId(newUser.getId());
+                    referrerService.insertSelective(referrer);
+//                    用户推荐别人注册成功，获得随机金额
+                    userService.share(referrer_id);
+            	}
                 if (newUser.getIsAdmin() == 1) {
                     map.put("status", "ok");
                     map.put("info", 1);//1为管理员
@@ -110,29 +127,29 @@ public class UserController {
 //  注册获取验证码
 	  @RequestMapping("registerSMSCode")
 	  public Map registerSMSCode(String tel) {
-		  Map<String, Object> map = new HashMap<>();
-	  	if (tel == null && tel.equals("")) {
-	//  	空字符串	
-	  		map.put("info", -9);//电话号码已存在
-	  		return map;
-	  	}
-	  	User user = userService.selectUserByTel(new Long(tel));
-	  	if(user != null) {
+		Map<String, Object> map = new HashMap<>();
+		if (tel == null && tel.equals("")) {
+			// 空字符串
+			map.put("info", -9);// 电话号码已存在
+			return map;
+		}
+		User user = userService.selectUserByTel(new Long(tel));
+		if (user != null) {
 //	  		用户已存在
-	  		String  randomNum = SMSUtil.sMSCode(tel);
-	    	user.setPassword(randomNum);
-	    	userService.updateByPrimaryKeySelective(user);
-	  		map.put("info", 1);
-	  	}else {
-	  		User u = new User();
-	  		String  randomNum = SMSUtil.sMSCode(tel);
-	  		u.setTel(new Long(tel));
-	    	u.setPassword(randomNum);
-	    	userService.insertSelective(u);
-	    	map.put("info", 1);//1代表注册成功
-	  	}
-	  	return map;
-	  }
+			String randomNum = SMSUtil.sMSCode(tel);
+			user.setPassword(randomNum);
+			userService.updateByPrimaryKeySelective(user);
+			map.put("info", 1);
+		} else {
+			User u = new User();
+			String randomNum = SMSUtil.sMSCode(tel);
+			u.setTel(new Long(tel));
+			u.setPassword(randomNum);
+			userService.insertSelective(u);
+			map.put("info", 1);// 1代表注册成功
+		}
+		return map;
+	}
     
     //用户注册
     @RequestMapping(value = "/registered")

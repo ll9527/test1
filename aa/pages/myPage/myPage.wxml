@@ -87,7 +87,7 @@
     </view>
     <view class='bonusPool_1'>
       <view>{{jiangjin.bonusPools}}</view>
-      <view>今日奖励奖金</view>
+      <view>今日分红奖金</view>
     </view>
   </view>
   <view class='box3'>

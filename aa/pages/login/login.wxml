@@ -12,9 +12,9 @@
 </view>
 <!-- <button class='button' open-type="getUserInfo" bindgetuserinfo="getUserInfo" form-type='submit'>登录</button> -->
 <button class='button' form-type='submit'>登录</button>
-<view class='button' catchtap='register'>注册</view>
+<!-- <view class='button' catchtap='register'>注册</view> -->
 <view class='button' catchtap='goIndex'>返回首页</view>
 
 </form>
-
+<view class='text'>* 用手机码可以直接登陆</view>
 <view class='text'>客服热线：0759-3601996</view>

@@ -28,7 +28,8 @@ Page({
         url: getApp().url+'/user/login',
         data:{
           tel: e.detail.value.phone,
-          password: e.detail.value.password
+          password: e.detail.value.password,
+          referrer_id: getApp().refereesId ? getApp().refereesId : -1
         },
         method:"POST",
         header: {
